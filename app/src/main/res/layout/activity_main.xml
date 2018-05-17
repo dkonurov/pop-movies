@@ -1,18 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".LifeCycleActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/standart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="standart" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/singleInsatnce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="singleInstance" />
+
+    <Button
+        android:id="@+id/singleTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="singleTop" />
+
+    <Button
+        android:id="@+id/singleTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="singleTask" />
+
+    <Button
+        android:id="@+id/flagNewTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="newTask" />
+
+    <Button
+        android:id="@+id/flagClearTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="clearTop" />
+
+    <Button
+        android:id="@+id/flagSingleTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="single Top" />
+
+    <Button
+        android:id="@+id/services"
+        android:text="Services"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
