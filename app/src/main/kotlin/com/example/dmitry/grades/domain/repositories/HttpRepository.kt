@@ -1,19 +1,34 @@
 package com.example.dmitry.grades.domain.repositories
 
-import android.text.TextUtils
+import com.example.dmitry.grades.domain.data.db.MovieDao
 import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
 import com.example.dmitry.grades.domain.data.remote.HttpDataSource
-import io.reactivex.Flowable
+import com.example.dmitry.grades.domain.models.ImageConfig
+import com.example.dmitry.grades.domain.models.ui.MovieListInfo
+import io.reactivex.Single
 import javax.inject.Inject
 
-class HttpRepository @Inject constructor(private val httpDataSource: HttpDataSource,
-                                         private val privateDataSource: PrivateDataSource) {
+open class HttpRepository @Inject constructor(private val httpDataSource: HttpDataSource,
+                                              private val privateDataSource: PrivateDataSource,
+                                              private val movieDao: MovieDao) {
 
-    fun getConfiguration(): Flowable<Boolean> {
+    open fun getConfiguration(): Single<ImageConfig> {
         return httpDataSource.getConfiguration()
                 .map {
                     privateDataSource.saveImageConfig(it.imageConfig)
-                    return@map !TextUtils.isEmpty(privateDataSource.baseUrlImg)
+                    return@map it.imageConfig
+                }
+    }
+
+    open fun getMovies(page: Int? = null,
+                       sortBy: String? = null,
+                       year: Int? = null): Single<MovieListInfo> {
+        return httpDataSource.getMovies()
+                .flatMap { discover ->
+                    movieDao.save(discover.movies)
+                    movieDao.getAll().map {
+                        MovieListInfo(discover.totalPages, it)
+                    }
                 }
     }
 }

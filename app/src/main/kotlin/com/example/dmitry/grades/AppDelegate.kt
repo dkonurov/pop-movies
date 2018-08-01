@@ -19,11 +19,13 @@ class AppDelegate : Application() {
     }
 
     private fun initBaseScopes() {
-        val appScope = Toothpick.openScope(Scopes.APP_SCOPE)
-        appScope.installModules(AppModule(this))
+        Toothpick.openScope(Scopes.APP_SCOPE).apply {
+            installModules(AppModule(this@AppDelegate))
+        }
 
-        val remoteScope = Toothpick.openScopes(Scopes.APP_SCOPE, Scopes.REMOTE_SCOPE)
-        remoteScope.installModules(RemoteModule())
+        Toothpick.openScopes(Scopes.APP_SCOPE, Scopes.REMOTE_SCOPE).apply {
+            installModules(RemoteModule())
+        }
     }
 
     private fun initToothpick() {

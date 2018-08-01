@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: 'config/jacoco.gradle'
 
 android {
     compileSdkVersion 27
@@ -15,6 +16,7 @@ android {
 
         buildConfigField('String', 'PROD_URL', '"https://api.themoviedb.org/3/"')
         buildConfigField('String', 'APY_KEY', '"a24147a595afe1935af3d13e6a8c0f61"')
+        buildConfigField('String', 'DB_NAME', '"app-database"')
 
 
         javaCompileOptions {
@@ -40,7 +42,6 @@ android {
             includeAndroidResources = true
         }
     }
-
 
 }
 
@@ -86,9 +87,4 @@ dependencies {
     testImplementation "org.mockito:mockito-core:2.20.1"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-
 }
-
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'

@@ -9,7 +9,10 @@ annotation class BaseUrl
 annotation class LoggingInterceptor
 
 @Qualifier
-annotation class AuthInterceptor
+annotation class Auth
 
 @Qualifier
 annotation class ApiKey
+
+@Qualifier
+annotation class DbName
