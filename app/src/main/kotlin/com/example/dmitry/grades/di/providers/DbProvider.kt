@@ -11,6 +11,6 @@ import javax.inject.Provider
 class DbProvider @Inject constructor(private val context: Context,
                                      @DbName private val dbName: String) : Provider<AppDatabase> {
     override fun get(): AppDatabase {
-        return Room.databaseBuilder(context, RoomDatabase::class.java, dbName).build() as AppDatabase
+        return Room.databaseBuilder(context, AppDatabase::class.java, dbName).build()
     }
 }
