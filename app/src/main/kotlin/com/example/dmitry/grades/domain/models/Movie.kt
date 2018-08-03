@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 data class Movie(val id: Long,
                  @PrimaryKey(autoGenerate = true)
                  val localId: Long,
-                 @SerializedName("poster_path") val posterPath: String?,
+                 @SerializedName("poster_path") var posterPath: String?,
                  val adult: Boolean,
                  val overview: String,
                  @SerializedName("release_date") val releaseDate: String,

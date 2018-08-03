@@ -16,11 +16,12 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var splashViewModel: SplashViewModel
 
+    val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(SplashViewModelFactory::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        val splashViewModelFactory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(SplashViewModelFactory::class.java)
-        splashViewModel = ViewModelProviders.of(this, splashViewModelFactory).get(SplashViewModel::class.java)
+        splashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel::class.java)
         val progress = findViewById<FrameLayout>(R.id.progress)
         splashViewModel.toast.observe(this, Observer {
             it?.let {

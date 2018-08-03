@@ -1,4 +1,4 @@
-package com.example.dmitry.grades.ui.main
+package com.example.dmitry.grades.ui.main.grid
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val httpRepository: HttpRepository,
+class GridViewModel @Inject constructor(private val httpRepository: HttpRepository,
                                         private val schedulerProvider: SchedulerProvider,
                                         private val resourceRepository: ResourceRepository) : BaseViewModel() {
 
@@ -41,5 +41,17 @@ class MainViewModel @Inject constructor(private val httpRepository: HttpReposito
                 }, {
                     _toast.value = resourceRepository.getNetworkError()
                 })
+    }
+
+    fun forceLoad() {
+        httpRepository.clearCache()
+        page = 1
+        load()
+    }
+
+    fun loadMore() {
+//        if (_progress.value == false && ((countPage != null) && (countPage > page) || (countPage == HttpRepository.UNKNOWN_COUNT_PAGE))) {
+//
+//        }
     }
 }

@@ -14,6 +14,7 @@ import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
 import com.example.dmitry.grades.domain.models.config.AppInfo
 import com.example.dmitry.grades.domain.repositories.AppInfoRepository
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
+import com.example.dmitry.grades.domain.mappers.MovieMapper
 import toothpick.config.Module
 
 class AppModule(context: Context) : Module() {
@@ -28,5 +29,7 @@ class AppModule(context: Context) : Module() {
         bind(ResourceRepository::class.java)
         bind(AppDatabase::class.java).toProvider(DbProvider::class.java).providesSingletonInScope()
         bind(MovieDao::class.java).toProvider(MovieDaoProvider::class.java).providesSingletonInScope()
+
+        bind(MovieMapper::class.java).to(MovieMapper::class.java)
     }
 }

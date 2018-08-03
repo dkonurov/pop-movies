@@ -13,6 +13,12 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(movies: List<Movie>)
 
-    @Query("SELECT * FROM " + Movie.TABLE_NAME)
+    @Query("SELECT * FROM ${Movie.TABLE_NAME} LIMIT :offset, :limit")
+    fun getMovies(offset: Int, limit: Int): Single<List<Movie>>
+
+    @Query("SELECT * FROM ${Movie.TABLE_NAME}")
     fun getAll(): Single<List<Movie>>
+
+    @Query("DELETE FROM ${Movie.TABLE_NAME}")
+    fun clear()
 }

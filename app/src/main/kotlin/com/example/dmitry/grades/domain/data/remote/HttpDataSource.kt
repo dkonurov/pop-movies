@@ -11,7 +11,7 @@ interface HttpDataSource {
     @GET("configuration")
     fun getConfiguration(): Single<ConfigResponse>
 
-    @GET("discover")
+    @GET("discover/movie")
     fun getMovies(@Query("page") page: Int? = null,
                   @Query("sort_by") sortBy: String? = null,
                   @Query("year") year: Int? = null): Single<DiscoverResponse>
