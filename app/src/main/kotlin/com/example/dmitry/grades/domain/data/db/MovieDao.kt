@@ -14,7 +14,7 @@ interface MovieDao {
     fun save(movies: List<Movie>)
 
     @Query("SELECT * FROM ${Movie.TABLE_NAME} LIMIT :offset, :limit")
-    fun getMovies(offset: Int, limit: Int): Single<List<Movie>>
+    fun getMovies(offset: Int, limit: Int): Single<MutableList<Movie>>
 
     @Query("SELECT * FROM ${Movie.TABLE_NAME}")
     fun getAll(): Single<List<Movie>>

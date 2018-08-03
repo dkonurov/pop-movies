@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
                 splashViewModel.showedToast()
             }
         })
-        splashViewModel.progress.observe(this, Observer {
+        splashViewModel.loading.observe(this, Observer {
             it?.let {
                 if (it) {
                     if (progress.visibility != View.VISIBLE) {

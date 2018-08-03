@@ -17,9 +17,10 @@ class PrivateDataSourceImpl @Inject constructor(context: Context) : PrivateDataS
     }
 
     companion object {
-        const val BASE_URL = "com.example.dmitry.grades.domain.data.preferences.base_url"
-        const val LOGO_SIZES = "com.example.dmitry.grades.domain.data.preferences.logo_sizes"
-        const val POSTERS_SIZES = "com.example.dmitry.grades.domain.data.preferences.posters_sizes"
+        private const val BASE_URL = "com.example.dmitry.grades.domain.data.preferences.base_url"
+        private const val LOGO_SIZES = "com.example.dmitry.grades.domain.data.preferences.logo_sizes"
+        private const val POSTERS_SIZES = "com.example.dmitry.grades.domain.data.preferences.posters_sizes"
+        private const val LAST_PAGE_MOVIE = "com.example.dmitry.grades.domain.data.preferences.last_page_movie"
     }
 
     private val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
@@ -33,16 +34,12 @@ class PrivateDataSourceImpl @Inject constructor(context: Context) : PrivateDataS
     override var logoSizes: List<String>?
         get() = sharedPreferences.getStringSet(LOGO_SIZES, null)?.toList()
         set(value) {
-            value?.let {
-                sharedPreferences.edit().putStringSet(LOGO_SIZES, value.toSet()).apply()
-            }
+            sharedPreferences.edit().putStringSet(LOGO_SIZES, value?.toSet()).apply()
         }
 
     override var posterSizes: List<String>?
         get() = sharedPreferences.getStringSet(POSTERS_SIZES, null)?.toList()
         set(value) {
-            value?.let {
-                sharedPreferences.edit().putStringSet(POSTERS_SIZES, value.toSet()).apply()
-            }
+            sharedPreferences.edit().putStringSet(POSTERS_SIZES, value?.toSet()).apply()
         }
 }

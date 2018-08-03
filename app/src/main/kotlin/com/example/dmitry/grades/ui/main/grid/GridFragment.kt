@@ -2,7 +2,6 @@ package com.example.dmitry.grades.ui.main.grid
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.nfc.tech.MifareUltralight.PAGE_SIZE
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -50,18 +49,23 @@ class GridFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
         val layoutManager = GridLayoutManager(context, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (adapter.isFooter(position)) layoutManager.spanCount else 1
+            }
+        }
         recyclerView.layoutManager = layoutManager
         val recyclerViewOnScrollListener = object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val visibleItemCount = layoutManager.getChildCount()
-                val totalItemCount = layoutManager.getItemCount()
+                val visibleItemCount = layoutManager.childCount
+                val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        && totalItemCount >= PAGE_SIZE) {
+                        && totalItemCount >= 4) {
                     viewModel.loadMore()
                 }
             }
@@ -79,9 +83,19 @@ class GridFragment : Fragment() {
         viewModel.movies.observe(this, Observer {
             adapter.setData(it)
         })
-        viewModel.progress.observe(this, Observer {
+        viewModel.loading.observe(this, Observer { it ->
             it?.let {
                 refreshLayout.isRefreshing = it
+            }
+        })
+        viewModel.moreMovies.observe(this, Observer { it ->
+            it?.let {
+                adapter.setMoreItems(it)
+            }
+        })
+        viewModel.toast.observe(this, Observer { it ->
+            it?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         })
         if (savedInstanceState == null) {

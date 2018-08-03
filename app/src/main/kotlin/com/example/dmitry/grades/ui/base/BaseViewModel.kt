@@ -14,14 +14,18 @@ open class BaseViewModel : ViewModel() {
 
     protected val _toast = MutableLiveData<String>()
 
-    val progress: LiveData<Boolean>
-        get() = _progress
+    val loading: LiveData<Boolean>
+        get() = _loading
 
-    protected val _progress = MutableLiveData<Boolean>()
+    protected val _loading = MutableLiveData<Boolean>()
 
 
     override fun onCleared() {
         super.onCleared()
         disposables.clear()
+    }
+
+    fun showedToast() {
+        _toast.value = null
     }
 }

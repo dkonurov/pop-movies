@@ -7,6 +7,8 @@ import com.example.dmitry.grades.domain.repositories.HttpRepository
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
+import com.example.dmitry.grades.ui.base.async
+import com.example.dmitry.grades.ui.base.loading
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(private val httpRepository: HttpRepository,
@@ -21,26 +23,15 @@ class SplashViewModel @Inject constructor(private val httpRepository: HttpReposi
 
     fun loadConfig() {
         disposables.add(httpRepository.getConfiguration()
-                .subscribeOn(schedulerProvier.io())
-                .observeOn(schedulerProvier.ui())
-                .doOnSubscribe {
-                    _progress.value = true
-                }
-                .doOnSuccess {
-                    _progress.value = false
-                }
-                .doOnError {
-                    _progress.value = false
+                .async(schedulerProvier)
+                .loading {
+                    _loading.value = it
                 }
                 .subscribe({
                     _imageConfig.value = it
                 }, {
                     _toast.value = resourceRepository.getNetworkError()
                 }))
-    }
-
-    fun showedToast() {
-        _toast.value = null
     }
 
 }

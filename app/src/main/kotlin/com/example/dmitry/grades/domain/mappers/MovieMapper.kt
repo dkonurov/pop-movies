@@ -7,12 +7,13 @@ import javax.inject.Inject
 
 class MovieMapper @Inject constructor() {
 
-    fun toMovieListInfo(countPages: Int, pathImg: String?, sizeImg: String?, movies: List<Movie>): MovieListInfo {
+    fun toMovieListInfo(countPages: Int, pathImg: String?, sizeImg: String?, movies: MutableList<Movie>,
+                        page: Int): MovieListInfo {
         movies.forEach {
             if (it.posterPath != null) {
                 it.posterPath = pathImg + sizeImg + it.posterPath
             }
         }
-        return MovieListInfo(countPages, movies)
+        return MovieListInfo(countPages, movies, page)
     }
 }

@@ -15,8 +15,8 @@ open class HttpRepository @Inject constructor(private val httpDataSource: HttpDa
                                               private val movieMapper: MovieMapper) {
 
     companion object {
-        private const val PER_PAGE = 20
-        public const val UNKNOWN_COUNT_PAGE = -1
+        internal const val PER_PAGE = 20
+        const val UNKNOWN_COUNT_PAGE = -1
     }
 
     open fun getConfiguration(): Single<ImageConfig> {
@@ -29,13 +29,13 @@ open class HttpRepository @Inject constructor(private val httpDataSource: HttpDa
 
     open fun getMovies(page: Int = 1,
                        sortBy: String? = null): Single<MovieListInfo> {
-        return movieDao.getMovies(0, page * PER_PAGE)
+        return movieDao.getMovies((page - 1) * PER_PAGE, PER_PAGE)
                 .flatMap {
                     if (it.isEmpty()) {
                         getRemoteMovies(page, sortBy)
                     } else {
                         Single.just(movieMapper.toMovieListInfo(UNKNOWN_COUNT_PAGE, privateDataSource.baseUrlImg,
-                                privateDataSource.posterSizes?.get(0), it))
+                                privateDataSource.posterSizes?.get(0), it, page))
                     }
                 }
     }
@@ -46,9 +46,9 @@ open class HttpRepository @Inject constructor(private val httpDataSource: HttpDa
         return httpDataSource.getMovies(page, sortBy)
                 .flatMap { discover ->
                     movieDao.save(discover.movies)
-                    movieDao.getAll().map {
+                    movieDao.getMovies((page - 1) * PER_PAGE, PER_PAGE).map {
                         movieMapper.toMovieListInfo(discover.totalPages, privateDataSource.baseUrlImg,
-                                privateDataSource.posterSizes?.get(0), it)
+                                privateDataSource.posterSizes?.get(0), it, page)
                     }
                 }
     }
