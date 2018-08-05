@@ -4,7 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
-import com.example.dmitry.grades.domain.models.Movie
+import com.example.dmitry.grades.domain.models.entity.Movie
 import io.reactivex.Single
 
 @Dao
@@ -18,6 +18,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM ${Movie.TABLE_NAME}")
     fun getAll(): Single<List<Movie>>
+
+    @Query("SELECT * FROM ${Movie.TABLE_NAME} WHERE localId = :id")
+    fun findById(id: Int): Single<Movie>
 
     @Query("DELETE FROM ${Movie.TABLE_NAME}")
     fun clear()

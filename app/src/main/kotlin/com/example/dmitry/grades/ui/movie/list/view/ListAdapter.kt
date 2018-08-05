@@ -1,14 +1,15 @@
-package com.example.dmitry.grades.ui.main.grid
+package com.example.dmitry.grades.ui.movie.list.view
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.dmitry.grades.R
-import com.example.dmitry.grades.domain.models.Movie
-import com.example.dmitry.grades.ui.main.MovieDiffUtils
+import com.example.dmitry.grades.domain.models.entity.Movie
+import com.example.dmitry.grades.ui.base.LoadingViewHolder
+import com.example.dmitry.grades.ui.movie.MovieDiffUtils
 
-class GridAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val FOOTER_TYPE = 1
@@ -39,9 +40,7 @@ class GridAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Ada
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isFooter(position)) {
-            items[position].posterPath?.let {
-                (holder as GridViewHolder).bind(it)
-            }
+            (holder as GridViewHolder).bind(items[position].posterPath)
         }
     }
 

@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
-import com.example.dmitry.grades.ui.main.MainActivity
+import com.example.dmitry.grades.ui.movie.MainActivity
 import toothpick.Toothpick
 
 class SplashActivity : AppCompatActivity() {

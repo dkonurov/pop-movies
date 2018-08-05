@@ -1,7 +1,7 @@
-package com.example.dmitry.grades.ui.main
+package com.example.dmitry.grades.ui.movie
 
 import android.support.v7.util.DiffUtil
-import com.example.dmitry.grades.domain.models.Movie
+import com.example.dmitry.grades.domain.models.entity.Movie
 
 class MovieDiffUtils(private val oldList: List<Movie>, private val newList: List<Movie>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

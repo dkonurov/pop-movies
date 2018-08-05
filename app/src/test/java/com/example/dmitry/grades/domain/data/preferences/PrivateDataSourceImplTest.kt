@@ -2,8 +2,7 @@ package com.example.dmitry.grades.domain.data.preferences
 
 import com.example.dmitry.grades.DebugAppDelegate
 import com.example.dmitry.grades.domain.models.ImageConfig
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNull
+import junit.framework.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -17,101 +16,127 @@ class PrivateDataSourceImplTest {
 
     @Test
     fun saveBaseUrlNull() {
+        // Arrange
+        privateDataSourceImpl.baseUrlImg = "test"
+
         // Act
         privateDataSourceImpl.baseUrlImg = null
 
         // Assert
-        assertNull(privateDataSourceImpl.baseUrlImg)
+        Assert.assertNull(privateDataSourceImpl.baseUrlImg)
     }
 
     @Test
     fun saveBaseUrlEmpty() {
+        // Arrange
+        privateDataSourceImpl.baseUrlImg = "test"
+
         // Act
         privateDataSourceImpl.baseUrlImg = ""
 
         // Assert
-        assertEquals(privateDataSourceImpl.baseUrlImg, "")
+        Assert.assertEquals(privateDataSourceImpl.baseUrlImg, "")
     }
 
     @Test
     fun saveBaseUrl() {
+        // Arrange
+        privateDataSourceImpl.baseUrlImg = "test1"
+
         // Act
         privateDataSourceImpl.baseUrlImg = "test"
 
         // Assert
-        assertEquals(privateDataSourceImpl.baseUrlImg, "test")
+        Assert.assertEquals(privateDataSourceImpl.baseUrlImg, "test")
     }
 
 
     @Test
     fun savePosterSizesNull() {
+        // Arrange
+        privateDataSourceImpl.posterSizes = listOf("1", "2")
+
         // Act
         privateDataSourceImpl.posterSizes = null
 
         // Assert
-        assertNull(privateDataSourceImpl.posterSizes)
+        Assert.assertNull(privateDataSourceImpl.posterSizes)
     }
 
     @Test
     fun savePosterSizesEmpty() {
+        // Arrange
+        privateDataSourceImpl.posterSizes = listOf("1", "2")
+
         // Act
         privateDataSourceImpl.posterSizes = emptyList()
 
         // Assert
-        assertEquals(privateDataSourceImpl.posterSizes, emptyList<String>())
+        Assert.assertEquals(privateDataSourceImpl.posterSizes, emptyList<String>())
     }
 
     @Test
     fun savePosterSizes() {
         // Arrange
+        privateDataSourceImpl.posterSizes = listOf("4", "5")
         val list = listOf("1", "2", "3")
 
         // Act
         privateDataSourceImpl.posterSizes = list
 
         // Assert
-        assertEquals(privateDataSourceImpl.posterSizes, list)
+        Assert.assertEquals(privateDataSourceImpl.posterSizes, list)
     }
 
     @Test
-    fun saveLogSizeNull() {
+    fun saveLogoSizeNull() {
+        // Arrange
+        privateDataSourceImpl.logoSizes = listOf("1", "2")
+
         // Act
         privateDataSourceImpl.logoSizes = null
 
         // Assert
-        assertNull(privateDataSourceImpl.logoSizes)
+        Assert.assertNull(privateDataSourceImpl.logoSizes)
     }
 
     @Test
     fun saveLogoSizesEmpty() {
+        // Arrange
+        privateDataSourceImpl.logoSizes = listOf("1", "2")
+
         // Act
         privateDataSourceImpl.logoSizes = emptyList()
 
         // Assert
-        assertEquals(privateDataSourceImpl.logoSizes, emptyList<String>())
+        Assert.assertEquals(privateDataSourceImpl.logoSizes, emptyList<String>())
     }
 
     @Test
     fun saveLogoSizes() {
         // Arrange
+        privateDataSourceImpl.logoSizes = listOf("4", "5")
         val list = listOf("1", "2", "3")
 
         // Act
         privateDataSourceImpl.logoSizes = list
 
         // Assert
-        assertEquals(privateDataSourceImpl.logoSizes, list)
+        Assert.assertEquals(privateDataSourceImpl.logoSizes, list)
     }
 
     @Test
     fun saveImageConfNull() {
+        // Arrange
+        privateDataSourceImpl.saveImageConfig(ImageConfig("test", listOf("1", "2"), listOf("3", "4")))
+
         // Act
         privateDataSourceImpl.saveImageConfig(null)
 
         // Asserts
-        assertNull(privateDataSourceImpl.logoSizes)
-        assertNull(privateDataSourceImpl.posterSizes)
-        assertNull(privateDataSourceImpl.baseUrlImg)
+        Assert.assertNull(privateDataSourceImpl.logoSizes)
+        Assert.assertNull(privateDataSourceImpl.posterSizes)
+        Assert.assertNull(privateDataSourceImpl.baseUrlImg)
     }
 
     @Test
@@ -125,7 +150,7 @@ class PrivateDataSourceImplTest {
         privateDataSourceImpl.saveImageConfig(config)
 
         // Asserts
-        assertNull(privateDataSourceImpl.baseUrlImg)
+        Assert.assertNull(privateDataSourceImpl.baseUrlImg)
     }
 
     @Test
@@ -138,7 +163,7 @@ class PrivateDataSourceImplTest {
         privateDataSourceImpl.saveImageConfig(config)
 
         // Asserts
-        assertNull(privateDataSourceImpl.posterSizes)
+        Assert.assertNull(privateDataSourceImpl.posterSizes)
     }
 
     @Test
@@ -151,12 +176,13 @@ class PrivateDataSourceImplTest {
         privateDataSourceImpl.saveImageConfig(config)
 
         // Asserts
-        assertNull(privateDataSourceImpl.logoSizes)
+        Assert.assertNull(privateDataSourceImpl.logoSizes)
     }
 
     @Test
     fun saveImageConf() {
         // Arrange
+        privateDataSourceImpl.saveImageConfig(ImageConfig("test", listOf("1", "2"), listOf("3", "4")))
         val posters = listOf("1", "2", "3")
         val logos = listOf("4", "5", "6")
         val config = ImageConfig("test", logos, posters)
@@ -165,9 +191,45 @@ class PrivateDataSourceImplTest {
         privateDataSourceImpl.saveImageConfig(config)
 
         // Asserts
-        assertEquals(privateDataSourceImpl.logoSizes, logos)
-        assertEquals(privateDataSourceImpl.posterSizes, posters)
-        assertEquals(privateDataSourceImpl.baseUrlImg, "test")
+        Assert.assertEquals(privateDataSourceImpl.logoSizes, logos)
+        Assert.assertEquals(privateDataSourceImpl.posterSizes, posters)
+        Assert.assertEquals(privateDataSourceImpl.baseUrlImg, "test")
+    }
+
+    @Test
+    fun sortBySaveNullTest() {
+        // Arrange
+        privateDataSourceImpl.sortBy = "test"
+
+        // Act
+        privateDataSourceImpl.sortBy = null
+
+        // Asserts
+        Assert.assertEquals(privateDataSourceImpl.sortBy, PrivateDataSourceImpl.SORT_BY_DEFAULT)
+    }
+
+    @Test
+    fun sortBySaveEmptyTest() {
+        // Arrange
+        privateDataSourceImpl.sortBy = "test"
+
+        // Act
+        privateDataSourceImpl.sortBy = ""
+
+        // Asserts
+        Assert.assertEquals(privateDataSourceImpl.sortBy, "")
+    }
+
+    @Test
+    fun sortBySaveTest() {
+        // Arrange
+        privateDataSourceImpl.sortBy = "test"
+
+        // Act
+        privateDataSourceImpl.sortBy = "test2"
+
+        // Asserts
+        Assert.assertEquals(privateDataSourceImpl.sortBy, "test2")
     }
 
 }

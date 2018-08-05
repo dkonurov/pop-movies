@@ -1,27 +1,32 @@
-package com.example.dmitry.grades.ui.main.grid
+package com.example.dmitry.grades.ui.movie.favorite.view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.support.v7.widget.Toolbar
+import android.view.*
 import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
-import com.example.dmitry.grades.domain.models.Movie
+import com.example.dmitry.grades.domain.models.entity.Movie
+import com.example.dmitry.grades.ui.base.ToothpickFragment
+import com.example.dmitry.grades.ui.movie.MovieRouter
+import com.example.dmitry.grades.ui.movie.favorite.FavoriteViewModel
+import com.example.dmitry.grades.ui.movie.favorite.FavoriteViewModelFactory
+import com.example.dmitry.grades.ui.movie.list.FilterType
+import com.example.dmitry.grades.ui.movie.list.view.ListAdapter
 import toothpick.Toothpick
 
-
-class GridFragment : Fragment() {
+class FavoriteFragment : ToothpickFragment() {
 
     companion object {
-        fun newInstance(): GridFragment {
-            return GridFragment()
+        fun newInstance(): FavoriteFragment {
+            return FavoriteFragment()
         }
     }
 
@@ -29,24 +34,80 @@ class GridFragment : Fragment() {
 
     private lateinit var refreshLayout: SwipeRefreshLayout
 
-    private lateinit var viewModel: GridViewModel
+    private lateinit var viewModel: FavoriteViewModel
 
-    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(GridViewModelFactory::class.java)
+    private lateinit var toolbar: Toolbar
 
-    private val adapter = GridAdapter { movie: Movie ->
-        Toast.makeText(context, movie.id.toString(), Toast.LENGTH_SHORT).show()
+    private var movieRouter: MovieRouter? = null
+
+    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(FavoriteViewModelFactory::class.java)
+
+    private val adapter = ListAdapter { movie: Movie ->
+        movieRouter?.let {
+            it.showDetails(movie.id)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        movieRouter = context as? MovieRouter
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        movieRouter = null
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_grid, container, false)
         refreshLayout = rootView.findViewById(R.id.refresh)
         recyclerView = rootView.findViewById(R.id.recycler)
-        viewModel = ViewModelProviders.of(this, factory).get(GridViewModel::class.java)
+        toolbar = rootView.findViewById(R.id.toolbar)
+
+        viewModel = ViewModelProviders.of(this, factory).get(FavoriteViewModel::class.java)
         return rootView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.list_movie, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.filter -> showPopupFilter()
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun showPopupFilter(): Boolean {
+        activity?.let {
+            val popup = PopupMenu(it, it.findViewById(R.id.filter))
+            popup.menuInflater.inflate(R.menu.filter_list, popup.menu)
+            popup.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.popularity -> viewModel.filter(FilterType.POPULARITY)
+                    R.id.releaseDate -> viewModel.filter(FilterType.RELEASE_DATE)
+                    R.id.voteCount -> viewModel.filter(FilterType.VOTE_COUNT)
+                }
+                true
+            }
+            popup.show()
+        }
+        return true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        compactActivity?.let {
+            it.setSupportActionBar(toolbar)
+            it.setTitle(R.string.list_title)
+        }
         recyclerView.adapter = adapter
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

@@ -10,7 +10,8 @@ import com.example.dmitry.grades.di.providers.RetrofitProvider
 import com.example.dmitry.grades.domain.data.remote.AuthInterceptor
 import com.example.dmitry.grades.domain.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.models.config.ServerInfo
-import com.example.dmitry.grades.domain.repositories.HttpRepository
+import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepository
+import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.domain.schedulers.SchedulerProviderImpl
 import com.google.gson.Gson
@@ -42,7 +43,8 @@ class RemoteModule @Inject constructor() : Module() {
         bind(RxJava2CallAdapterFactory::class.java).toInstance(RxJava2CallAdapterFactory.create())
         bind(Retrofit::class.java).toProvider(RetrofitProvider::class.java).providesSingletonInScope()
         bind(HttpDataSource::class.java).toProvider(HttpDataSourceProvider::class.java).providesSingletonInScope()
-        bind(HttpRepository::class.java).to(HttpRepository::class.java)
+        bind(MovieRepository::class.java).to(MovieRepository::class.java).instancesInScope()
+        bind(BaseConfigRepository::class.java).to(BaseConfigRepository::class.java)
         bind(SchedulerProvider::class.java).toInstance(SchedulerProviderImpl())
     }
 }

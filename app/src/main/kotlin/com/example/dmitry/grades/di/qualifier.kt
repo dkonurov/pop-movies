@@ -16,3 +16,6 @@ annotation class ApiKey
 
 @Qualifier
 annotation class DbName
+
+@Qualifier
+annotation class MovieId

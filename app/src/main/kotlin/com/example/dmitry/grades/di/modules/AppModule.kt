@@ -6,15 +6,18 @@ import com.example.dmitry.grades.BuildConfig
 import com.example.dmitry.grades.di.BaseUrl
 import com.example.dmitry.grades.di.DbName
 import com.example.dmitry.grades.di.providers.DbProvider
+import com.example.dmitry.grades.di.providers.FavoriteDaoProvider
 import com.example.dmitry.grades.di.providers.MovieDaoProvider
 import com.example.dmitry.grades.di.providers.PrivateDataSourceProvider
+import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.data.db.AppDatabase
+import com.example.dmitry.grades.domain.data.db.FavoriteDao
 import com.example.dmitry.grades.domain.data.db.MovieDao
 import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
+import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.config.AppInfo
 import com.example.dmitry.grades.domain.repositories.AppInfoRepository
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
-import com.example.dmitry.grades.domain.mappers.MovieMapper
 import toothpick.config.Module
 
 class AppModule(context: Context) : Module() {
@@ -29,7 +32,8 @@ class AppModule(context: Context) : Module() {
         bind(ResourceRepository::class.java)
         bind(AppDatabase::class.java).toProvider(DbProvider::class.java).providesSingletonInScope()
         bind(MovieDao::class.java).toProvider(MovieDaoProvider::class.java).providesSingletonInScope()
-
-        bind(MovieMapper::class.java).to(MovieMapper::class.java)
+        bind(FavoriteDao::class.java).toProvider(FavoriteDaoProvider::class.java).providesSingletonInScope()
+        bind(Logger::class.java).toInstance(Logger())
+        bind(MovieMapper::class.java).to(MovieMapper::class.java).instancesInScope()
     }
 }

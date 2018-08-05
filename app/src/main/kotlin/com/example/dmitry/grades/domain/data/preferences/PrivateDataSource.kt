@@ -9,5 +9,7 @@ interface PrivateDataSource {
 
     var logoSizes: List<String>?
 
+    var sortBy: String?
+
     fun saveImageConfig(imageConfig: ImageConfig?)
 }

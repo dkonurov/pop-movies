@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.models.response
 
-import com.example.dmitry.grades.domain.models.Movie
+import com.example.dmitry.grades.domain.models.entity.Movie
 import com.google.gson.annotations.SerializedName
 
 data class DiscoverResponse(val page: Int,

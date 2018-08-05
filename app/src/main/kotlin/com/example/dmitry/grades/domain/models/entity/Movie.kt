@@ -1,4 +1,4 @@
-package com.example.dmitry.grades.domain.models
+package com.example.dmitry.grades.domain.models.entity
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
