@@ -137,6 +137,8 @@ class DetailsFragment : ToothpickFragment() {
                 viewModel.removeFavorite()
             }
         }
-        viewModel.load()
+        if (viewModel.movie.value == null) {
+            viewModel.load()
+        }
     }
 }
