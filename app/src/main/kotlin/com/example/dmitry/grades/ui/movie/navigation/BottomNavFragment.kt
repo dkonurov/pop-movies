@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.example.dmitry.grades.R
@@ -11,7 +12,21 @@ import com.example.dmitry.grades.ui.base.ToothpickFragment
 import com.example.dmitry.grades.ui.movie.favorite.view.FavoriteFragment
 import com.example.dmitry.grades.ui.movie.list.view.ListFragment
 
-class BottomNavFragment : ToothpickFragment() {
+class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private var needLoad = false
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val fragment: Fragment? = when (item.itemId) {
+            R.id.nav_list -> ListFragment.newInstance()
+            R.id.nav_favorite -> FavoriteFragment.newInstance()
+            else -> null
+        }
+        fragment?.let {
+            setFragment(it)
+        }
+        return fragment != null
+    }
 
     private lateinit var bottomNav: BottomNavigationView
 
@@ -23,29 +38,22 @@ class BottomNavFragment : ToothpickFragment() {
         private const val SELECTED_ID = "com.example.dmitry.grades.ui.movie.navigation.selected_id"
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            needLoad = true
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_bootom_nav, container, false)
         bottomNav = rootView.findViewById(R.id.bottomNav)
-        bottomNav.setOnNavigationItemSelectedListener { it ->
-            val fragment: Fragment? = when (it.itemId) {
-                R.id.nav_list -> ListFragment.newInstance()
-                R.id.nav_favorite -> FavoriteFragment.newInstance()
-                else -> null
-            }
-            fragment?.let {
-                setFragment(it)
-            }
-            fragment != null
+        bottomNav.setOnNavigationItemSelectedListener(this)
+        if (needLoad) {
+            setFragment(ListFragment.newInstance())
+            needLoad = false
         }
         return rootView
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState == null) {
-            val selected = bottomNav.selectedItemId
-            bottomNav.selectedItemId = selected
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

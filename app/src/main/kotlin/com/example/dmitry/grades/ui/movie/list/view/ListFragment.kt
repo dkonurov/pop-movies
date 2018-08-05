@@ -159,7 +159,7 @@ class ListFragment : ToothpickFragment() {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         })
-        if (savedInstanceState == null) {
+        if (viewModel.movies.value == null) {
             viewModel.load()
         }
     }
