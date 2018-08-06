@@ -1,5 +1,6 @@
 package com.example.dmitry.grades.domain.repositories.movie
 
+import com.example.dmitry.grades.domain.data.db.FavoriteDao
 import com.example.dmitry.grades.domain.data.db.MovieDao
 import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
 import com.example.dmitry.grades.domain.data.remote.HttpDataSource
@@ -28,6 +29,9 @@ class MovieRepositoryTest {
 
     @Mock
     private lateinit var movieDao: MovieDao
+
+    @Mock
+    private lateinit var favoriteDao: FavoriteDao
 
     @Spy
     private lateinit var movieMapper: MovieMapper
@@ -108,7 +112,7 @@ class MovieRepositoryTest {
         val info = MovieListInfo(totalPage, list, page)
         testObserver.assertValue(info)
         Mockito.verify(movieDao, Mockito.times(1)).save(list)
-        Mockito.verify(movieDao, Mockito.times(2)).getMovies(Mockito.anyInt(), Mockito.anyInt())
+        Mockito.verify(movieDao, Mockito.times(1)).getMovies(Mockito.anyInt(), Mockito.anyInt())
         Mockito.verify(movieMapper).toMovieListInfo(totalPage, null, null, list, page)
     }
 
@@ -116,7 +120,7 @@ class MovieRepositoryTest {
     fun findMovieError() {
         // Arrange
         val error = Throwable()
-        Mockito.`when`(httpDataSource.getMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
+        Mockito.`when`(httpDataSource.getDetailsMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
                 .thenReturn(Single.error(error))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
@@ -129,15 +133,15 @@ class MovieRepositoryTest {
     fun findMovie() {
         // Arrange
         val details = prepareDetails()
-        Mockito.`when`(httpDataSource.getMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
+        Mockito.`when`(httpDataSource.getDetailsMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
                 .thenReturn(Single.just(details))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
 
         // Asserts
-        testObserver.assertValue(ViewMovie(details.title, details.overview, null, details.releaseDate,
-                details.runtime, details.releaseDate))
-        Mockito.verify(movieMapper).toViewMovie(details, null, null)
+        testObserver.assertValue(ViewMovie(details.id, details.title, details.overview, null, details.releaseDate,
+                details.runtime, details.releaseDate, false))
+        Mockito.verify(movieMapper).toViewMovie(details, null, null, false)
     }
 
     private fun prepareList(): MutableList<Movie> {

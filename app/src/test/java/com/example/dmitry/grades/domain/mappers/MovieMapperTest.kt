@@ -2,6 +2,7 @@ package com.example.dmitry.grades.domain.mappers
 
 import com.example.dmitry.grades.domain.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
+import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import junit.framework.Assert
 import org.junit.Test
 
@@ -140,6 +141,27 @@ class MovieMapperTest {
         Assert.assertEquals(viewMovie.poster, "test1test2test")
     }
 
+    @Test
+    fun toFavoriteTest() {
+        // Arrange
+        val viewMovie = prepareViewMovie()
+
+        // Act
+        val favorite = movieMapper.toFavorite(viewMovie)
+
+        // Asserts
+        Assert.assertEquals(viewMovie.poster, favorite.poster)
+        Assert.assertEquals(viewMovie.title, favorite.title)
+        Assert.assertEquals(viewMovie.about, favorite.about)
+        Assert.assertEquals(viewMovie.release, favorite.release)
+        Assert.assertEquals(viewMovie.time, favorite.time)
+        Assert.assertEquals(viewMovie.id, favorite.id)
+    }
+
+
+    private fun prepareViewMovie(): ViewMovie {
+        return ViewMovie(1, "test", "test", null, "test", null, "test", false)
+    }
 
     private fun prepareList(): MutableList<Movie> {
         val movie = Movie(1, 1, "test", false, "test",

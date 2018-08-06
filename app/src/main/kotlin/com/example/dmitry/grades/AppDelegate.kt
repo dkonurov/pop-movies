@@ -9,7 +9,7 @@ import toothpick.configuration.Configuration
 import toothpick.registries.FactoryRegistryLocator
 import toothpick.registries.MemberInjectorRegistryLocator
 
-class AppDelegate : Application() {
+open class AppDelegate : Application() {
 
     override fun onCreate() {
         super.onCreate()
