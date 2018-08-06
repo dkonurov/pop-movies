@@ -104,7 +104,7 @@ class ListFragment : ToothpickFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        compactActivity?.let {
+        compatActivity?.let {
             it.setSupportActionBar(toolbar)
             it.setTitle(R.string.list_title)
         }

@@ -5,6 +5,7 @@ import com.example.dmitry.grades.domain.data.db.MovieDao
 import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
 import com.example.dmitry.grades.domain.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.mappers.MovieMapper
+import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import io.reactivex.Flowable
@@ -48,12 +49,12 @@ open class MovieRepository @Inject constructor(private val httpDataSource: HttpD
     private fun getRemoteMovies(page: Int = 1,
                                 sortBy: String? = null): Single<MovieListInfo> {
         return httpDataSource.getListMovies(page, sortBy)
-                .flatMap { discover ->
-                    movieDao.save(discover.movies)
-                    movieDao.getMovies((page - 1) * PER_PAGE, PER_PAGE).map {
-                        movieMapper.toMovieListInfo(discover.totalPages, privateDataSource.baseUrlImg,
-                                getPosterSize(), it, page)
-                    }
+                .doOnSuccess {
+                    movieDao.save(it.movies)
+                }
+                .map {
+                    movieMapper.toMovieListInfo(it.totalPages, privateDataSource.baseUrlImg,
+                            getPosterSize(), it.movies.toMutableList(), page)
                 }
     }
 
@@ -82,17 +83,19 @@ open class MovieRepository @Inject constructor(private val httpDataSource: HttpD
                 .flatMap { count ->
                     val countPages = count / PER_PAGE
                     favoriteDao.getMoviesId((page - 1) * PER_PAGE, PER_PAGE)
-                            .flatMap {
-                                Flowable.fromIterable(it)
-                                        .flatMap { id ->
-                                            httpDataSource.getMovie(id).toFlowable()
-                                        }
-                                        .toList()
-                            }
-                            .map { movies ->
+                            .flatMap(this::findMoviesById)
+                            .map {
                                 movieMapper.toMovieListInfo(countPages, privateDataSource.baseUrlImg,
-                                        getPosterSize(), movies, page)
+                                        getPosterSize(), it, page)
                             }
                 }
+    }
+
+    private fun findMoviesById(movies: List<Long>): Single<MutableList<Movie>>? {
+        return Flowable.fromIterable(movies)
+                .flatMap {
+                    httpDataSource.getMovie(it).toFlowable()
+                }
+                .toList()
     }
 }

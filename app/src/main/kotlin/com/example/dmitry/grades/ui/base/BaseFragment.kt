@@ -5,6 +5,6 @@ import android.support.v7.app.AppCompatActivity
 
 open class BaseFragment : Fragment() {
 
-    protected val compactActivity: AppCompatActivity?
+    protected val compatActivity: AppCompatActivity?
         get() = activity as? AppCompatActivity
 }
