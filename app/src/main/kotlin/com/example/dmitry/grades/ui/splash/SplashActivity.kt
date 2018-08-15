@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
+import com.example.dmitry.grades.ui.RemoteScopeFactory
 import com.example.dmitry.grades.ui.movie.MainActivity
 import toothpick.Toothpick
 
@@ -16,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var splashViewModel: SplashViewModel
 
-    val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(SplashViewModelFactory::class.java)
+    val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(RemoteScopeFactory::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

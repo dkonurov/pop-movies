@@ -14,10 +14,10 @@ import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.entity.Movie
+import com.example.dmitry.grades.ui.RemoteScopeFactory
 import com.example.dmitry.grades.ui.base.ToothpickFragment
 import com.example.dmitry.grades.ui.movie.MovieRouter
 import com.example.dmitry.grades.ui.movie.favorite.FavoriteViewModel
-import com.example.dmitry.grades.ui.movie.favorite.FavoriteViewModelFactory
 import com.example.dmitry.grades.ui.movie.list.FilterType
 import com.example.dmitry.grades.ui.movie.list.view.ListAdapter
 import toothpick.Toothpick
@@ -40,7 +40,7 @@ class FavoriteFragment : ToothpickFragment() {
 
     private var movieRouter: MovieRouter? = null
 
-    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(FavoriteViewModelFactory::class.java)
+    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(RemoteScopeFactory::class.java)
 
     private val adapter = ListAdapter { movie: Movie ->
         movieRouter?.let {
