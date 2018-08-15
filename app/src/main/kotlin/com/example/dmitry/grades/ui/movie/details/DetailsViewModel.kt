@@ -6,6 +6,7 @@ import com.example.dmitry.grades.di.MovieId
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
+import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(@MovieId private val wrapperId: PrimitiveWrapper<Long>,
                                            private val movieRepository: MovieRepository,
+                                           private val favoriteRepository: FavoriteRepository,
                                            private val schedulerProvider: SchedulerProvider,
                                            private val logger: Logger) : BaseViewModel() {
 
@@ -36,7 +38,7 @@ class DetailsViewModel @Inject constructor(@MovieId private val wrapperId: Primi
 
     fun saveFavorite() {
         _movie.value?.let {
-            movieRepository.saveFavorite(it)
+            favoriteRepository.saveFavorite(it)
             it.isFavorite = true
             _movie.value = it
         }
@@ -45,7 +47,7 @@ class DetailsViewModel @Inject constructor(@MovieId private val wrapperId: Primi
 
     fun removeFavorite() {
         _movie.value?.let {
-            movieRepository.removeFavorite(it)
+            favoriteRepository.removeFavorite(it)
             it.isFavorite = false
             _movie.value = it
         }

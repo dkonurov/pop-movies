@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class MovieRepositoryTest {
 
     @InjectMocks
-    private lateinit var movieRepository: MovieRepository
+    private lateinit var movieRepository: MovieRepositoryImpl
 
     @Mock
     private lateinit var privateDataSource: PrivateDataSource
@@ -79,10 +79,10 @@ class MovieRepositoryTest {
 
         // Asserts
         list[0].posterPath = null
-        val info = MovieListInfo(MovieRepository.UNKNOWN_COUNT_PAGE, list, 1)
+        val info = MovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, list, 1)
         testObserver.assertValue(info)
         Mockito.verify(httpDataSource, Mockito.never()).getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
-        Mockito.verify(movieMapper).toMovieListInfo(MovieRepository.UNKNOWN_COUNT_PAGE, null, null, list, 1)
+        Mockito.verify(movieMapper).toMovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
     }
 
     @Test

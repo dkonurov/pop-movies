@@ -5,8 +5,10 @@ import android.arch.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
+import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
+import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
 import com.example.dmitry.grades.ui.base.async
@@ -18,6 +20,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRepository,
                                             private val schedulerProvider: SchedulerProvider,
                                             private val resourceRepository: ResourceRepository,
+                                            private val favoriteRepository: FavoriteRepository,
                                             private val movieConfigRepository: MovieConfigRepository,
                                             private val logger: Logger) : BaseViewModel() {
 
@@ -45,7 +48,7 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
                 it.dispose()
             }
         }
-        _disposable = movieRepository.getFavorites(page = page)
+        _disposable = favoriteRepository.getFavorites(page = page)
                 .async(schedulerProvider)
                 .loading {
                     if (it) {
@@ -106,7 +109,7 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
 
     fun loadMore() {
         countPage?.let {
-            if (_moreMovies.value == false && (it > page || it == MovieRepository.UNKNOWN_COUNT_PAGE)) {
+            if (_moreMovies.value == false && (it > page || it == MovieRepositoryImpl.UNKNOWN_COUNT_PAGE)) {
                 _moreMovies.value = true
                 page++
                 load()

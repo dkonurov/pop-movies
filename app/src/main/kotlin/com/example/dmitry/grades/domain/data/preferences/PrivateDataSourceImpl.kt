@@ -32,6 +32,16 @@ class PrivateDataSourceImpl @Inject constructor(context: Context) : PrivateDataS
         }
     }
 
+    override val posterSize: String?
+        get() {
+            val size = posterSizes
+            return if (size == null || size.isEmpty()) {
+                null
+            } else {
+                size[0]
+            }
+        }
+
     override var baseUrlImg: String?
         get() = sharedPreferences.getString(BASE_URL, null)
         set(value) {

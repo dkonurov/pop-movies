@@ -7,6 +7,8 @@ interface PrivateDataSource {
 
     var posterSizes: List<String>?
 
+    val posterSize: String?
+
     var logoSizes: List<String>?
 
     var sortBy: String?

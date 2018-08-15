@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations
 class BaseConfigRepositoryTest {
 
     @InjectMocks
-    private lateinit var baseConfigRepository: BaseConfigRepository
+    private lateinit var baseConfigRepository: BaseConfigRepositoryImpl
 
     @Mock
     private lateinit var privateDataSource: PrivateDataSource

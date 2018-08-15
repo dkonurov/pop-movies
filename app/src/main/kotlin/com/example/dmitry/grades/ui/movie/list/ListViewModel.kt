@@ -7,6 +7,7 @@ import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
+import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
 import com.example.dmitry.grades.ui.base.async
@@ -105,7 +106,7 @@ class ListViewModel @Inject constructor(private val movieRepository: MovieReposi
 
     fun loadMore() {
         countPage?.let {
-            if (_moreMovies.value == false && (it > page || it == MovieRepository.UNKNOWN_COUNT_PAGE)) {
+            if (_moreMovies.value == false && (it > page || it == MovieRepositoryImpl.UNKNOWN_COUNT_PAGE)) {
                 _moreMovies.value = true
                 page++
                 load()

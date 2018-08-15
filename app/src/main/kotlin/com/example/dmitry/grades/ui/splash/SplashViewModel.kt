@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.models.ImageConfig
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepository
+import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.BaseViewModel
 import com.example.dmitry.grades.ui.base.async

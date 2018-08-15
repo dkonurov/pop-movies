@@ -11,7 +11,11 @@ import com.example.dmitry.grades.domain.data.remote.AuthInterceptor
 import com.example.dmitry.grades.domain.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.models.config.ServerInfo
 import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepository
+import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepositoryImpl
+import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
+import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepositoryImpl
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
+import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.domain.schedulers.SchedulerProviderImpl
 import com.google.gson.Gson
@@ -27,6 +31,7 @@ import javax.inject.Inject
 class RemoteModule @Inject constructor() : Module() {
 
     init {
+        //remote
         bind(Interceptor::class.java).withName(LoggingInterceptor::class.java)
                 .toInstance(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BODY
@@ -43,8 +48,13 @@ class RemoteModule @Inject constructor() : Module() {
         bind(RxJava2CallAdapterFactory::class.java).toInstance(RxJava2CallAdapterFactory.create())
         bind(Retrofit::class.java).toProvider(RetrofitProvider::class.java).providesSingletonInScope()
         bind(HttpDataSource::class.java).toProvider(HttpDataSourceProvider::class.java).providesSingletonInScope()
-        bind(MovieRepository::class.java).to(MovieRepository::class.java).instancesInScope()
-        bind(BaseConfigRepository::class.java).to(BaseConfigRepository::class.java)
+
+        //repostories
+        bind(MovieRepository::class.java).to(MovieRepositoryImpl::class.java)
+        bind(BaseConfigRepository::class.java).to(BaseConfigRepositoryImpl::class.java)
+        bind(FavoriteRepository::class.java).to(FavoriteRepositoryImpl::class.java)
+
+        //schedulers
         bind(SchedulerProvider::class.java).toInstance(SchedulerProviderImpl())
     }
 }
