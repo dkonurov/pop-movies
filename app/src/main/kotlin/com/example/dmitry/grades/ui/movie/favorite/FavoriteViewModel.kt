@@ -10,9 +10,10 @@ import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.base.BaseViewModel
-import com.example.dmitry.grades.ui.base.async
-import com.example.dmitry.grades.ui.base.loading
+import com.example.dmitry.grades.ui.base.extensions.async
+import com.example.dmitry.grades.ui.base.extensions.loading
+import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
+import com.example.dmitry.grades.ui.base.ui.errors.UIError
 import com.example.dmitry.grades.ui.movie.list.FilterType
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -22,7 +23,7 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
                                             private val resourceRepository: ResourceRepository,
                                             private val favoriteRepository: FavoriteRepository,
                                             private val movieConfigRepository: MovieConfigRepository,
-                                            private val logger: Logger) : BaseViewModel() {
+                                            private val logger: Logger) : ErrorViewModel(resourceRepository, logger) {
 
     private val _movies = MutableLiveData<MutableList<Movie>>()
 
@@ -74,15 +75,17 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
                     page = it.page
                 }, {
                     logger.error(it)
-                    _toast.value = resourceRepository.getNetworkError()
+                    _error.value = UIError(it, resourceRepository.getNetworkError())
                 })
     }
 
     fun forceLoad() {
-        movieRepository.clearCache()
-        _movies.value = null
-        page = 1
-        load()
+        coroutine {
+            movieRepository.clearCache()
+            _movies.value = null
+            page = 1
+            load()
+        }
     }
 
     fun filter(filterType: FilterType) {

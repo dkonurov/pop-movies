@@ -8,11 +8,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.example.dmitry.grades.R
-import com.example.dmitry.grades.ui.base.ToothpickFragment
+import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.favorite.view.FavoriteFragment
 import com.example.dmitry.grades.ui.movie.list.view.ListFragment
 
-class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private var needLoad = false
 

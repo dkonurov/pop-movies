@@ -1,4 +1,4 @@
-package com.example.dmitry.grades.ui.base
+package com.example.dmitry.grades.ui.base.ui
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

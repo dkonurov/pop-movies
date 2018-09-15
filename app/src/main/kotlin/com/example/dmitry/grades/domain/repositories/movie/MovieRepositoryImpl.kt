@@ -7,7 +7,11 @@ import com.example.dmitry.grades.domain.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
+import com.example.dmitry.grades.ui.base.extensions.await
 import io.reactivex.Single
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.withContext
 import javax.inject.Inject
 
 open class MovieRepositoryImpl @Inject constructor(private val httpDataSource: HttpDataSource,
@@ -21,30 +25,31 @@ open class MovieRepositoryImpl @Inject constructor(private val httpDataSource: H
         const val UNKNOWN_COUNT_PAGE = -1
     }
 
-    override fun getMovies(page: Int,
-                           sortBy: String?): Single<MovieListInfo> {
-        return movieDao.getMovies((page - 1) * PER_PAGE, PER_PAGE)
-                .flatMap {
-                    if (it.isEmpty()) {
-                        getRemoteMovies(page, sortBy)
-                    } else {
-                        Single.just(movieMapper.toMovieListInfo(UNKNOWN_COUNT_PAGE, privateDataSource.baseUrlImg,
-                                privateDataSource.posterSize, it, page))
-                    }
-                }
+    override suspend fun getMovies(page: Int,
+                                   sortBy: String?): MovieListInfo {
+
+        val list = withContext(CommonPool) {
+            movieDao.getMovies((page - 1) * PER_PAGE, PER_PAGE)
+        }
+        return if (list.isEmpty()) {
+            getRemoteMovies(page, sortBy)
+        } else {
+            movieMapper.toMovieListInfo(UNKNOWN_COUNT_PAGE, privateDataSource.baseUrlImg,
+                    privateDataSource.posterSize, list, page)
+        }
     }
 
 
-    private fun getRemoteMovies(page: Int = 1,
-                                sortBy: String? = null): Single<MovieListInfo> {
-        return httpDataSource.getListMovies(page, sortBy)
-                .doOnSuccess {
-                    movieDao.save(it.movies)
-                }
-                .map {
-                    movieMapper.toMovieListInfo(it.totalPages, privateDataSource.baseUrlImg,
-                            privateDataSource.posterSize, it.movies.toMutableList(), page)
-                }
+    private suspend fun getRemoteMovies(page: Int = 1,
+                                        sortBy: String? = null): MovieListInfo {
+
+        val response = withContext(CommonPool) {
+            val response = httpDataSource.getListMovies(page, sortBy).await()
+            movieDao.save(response.movies)
+            return@withContext response
+        }
+        return movieMapper.toMovieListInfo(response.totalPages, privateDataSource.baseUrlImg,
+                privateDataSource.posterSize, response.movies.toMutableList(), page)
     }
 
     override fun findMovie(id: Long): Single<ViewMovie> {
@@ -55,7 +60,9 @@ open class MovieRepositoryImpl @Inject constructor(private val httpDataSource: H
                 }
     }
 
-    override fun clearCache() {
-        movieDao.clear()
+    override suspend fun clearCache() {
+        runBlocking(CommonPool) {
+            movieDao.clear()
+        }
     }
 }

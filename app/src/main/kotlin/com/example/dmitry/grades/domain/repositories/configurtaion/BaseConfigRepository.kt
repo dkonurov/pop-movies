@@ -5,5 +5,5 @@ import io.reactivex.Single
 
 interface BaseConfigRepository {
 
-    fun getConfiguration(): Single<ImageConfig>
+    suspend fun getConfiguration(): ImageConfig
 }

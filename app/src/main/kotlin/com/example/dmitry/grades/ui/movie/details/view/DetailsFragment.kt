@@ -17,13 +17,13 @@ import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.MovieId
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
-import com.example.dmitry.grades.ui.base.ToothpickFragment
+import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModel
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModelFactory
 import toothpick.Toothpick
 import toothpick.config.Module
 
-class DetailsFragment : ToothpickFragment() {
+class DetailsFragment : DIFragment() {
 
     companion object {
         private const val MOVIE_ID = "com.example.dmitry.grades.ui.movie.details.movie_id"

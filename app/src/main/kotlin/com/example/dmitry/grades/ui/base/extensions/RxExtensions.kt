@@ -1,4 +1,4 @@
-package com.example.dmitry.grades.ui.base
+package com.example.dmitry.grades.ui.base.extensions
 
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import io.reactivex.Single

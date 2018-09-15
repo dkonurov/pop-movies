@@ -8,18 +8,14 @@ import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
-import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.base.BaseViewModel
-import com.example.dmitry.grades.ui.base.async
-import com.example.dmitry.grades.ui.base.loading
+import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class ListViewModel @Inject constructor(private val movieRepository: MovieRepository,
-                                        private val schedulerProvider: SchedulerProvider,
-                                        private val resourceRepository: ResourceRepository,
-                                        private val movieConfigRepository: MovieConfigRepository,
-                                        private val logger: Logger) : BaseViewModel() {
+                                        resourceRepository: ResourceRepository,
+                                        logger: Logger,
+                                        private val movieConfigRepository: MovieConfigRepository) : ErrorViewModel(resourceRepository, logger) {
 
     private val _movies = MutableLiveData<MutableList<Movie>>()
 
@@ -45,41 +41,32 @@ class ListViewModel @Inject constructor(private val movieRepository: MovieReposi
                 it.dispose()
             }
         }
-        _disposable = movieRepository.getMovies(page = page, sortBy = _sortyBy)
-                .async(schedulerProvider)
-                .loading {
-                    if (it) {
-                        if (page == 1) {
-                            _loading.value = it
-                        } else {
-                            _moreMovies.value = it
-                        }
-                    } else {
-                        _loading.value = it
-                        _moreMovies.value = it
-                    }
-                }
-                .subscribe({
-                    val movies = _movies.value
-                    if (movies == null) {
-                        _movies.value = it.movies
-                    } else {
-                        movies.addAll(it.movies)
-                        _movies.value = movies
-                    }
-                    countPage = it.countPage
-                    page = it.page
-                }, {
-                    logger.error(it)
-                    _toast.value = resourceRepository.getNetworkError()
-                })
+        coroutine {
+            if (page > 1) {
+                _moreMovies.value = true
+            }
+            val info = movieRepository.getMovies(page, _sortyBy)
+            val movies = info.movies
+            val old = _movies.value
+            if (old == null) {
+                _movies.value = movies
+            } else {
+                old.addAll(movies)
+                _movies.value = old
+            }
+            countPage = info.countPage
+            _moreMovies.value = false
+            page = info.page
+        }
     }
 
     fun forceLoad() {
-        movieRepository.clearCache()
-        _movies.value = null
-        page = 1
-        load()
+        coroutine {
+            movieRepository.clearCache()
+            _movies.value = null
+            page = 1
+            load()
+        }
     }
 
     fun filter(filterType: FilterType) {

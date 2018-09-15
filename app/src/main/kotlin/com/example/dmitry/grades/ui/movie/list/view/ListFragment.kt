@@ -9,20 +9,25 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.ui.RemoteScopeFactory
-import com.example.dmitry.grades.ui.base.ToothpickFragment
+import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.MovieRouter
 import com.example.dmitry.grades.ui.movie.list.FilterType
 import com.example.dmitry.grades.ui.movie.list.ListViewModel
 import toothpick.Toothpick
 
 
-class ListFragment : ToothpickFragment() {
+class ListFragment : DIFragment() {
 
     companion object {
         fun newInstance(): ListFragment {
@@ -154,9 +159,9 @@ class ListFragment : ToothpickFragment() {
                 adapter.setMoreItems(it)
             }
         })
-        viewModel.toast.observe(this, Observer { it ->
+        viewModel.error.observe(this, Observer { it ->
             it?.let {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
             }
         })
         if (viewModel.movies.value == null) {

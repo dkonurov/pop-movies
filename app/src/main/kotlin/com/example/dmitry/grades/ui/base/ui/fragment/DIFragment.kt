@@ -1,10 +1,11 @@
-package com.example.dmitry.grades.ui.base
+package com.example.dmitry.grades.ui.base.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 
 
-open class ToothpickFragment : BaseFragment() {
+open class DIFragment : BaseFragment() {
 
     private var isSaveState = false
 
@@ -41,6 +42,7 @@ open class ToothpickFragment : BaseFragment() {
         isSaveState = true
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     override fun onDestroy() {
         super.onDestroy()
 
@@ -58,7 +60,7 @@ open class ToothpickFragment : BaseFragment() {
 
         var anyParentIsRemoving = false
 
-        if (Build.VERSION.SDK_INT >= 17) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             var parent = parentFragment
             while (!anyParentIsRemoving && parent != null) {
                 anyParentIsRemoving = parent.isRemoving

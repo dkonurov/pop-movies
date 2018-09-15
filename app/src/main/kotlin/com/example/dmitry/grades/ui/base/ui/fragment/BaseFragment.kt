@@ -1,4 +1,4 @@
-package com.example.dmitry.grades.ui.base
+package com.example.dmitry.grades.ui.base.ui.fragment
 
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.domain.models.entity.Movie
-import com.example.dmitry.grades.ui.base.LoadingViewHolder
+import com.example.dmitry.grades.ui.base.ui.LoadingViewHolder
 import com.example.dmitry.grades.ui.movie.MovieDiffUtils
 
 class ListAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
