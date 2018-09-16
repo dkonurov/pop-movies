@@ -1,7 +1,5 @@
 package com.example.dmitry.grades.ui.base.vm
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.Job
@@ -21,26 +19,28 @@ abstract class BaseViewModel : ViewModel() {
         jobs.add(runnable.invoke())
     }
 
-    val loading: LiveData<Boolean>
-        get() = _loading
-
-    protected val _loading = MutableLiveData<Boolean>()
-
     protected fun launchJob(context: CoroutineContext = UI,
                             block: suspend () -> Unit): Job {
         return launch(context) {
             try {
-                _loading.value = true
+                showLoading()
+                hideError()
                 block.invoke()
             } catch (t: Throwable) {
                 handleError(t)
             } finally {
-                _loading.value = false
+                hideLoading()
             }
         }
     }
 
     protected abstract fun handleError(t: Throwable)
+
+    protected abstract fun hideError()
+
+    protected abstract fun showLoading()
+
+    protected abstract fun hideLoading()
 
     protected fun coroutine(context: CoroutineContext = UI,
                             block: suspend () -> Unit) {

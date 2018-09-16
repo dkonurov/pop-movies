@@ -8,9 +8,9 @@ class LoadingObserver(private val loadingView: LoadingView) : Observer<Boolean> 
     override fun onChanged(state: Boolean?) {
         state?.let {
             if (it) {
-                loadingView.showLoading(it)
+                loadingView.showLoading()
             } else {
-                loadingView.hideLoading(it)
+                loadingView.hideLoading()
             }
         }
     }

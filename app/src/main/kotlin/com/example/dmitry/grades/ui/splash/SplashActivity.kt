@@ -3,20 +3,21 @@ package com.example.dmitry.grades.ui.splash
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.ui.RemoteScopeFactory
-import com.example.dmitry.grades.ui.base.observers.ErrorObserver
 import com.example.dmitry.grades.ui.base.observers.LoadingObserver
-import com.example.dmitry.grades.ui.base.ui.activity.BaseActivity
+import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
 import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
 import com.example.dmitry.grades.ui.base.ui.errors.StubErrorView
 import com.example.dmitry.grades.ui.movie.MainActivity
 import toothpick.Toothpick
 
-class SplashActivity : BaseActivity(), StubErrorView, LoadingView {
+class SplashActivity : AppCompatActivity(), StubErrorView, LoadingView {
 
     private var progress: View? = null
 
@@ -24,6 +25,14 @@ class SplashActivity : BaseActivity(), StubErrorView, LoadingView {
 
     override fun showStub() {
         network?.visibility = View.VISIBLE
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun hideStub() {
+        network?.visibility = View.GONE
     }
 
     private lateinit var splashViewModel: SplashViewModel
@@ -39,7 +48,7 @@ class SplashActivity : BaseActivity(), StubErrorView, LoadingView {
         findViewById<Button>(R.id.repeat).setOnClickListener {
             splashViewModel.loadConfig()
         }
-        splashViewModel.error.observe(this, ErrorObserver(stubErrorView = this))
+        ErrorHandler.handleError(splashViewModel, this)
         splashViewModel.loading.observe(this, LoadingObserver(this))
         splashViewModel.imageConfig.observe(this, Observer {
             startActivity(MainActivity.makeIntent(this@SplashActivity))
@@ -51,11 +60,11 @@ class SplashActivity : BaseActivity(), StubErrorView, LoadingView {
         }
     }
 
-    override fun hideLoading(state: Boolean) {
+    override fun hideLoading() {
         progress?.visibility = View.GONE
     }
 
-    override fun showLoading(state: Boolean) {
+    override fun showLoading() {
         network?.visibility = View.GONE
         progress?.visibility = View.VISIBLE
     }

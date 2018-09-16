@@ -9,21 +9,15 @@ import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
-import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.base.extensions.async
-import com.example.dmitry.grades.ui.base.extensions.loading
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
-import com.example.dmitry.grades.ui.base.ui.errors.UIError
 import com.example.dmitry.grades.ui.movie.list.FilterType
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRepository,
-                                            private val schedulerProvider: SchedulerProvider,
-                                            private val resourceRepository: ResourceRepository,
+                                            resourceRepository: ResourceRepository,
                                             private val favoriteRepository: FavoriteRepository,
                                             private val movieConfigRepository: MovieConfigRepository,
-                                            private val logger: Logger) : ErrorViewModel(resourceRepository, logger) {
+                                            logger: Logger) : ErrorViewModel(resourceRepository, logger) {
 
     private val _movies = MutableLiveData<MutableList<Movie>>()
 
@@ -35,48 +29,38 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
 
     private var _sortyBy: String? = movieConfigRepository.sortBy
 
-    private var _disposable: Disposable? = null
-
     val movies: LiveData<MutableList<Movie>>
         get() = _movies
 
     val moreMovies: LiveData<Boolean>
         get() = _moreMovies
 
-    fun load() {
-        _disposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
+    override fun showLoading() {
+        if (page > 1) {
+            _moreMovies.value = true
+        } else {
+            super.showLoading()
         }
-        _disposable = favoriteRepository.getFavorites(page = page)
-                .async(schedulerProvider)
-                .loading {
-                    if (it) {
-                        if (page == 1) {
-                            _loading.value = it
-                        } else {
-                            _moreMovies.value = it
-                        }
-                    } else {
-                        _loading.value = it
-                        _moreMovies.value = it
-                    }
-                }
-                .subscribe({
-                    val movies = _movies.value
-                    if (movies == null) {
-                        _movies.value = it.movies
-                    } else {
-                        movies.addAll(it.movies)
-                        _movies.value = movies
-                    }
-                    countPage = it.countPage
-                    page = it.page
-                }, {
-                    logger.error(it)
-                    _error.value = UIError(it, resourceRepository.getNetworkError())
-                })
+    }
+
+    override fun hideLoading() {
+        super.hideLoading()
+        _moreMovies.value = false
+    }
+
+    fun load() {
+        coroutine {
+            val info = favoriteRepository.getFavorites(page = page)
+            val movies = _movies.value
+            if (movies == null) {
+                _movies.value = info.movies
+            } else {
+                movies.addAll(info.movies)
+                _movies.value = movies
+            }
+            countPage = info.countPage
+            page = info.page
+        }
     }
 
     fun forceLoad() {
@@ -98,15 +82,6 @@ class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRe
             movieConfigRepository.sortBy = text
             _sortyBy = text
             forceLoad()
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        _disposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
         }
     }
 

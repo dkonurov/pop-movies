@@ -17,13 +17,16 @@ import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.MovieId
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
+import com.example.dmitry.grades.ui.base.observers.LoadingObserver
+import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
+import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
 import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModel
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModelFactory
 import toothpick.Toothpick
 import toothpick.config.Module
 
-class DetailsFragment : DIFragment() {
+class DetailsFragment : DIFragment(), LoadingView {
 
     companion object {
         private const val MOVIE_ID = "com.example.dmitry.grades.ui.movie.details.movie_id"
@@ -113,11 +116,7 @@ class DetailsFragment : DIFragment() {
             it.setTitle(R.string.details_title)
         }
         val viewModel = ViewModelProviders.of(this, factory).get(DetailsViewModel::class.java)
-        viewModel.loading.observe(this, Observer {
-            it?.let {
-                refresh.isRefreshing = it
-            }
-        })
+        viewModel.loading.observe(this, LoadingObserver(this))
         viewModel.movie.observe(this, Observer {
             it?.let {
                 titleTv.text = it.title
@@ -130,6 +129,7 @@ class DetailsFragment : DIFragment() {
                 favoriteBtn.isChecked = it.isFavorite
             }
         })
+        ErrorHandler.handleError(viewModel, this)
         favoriteBtn.setOnClickListener {
             if (favoriteBtn.isChecked) {
                 viewModel.saveFavorite()
@@ -140,5 +140,13 @@ class DetailsFragment : DIFragment() {
         if (viewModel.movie.value == null) {
             viewModel.load()
         }
+    }
+
+    override fun showLoading() {
+        refresh.isRefreshing = true
+    }
+
+    override fun hideLoading() {
+        refresh.isRefreshing = false
     }
 }

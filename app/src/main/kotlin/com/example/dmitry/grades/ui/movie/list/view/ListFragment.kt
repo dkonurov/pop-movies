@@ -15,11 +15,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.ui.RemoteScopeFactory
+import com.example.dmitry.grades.ui.base.observers.LoadingObserver
+import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
+import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
 import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.MovieRouter
 import com.example.dmitry.grades.ui.movie.list.FilterType
@@ -27,7 +29,7 @@ import com.example.dmitry.grades.ui.movie.list.ListViewModel
 import toothpick.Toothpick
 
 
-class ListFragment : DIFragment() {
+class ListFragment : DIFragment(), LoadingView {
 
     companion object {
         fun newInstance(): ListFragment {
@@ -142,31 +144,31 @@ class ListFragment : DIFragment() {
         refreshLayout.setOnRefreshListener {
             viewModel.forceLoad()
         }
-        initViewModel(savedInstanceState)
+        initViewModel()
     }
 
-    private fun initViewModel(savedInstanceState: Bundle?) {
+    private fun initViewModel() {
         viewModel.movies.observe(this, Observer {
             adapter.setData(it)
         })
-        viewModel.loading.observe(this, Observer { it ->
-            it?.let {
-                refreshLayout.isRefreshing = it
-            }
-        })
+        viewModel.loading.observe(this, LoadingObserver(this))
         viewModel.moreMovies.observe(this, Observer { it ->
             it?.let {
                 adapter.setMoreItems(it)
             }
         })
-        viewModel.error.observe(this, Observer { it ->
-            it?.let {
-                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-            }
-        })
+        ErrorHandler.handleError(viewModel, this)
         if (viewModel.movies.value == null) {
             viewModel.load()
         }
+    }
+
+    override fun showLoading() {
+        refreshLayout.isRefreshing = true
+    }
+
+    override fun hideLoading() {
+        refreshLayout.isRefreshing = false
     }
 
 }

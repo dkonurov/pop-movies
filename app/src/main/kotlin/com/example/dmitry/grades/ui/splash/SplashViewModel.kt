@@ -1,12 +1,12 @@
 package com.example.dmitry.grades.ui.splash
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.models.ImageConfig
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepository
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
+import com.example.dmitry.grades.ui.base.vm.SingleLiveEvent
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(private val baseConfigRepository: BaseConfigRepository,
@@ -17,7 +17,7 @@ class SplashViewModel @Inject constructor(private val baseConfigRepository: Base
         get() = _imageConfig
 
 
-    private val _imageConfig = MutableLiveData<ImageConfig>()
+    private val _imageConfig = SingleLiveEvent<ImageConfig>()
 
     fun loadConfig() {
         coroutine {

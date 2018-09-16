@@ -8,7 +8,6 @@ import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import com.example.dmitry.grades.ui.base.extensions.await
-import io.reactivex.Single
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.withContext
@@ -52,12 +51,14 @@ open class MovieRepositoryImpl @Inject constructor(private val httpDataSource: H
                 privateDataSource.posterSize, response.movies.toMutableList(), page)
     }
 
-    override fun findMovie(id: Long): Single<ViewMovie> {
-        return httpDataSource.getDetailsMovie(id)
-                .map {
-                    val isFavorite = favoriteDao.findById(id) != null
-                    movieMapper.toViewMovie(it, privateDataSource.baseUrlImg, privateDataSource.posterSize, isFavorite)
-                }
+    override suspend fun findMovie(id: Long): ViewMovie {
+        return withContext(CommonPool) {
+            val details = httpDataSource.getDetailsMovie(id).await()
+            val isFavorite = favoriteDao.findById(id) != null
+            movieMapper.toViewMovie(details, privateDataSource.baseUrlImg,
+                    privateDataSource.posterSize, isFavorite)
+
+        }
     }
 
     override suspend fun clearCache() {

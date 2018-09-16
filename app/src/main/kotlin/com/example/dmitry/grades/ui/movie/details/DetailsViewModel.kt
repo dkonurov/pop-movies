@@ -9,18 +9,14 @@ import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
-import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.base.extensions.async
-import com.example.dmitry.grades.ui.base.extensions.loading
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
 import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(@MovieId private val wrapperId: PrimitiveWrapper<Long>,
                                            private val movieRepository: MovieRepository,
                                            private val favoriteRepository: FavoriteRepository,
-                                           private val schedulerProvider: SchedulerProvider,
                                            resourceRepository: ResourceRepository,
-                                           private val logger: Logger) : ErrorViewModel(resourceRepository, logger) {
+                                           logger: Logger) : ErrorViewModel(resourceRepository, logger) {
 
     private val _movie = MutableLiveData<ViewMovie>()
 
@@ -28,14 +24,9 @@ class DetailsViewModel @Inject constructor(@MovieId private val wrapperId: Primi
         get() = _movie
 
     fun load() {
-        disposables.add(movieRepository.findMovie(wrapperId.value)
-                .async(schedulerProvider)
-                .loading { _loading.value = it }
-                .subscribe({
-                    _movie.value = it
-                }, {
-                    logger.error(it)
-                }))
+        coroutine {
+            _movie.value = movieRepository.findMovie(wrapperId.value)
+        }
     }
 
     fun saveFavorite() {

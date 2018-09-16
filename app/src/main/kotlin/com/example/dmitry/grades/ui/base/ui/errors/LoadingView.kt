@@ -2,7 +2,7 @@ package com.example.dmitry.grades.ui.base.ui.errors
 
 interface LoadingView {
 
-    fun showLoading(state: Boolean)
+    fun showLoading()
 
-    fun hideLoading(state: Boolean)
+    fun hideLoading()
 }

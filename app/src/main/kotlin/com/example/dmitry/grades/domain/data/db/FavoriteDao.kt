@@ -1,8 +1,11 @@
 package com.example.dmitry.grades.domain.data.db
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Query
 import com.example.dmitry.grades.domain.models.entity.Favorite
-import io.reactivex.Single
 
 @Dao
 interface FavoriteDao {
@@ -20,8 +23,8 @@ interface FavoriteDao {
     fun findById(id: Long): Favorite?
 
     @Query("SELECT id FROM ${Favorite.TABLE_NAME} LIMIT :offset, :limit")
-    fun getMoviesId(offset: Int, limit: Int): Single<List<Long>>
+    fun getMoviesId(offset: Int, limit: Int): List<Long>
 
     @Query("SELECT COUNT(id) FROM ${Favorite.TABLE_NAME}")
-    fun count(): Single<Int>
+    fun count(): Int
 }

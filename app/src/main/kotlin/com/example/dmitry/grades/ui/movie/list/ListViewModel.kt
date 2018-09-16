@@ -9,7 +9,6 @@ import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
-import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class ListViewModel @Inject constructor(private val movieRepository: MovieRepository,
@@ -27,24 +26,27 @@ class ListViewModel @Inject constructor(private val movieRepository: MovieReposi
 
     private var _sortyBy: String? = movieConfigRepository.sortBy
 
-    private var _disposable: Disposable? = null
-
     val movies: LiveData<MutableList<Movie>>
         get() = _movies
 
     val moreMovies: LiveData<Boolean>
         get() = _moreMovies
 
-    fun load() {
-        _disposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
+    override fun showLoading() {
+        if (page > 1) {
+            _moreMovies.value = true
+        } else {
+            super.showLoading()
         }
+    }
+
+    override fun hideLoading() {
+        super.hideLoading()
+        _moreMovies.value = false
+    }
+
+    fun load() {
         coroutine {
-            if (page > 1) {
-                _moreMovies.value = true
-            }
             val info = movieRepository.getMovies(page, _sortyBy)
             val movies = info.movies
             val old = _movies.value
@@ -55,7 +57,6 @@ class ListViewModel @Inject constructor(private val movieRepository: MovieReposi
                 _movies.value = old
             }
             countPage = info.countPage
-            _moreMovies.value = false
             page = info.page
         }
     }
@@ -79,15 +80,6 @@ class ListViewModel @Inject constructor(private val movieRepository: MovieReposi
             movieConfigRepository.sortBy = text
             _sortyBy = text
             forceLoad()
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        _disposable?.let {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
         }
     }
 

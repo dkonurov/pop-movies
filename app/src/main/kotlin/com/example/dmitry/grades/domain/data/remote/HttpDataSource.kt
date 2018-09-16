@@ -4,7 +4,6 @@ import com.example.dmitry.grades.domain.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.response.ConfigResponse
 import com.example.dmitry.grades.domain.models.response.DiscoverResponse
-import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,11 +16,11 @@ interface HttpDataSource {
 
     @GET("discover/movie")
     fun getListMovies(@Query("page") page: Int? = null,
-                              @Query("sort_by") sortBy: String? = null): Call<DiscoverResponse>
+                      @Query("sort_by") sortBy: String? = null): Call<DiscoverResponse>
 
     @GET("movie/{id}")
-    fun getDetailsMovie(@Path("id") id: Long, @Query("language") language: String? = "en-US"): Single<DetailsMovie>
+    fun getDetailsMovie(@Path("id") id: Long, @Query("language") language: String? = "en-US"): Call<DetailsMovie>
 
     @GET("movie/{id}")
-    fun getMovie(@Path("id") id: Long, @Query("language") language: String? = "en-US"): Single<Movie>
+    fun getMovie(@Path("id") id: Long, @Query("language") language: String? = "en-US"): Call<Movie>
 }
