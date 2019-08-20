@@ -1,9 +1,9 @@
 package com.example.dmitry.grades.ui.base.ui.fragment
 
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.dmitry.grades.ui.base.ui.errors.ErrorView
+import com.google.android.material.snackbar.Snackbar
 
 open class BaseFragment : Fragment(), ErrorView {
 

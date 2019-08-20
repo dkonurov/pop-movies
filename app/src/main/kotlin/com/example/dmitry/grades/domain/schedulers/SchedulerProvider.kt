@@ -1,10 +1,12 @@
 package com.example.dmitry.grades.domain.schedulers
 
-import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface SchedulerProvider {
 
-    fun io(): Scheduler
+    fun io(): CoroutineDispatcher
 
-    fun ui(): Scheduler
+    fun ui(): CoroutineDispatcher
+
+    fun computation(): CoroutineDispatcher
 }

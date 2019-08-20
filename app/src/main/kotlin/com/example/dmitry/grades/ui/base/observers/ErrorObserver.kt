@@ -1,16 +1,10 @@
 package com.example.dmitry.grades.ui.base.observers
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import com.example.dmitry.grades.ui.base.ui.errors.ErrorView
 import com.example.dmitry.grades.ui.base.ui.errors.UIError
 
-class ErrorObserver : Observer<UIError> {
-
-    private val view: ErrorView
-
-    constructor(errorView: ErrorView) {
-        view = errorView
-    }
+class ErrorObserver(private val view: ErrorView) : Observer<UIError> {
 
     override fun onChanged(error: UIError?) {
         error?.let {

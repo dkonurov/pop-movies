@@ -1,16 +1,13 @@
 package com.example.dmitry.grades.domain.schedulers
 
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 class SchedulerProviderImpl : SchedulerProvider {
 
-    override fun io(): Scheduler {
-        return Schedulers.io()
-    }
+    override fun io(): CoroutineDispatcher = Dispatchers.IO
 
-    override fun ui(): Scheduler {
-        return AndroidSchedulers.mainThread()
-    }
+    override fun ui(): CoroutineDispatcher = Dispatchers.Main
+
+    override fun computation(): CoroutineDispatcher = Dispatchers.Unconfined
 }

@@ -1,20 +1,19 @@
 package com.example.dmitry.grades.ui.movie.list.view
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.PopupMenu
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.entity.Movie
@@ -28,7 +27,6 @@ import com.example.dmitry.grades.ui.movie.list.FilterType
 import com.example.dmitry.grades.ui.movie.list.ListViewModel
 import toothpick.Toothpick
 
-
 class ListFragment : DIFragment(), LoadingView {
 
     companion object {
@@ -39,7 +37,7 @@ class ListFragment : DIFragment(), LoadingView {
 
     private lateinit var recyclerView: RecyclerView
 
-    private lateinit var refreshLayout: SwipeRefreshLayout
+    private lateinit var refreshLayout: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
     private lateinit var viewModel: ListViewModel
 
@@ -125,15 +123,15 @@ class ListFragment : DIFragment(), LoadingView {
         recyclerView.layoutManager = layoutManager
         val recyclerViewOnScrollListener = object : RecyclerView.OnScrollListener() {
 
-            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val visibleItemCount = layoutManager.childCount
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                        && firstVisibleItemPosition >= 0
-                        && totalItemCount >= 4) {
+                    && firstVisibleItemPosition >= 0
+                    && totalItemCount >= 4) {
                     viewModel.loadMore()
                 }
             }

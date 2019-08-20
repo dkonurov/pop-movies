@@ -3,7 +3,7 @@ package com.example.dmitry.grades.ui.movie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.ui.movie.details.view.DetailsFragment
 import com.example.dmitry.grades.ui.movie.navigation.BottomNavFragment

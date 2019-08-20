@@ -1,17 +1,9 @@
 package com.example.dmitry.grades.ui.base.observers
 
-import android.arch.lifecycle.Observer
-import com.example.dmitry.grades.ui.base.ui.errors.ErrorView
+import androidx.lifecycle.Observer
 import com.example.dmitry.grades.ui.base.ui.errors.StubErrorView
-import com.example.dmitry.grades.ui.base.ui.errors.UIError
 
-class NoStubObserver : Observer<Boolean> {
-
-    private val view: StubErrorView
-
-    constructor(stubErrorView: StubErrorView) {
-        view = stubErrorView
-    }
+class NoStubObserver(private val view: StubErrorView) : Observer<Boolean> {
 
     override fun onChanged(state: Boolean?) {
         state?.let {

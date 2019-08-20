@@ -1,26 +1,31 @@
 package com.example.dmitry.grades.ui.base.vm
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
+import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.ui.errors.UIError
+import kotlinx.coroutines.CoroutineScope
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-open class ErrorViewModel @Inject constructor(private val resourceRepository: ResourceRepository,
-                                              private val logger: Logger) : BaseViewModel() {
-
+open class ErrorViewModel @Inject constructor(
+    coroutineScope: CoroutineScope,
+    schedulerProvider: SchedulerProvider,
+    private val resourceRepository: ResourceRepository,
+    private val logger: Logger
+) : BaseViewModel(coroutineScope, schedulerProvider) {
 
     companion object {
         const val AUTH_ERROR_HTTP_CODE = 401
         val NETWORK_EXCEPTIONS = listOf<Class<*>>(
-                UnknownHostException::class.java,
-                SocketTimeoutException::class.java,
-                ConnectException::class.java
+            UnknownHostException::class.java,
+            SocketTimeoutException::class.java,
+            ConnectException::class.java
         )
     }
 

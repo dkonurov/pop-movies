@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.ui.splash
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.domain.models.ImageConfig
 import com.example.dmitry.grades.domain.repositories.ResourceRepository

@@ -4,6 +4,7 @@ import com.example.dmitry.grades.BuildConfig
 import com.example.dmitry.grades.di.ApiKey
 import com.example.dmitry.grades.di.Auth
 import com.example.dmitry.grades.di.LoggingInterceptor
+import com.example.dmitry.grades.di.providers.CoroutineScopeProvider
 import com.example.dmitry.grades.di.providers.HttpDataSourceProvider
 import com.example.dmitry.grades.di.providers.OkHttpProvider
 import com.example.dmitry.grades.di.providers.RetrofitProvider
@@ -19,6 +20,9 @@ import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.domain.schedulers.SchedulerProviderImpl
 import com.google.gson.Gson
+import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -56,5 +60,9 @@ class RemoteModule @Inject constructor() : Module() {
 
         //schedulers
         bind(SchedulerProvider::class.java).toInstance(SchedulerProviderImpl())
+
+        //scopes
+        bind(CompletableJob::class.java).toProviderInstance { SupervisorJob() }
+        bind(CoroutineScope::class.java).toProvider(CoroutineScopeProvider::class.java)
     }
 }

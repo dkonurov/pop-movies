@@ -7,34 +7,46 @@ import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
+import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.extensions.await
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.withContext
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class FavoriteRepositoryImpl @Inject constructor(private val favoriteDao: FavoriteDao,
-                                                 private val movieMapper: MovieMapper,
-                                                 private val httpDataSource: HttpDataSource,
-                                                 private val privateDataSource: PrivateDataSource) : FavoriteRepository {
+class FavoriteRepositoryImpl @Inject constructor(
+    private val favoriteDao: FavoriteDao,
+    private val movieMapper: MovieMapper,
+    private val httpDataSource: HttpDataSource,
+    private val privateDataSource: PrivateDataSource,
+    private val schedulerProvider: SchedulerProvider
+) : FavoriteRepository {
 
-    override fun saveFavorite(viewMovie: ViewMovie) {
-        favoriteDao.save(movieMapper.toFavorite(viewMovie))
+    override suspend fun saveFavorite(viewMovie: ViewMovie) {
+        withContext(schedulerProvider.io()) {
+            favoriteDao.save(movieMapper.toFavorite(viewMovie))
+        }
     }
 
-    override fun removeFavorite(viewMovie: ViewMovie) {
-        favoriteDao.deleteById(viewMovie.id)
+    override suspend fun removeFavorite(viewMovie: ViewMovie) {
+        withContext(schedulerProvider.io()) {
+            favoriteDao.deleteById(viewMovie.id)
+        }
     }
 
     override suspend fun getFavorites(page: Int): MovieListInfo {
-        return withContext(CommonPool) {
+        return withContext(schedulerProvider.io()) {
             val count = favoriteDao.count()
             val countPages = count / MovieRepositoryImpl.PER_PAGE
-            val movies = favoriteDao.getMoviesId((page - 1) * MovieRepositoryImpl.PER_PAGE, MovieRepositoryImpl.PER_PAGE)
+            val movies = favoriteDao.getMoviesId(
+                (page - 1) * MovieRepositoryImpl.PER_PAGE,
+                MovieRepositoryImpl.PER_PAGE
+            )
             val remote = movies.map {
                 httpDataSource.getMovie(it).await()
             }.toMutableList()
-            movieMapper.toMovieListInfo(countPages, privateDataSource.baseUrlImg,
-                    privateDataSource.posterSize, remote, page)
+            movieMapper.toMovieListInfo(
+                countPages, privateDataSource.baseUrlImg,
+                privateDataSource.posterSize, remote, page
+            )
         }
     }
 }
