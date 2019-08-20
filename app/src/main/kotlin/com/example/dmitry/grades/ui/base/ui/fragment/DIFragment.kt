@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 
-
 open class DIFragment : BaseFragment() {
 
     private var isSaveState = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

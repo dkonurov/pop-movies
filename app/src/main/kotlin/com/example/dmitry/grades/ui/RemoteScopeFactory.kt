@@ -1,7 +1,7 @@
 package com.example.dmitry.grades.ui
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.dmitry.grades.di.Scopes
 import toothpick.Toothpick
 import javax.inject.Inject

@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.ui.base.observers
 
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.Observer
 import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
 
 class LoadingObserver(private val loadingView: LoadingView) : Observer<Boolean> {

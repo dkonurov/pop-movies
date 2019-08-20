@@ -1,20 +1,26 @@
 package com.example.dmitry.grades.ui.movie.list
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
+import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-class ListViewModel @Inject constructor(private val movieRepository: MovieRepository,
-                                        resourceRepository: ResourceRepository,
-                                        logger: Logger,
-                                        private val movieConfigRepository: MovieConfigRepository) : ErrorViewModel(resourceRepository, logger) {
+class ListViewModel @Inject constructor(
+    coroutineScope: CoroutineScope,
+    schedulerProvider: SchedulerProvider,
+    resourceRepository: ResourceRepository,
+    logger: Logger,
+    private val movieRepository: MovieRepository,
+    private val movieConfigRepository: MovieConfigRepository
+) : ErrorViewModel(coroutineScope, schedulerProvider, resourceRepository, logger) {
 
     private val _movies = MutableLiveData<MutableList<Movie>>()
 

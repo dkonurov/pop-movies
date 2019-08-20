@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.data.db.convertors
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.example.dmitry.grades.di.Scopes
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

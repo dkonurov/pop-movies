@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.ui.base.extensions
 
-import kotlinx.coroutines.experimental.suspendCancellableCoroutine
+import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,14 +10,14 @@ import java.io.IOException
 suspend inline fun <T> Call<T>.await(): T = suspendCancellableCoroutine {
     enqueue(object : Callback<T> {
         override fun onFailure(call: Call<T>, t: Throwable) {
-            it.resumeWithException(t)
+            it.resumeWith(Result.failure(t))
         }
 
         override fun onResponse(call: Call<T>, response: Response<T>) {
             if (response.isSuccessful)
-                it.resume(response.body()!!)
+                it.resumeWith(Result.success(response.body()!!))
             else
-                it.resumeWithException(IOException(response.message()))
+                it.resumeWith(Result.failure(IOException(response.message())))
         }
     })
 }

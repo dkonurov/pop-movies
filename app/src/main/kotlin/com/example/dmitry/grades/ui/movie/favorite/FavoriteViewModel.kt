@@ -1,7 +1,7 @@
 package com.example.dmitry.grades.ui.movie.favorite
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.dmitry.grades.domain.Logger
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
@@ -9,15 +9,21 @@ import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
+import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import com.example.dmitry.grades.ui.base.vm.ErrorViewModel
 import com.example.dmitry.grades.ui.movie.list.FilterType
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
-class FavoriteViewModel @Inject constructor(private val movieRepository: MovieRepository,
-                                            resourceRepository: ResourceRepository,
-                                            private val favoriteRepository: FavoriteRepository,
-                                            private val movieConfigRepository: MovieConfigRepository,
-                                            logger: Logger) : ErrorViewModel(resourceRepository, logger) {
+class FavoriteViewModel @Inject constructor(
+    coroutineScope: CoroutineScope,
+    schedulerProvider: SchedulerProvider,
+    resourceRepository: ResourceRepository,
+    logger: Logger,
+    private val movieRepository: MovieRepository,
+    private val favoriteRepository: FavoriteRepository,
+    private val movieConfigRepository: MovieConfigRepository
+) : ErrorViewModel(coroutineScope, schedulerProvider, resourceRepository, logger) {
 
     private val _movies = MutableLiveData<MutableList<Movie>>()
 

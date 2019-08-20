@@ -1,11 +1,11 @@
 package com.example.dmitry.grades.ui.movie.list.view
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
-class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class GridViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
     private val _image: ImageView = itemView as ImageView
 

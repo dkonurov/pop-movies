@@ -1,7 +1,7 @@
 package com.example.dmitry.grades.domain.models.entity
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity(tableName = Favorite.TABLE_NAME)
 data class Favorite(@PrimaryKey val id: Long, val title: String, val about: String,

@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.models
 
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class DetailsMovie(val id: Long,

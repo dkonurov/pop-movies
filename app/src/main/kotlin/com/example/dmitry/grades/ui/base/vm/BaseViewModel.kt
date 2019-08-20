@@ -1,38 +1,20 @@
 package com.example.dmitry.grades.ui.base.vm
 
-import android.arch.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.CoroutineContext
+import androidx.lifecycle.ViewModel
+import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class BaseViewModel : ViewModel() {
-
-    protected val jobs = mutableListOf<Job>()
-
-    protected val disposables = CompositeDisposable()
-
-    protected fun cancelable(runnable: () -> Job) {
-        jobs.filter { it.isCancelled || it.isCompleted }
-                .forEach { jobs.remove(it) }
-        jobs.add(runnable.invoke())
-    }
-
-    protected fun launchJob(context: CoroutineContext = UI,
-                            block: suspend () -> Unit): Job {
-        return launch(context) {
-            try {
-                showLoading()
-                hideError()
-                block.invoke()
-            } catch (t: Throwable) {
-                handleError(t)
-            } finally {
-                hideLoading()
-            }
-        }
-    }
+abstract class BaseViewModel
+constructor(
+    private val scope: CoroutineScope,
+    protected val schedulerProvider: SchedulerProvider
+) : ViewModel() {
 
     protected abstract fun handleError(t: Throwable)
 
@@ -42,17 +24,26 @@ abstract class BaseViewModel : ViewModel() {
 
     protected abstract fun hideLoading()
 
-    protected fun coroutine(context: CoroutineContext = UI,
-                            block: suspend () -> Unit) {
-        cancelable {
-            launchJob(context, block)
+    protected fun coroutine(
+        context: CoroutineContext = EmptyCoroutineContext,
+        start: CoroutineStart = CoroutineStart.DEFAULT,
+        block: suspend CoroutineScope.() -> Unit
+    ): Job {
+        return scope.launch(context, start) {
+            try {
+                showLoading()
+                hideError()
+                block.invoke(this)
+            } catch (t: Throwable) {
+                handleError(t)
+            } finally {
+                hideLoading()
+            }
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
-        jobs.forEach { it.cancel() }
-        jobs.clear()
+        scope.coroutineContext.cancelChildren()
     }
 }

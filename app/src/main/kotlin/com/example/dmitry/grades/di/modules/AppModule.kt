@@ -18,6 +18,9 @@ import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.config.AppInfo
 import com.example.dmitry.grades.domain.repositories.AppInfoRepository
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
+import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import toothpick.config.Module
 
 class AppModule(context: Context) : Module() {

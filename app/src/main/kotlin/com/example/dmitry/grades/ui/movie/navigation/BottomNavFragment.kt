@@ -1,8 +1,8 @@
 package com.example.dmitry.grades.ui.movie.navigation
 
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -17,7 +17,7 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
     private var needLoad = false
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val fragment: Fragment? = when (item.itemId) {
+        val fragment: androidx.fragment.app.Fragment? = when (item.itemId) {
             R.id.nav_list -> ListFragment.newInstance()
             R.id.nav_favorite -> FavoriteFragment.newInstance()
             else -> null
@@ -61,7 +61,7 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
         outState.putInt(SELECTED_ID, bottomNav.selectedItemId)
     }
 
-    fun setFragment(it: Fragment): Int {
+    fun setFragment(it: androidx.fragment.app.Fragment): Int {
         return childFragmentManager.beginTransaction()
                 .replace(R.id.nav_container, it)
                 .commit()

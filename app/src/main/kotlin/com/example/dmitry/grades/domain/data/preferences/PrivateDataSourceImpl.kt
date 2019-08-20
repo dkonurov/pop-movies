@@ -2,7 +2,7 @@ package com.example.dmitry.grades.domain.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import com.example.dmitry.grades.domain.models.ImageConfig
 import javax.inject.Inject
 

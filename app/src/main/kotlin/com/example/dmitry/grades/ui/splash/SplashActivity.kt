@@ -1,12 +1,11 @@
 package com.example.dmitry.grades.ui.splash
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.ui.RemoteScopeFactory
@@ -15,13 +14,14 @@ import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
 import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
 import com.example.dmitry.grades.ui.base.ui.errors.StubErrorView
 import com.example.dmitry.grades.ui.movie.MainActivity
+import kotlinx.android.synthetic.main.activity_splash.*
 import toothpick.Toothpick
 
 class SplashActivity : AppCompatActivity(), StubErrorView, LoadingView {
-
-    private var progress: View? = null
-
-    private var network: View? = null
+    //
+    //    private var progress: View? = null
+    //
+    //    private var network: View? = null
 
     override fun showStub() {
         network?.visibility = View.VISIBLE
@@ -37,15 +37,13 @@ class SplashActivity : AppCompatActivity(), StubErrorView, LoadingView {
 
     private lateinit var splashViewModel: SplashViewModel
 
-    val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(RemoteScopeFactory::class.java)
+    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(RemoteScopeFactory::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         splashViewModel = ViewModelProviders.of(this, factory).get(SplashViewModel::class.java)
-        progress = findViewById(R.id.progress)
-        network = findViewById(R.id.network)
-        findViewById<Button>(R.id.repeat).setOnClickListener {
+        repeat.setOnClickListener {
             splashViewModel.loadConfig()
         }
         ErrorHandler.handleError(splashViewModel, this)
