@@ -1,7 +1,6 @@
 package com.example.dmitry.grades.domain.data.preferences
 
 import com.example.dmitry.grades.DebugAppDelegate
-import com.example.dmitry.grades.domain.models.ImageConfig
 import junit.framework.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,7 +11,9 @@ import org.robolectric.annotation.Config
 @Config(application = DebugAppDelegate::class)
 class PrivateDataSourceImplTest {
 
-    val privateDataSourceImpl = PrivateDataSourceImpl(DebugAppDelegate.context)
+    val privateDataSourceImpl = com.example.core.data.preferences.PrivateDataSourceImpl(
+        DebugAppDelegate.context
+    )
 
     @Test
     fun saveBaseUrlNull() {

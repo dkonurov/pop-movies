@@ -3,6 +3,7 @@ package com.example.dmitry.grades
 import android.app.Application
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
+import com.example.dmitry.grades.di.modules.DataModule
 import com.example.dmitry.grades.di.modules.RemoteModule
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
@@ -20,7 +21,7 @@ open class AppDelegate : Application() {
 
     private fun initBaseScopes() {
         Toothpick.openScope(Scopes.APP_SCOPE).apply {
-            installModules(AppModule(this@AppDelegate))
+            installModules(DataModule(this@AppDelegate), AppModule())
         }
 
         Toothpick.openScopes(Scopes.APP_SCOPE, Scopes.REMOTE_SCOPE).apply {

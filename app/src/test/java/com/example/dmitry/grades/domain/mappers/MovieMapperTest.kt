@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.mappers
 
-import com.example.dmitry.grades.domain.models.DetailsMovie
+import com.example.core.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import junit.framework.Assert
