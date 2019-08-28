@@ -1,7 +1,6 @@
 package com.example.dmitry.grades.domain.repositories.configurtaion
 
-import com.example.dmitry.grades.domain.models.ImageConfig
-import io.reactivex.Single
+import com.example.core.models.config.ImageConfig
 
 interface BaseConfigRepository {
 

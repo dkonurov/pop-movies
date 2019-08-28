@@ -14,9 +14,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.models.entity.Movie
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
-import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.ui.RemoteScopeFactory
 import com.example.dmitry.grades.ui.base.observers.LoadingObserver
 import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler

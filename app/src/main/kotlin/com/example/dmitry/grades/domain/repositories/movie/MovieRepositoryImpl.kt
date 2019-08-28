@@ -1,9 +1,9 @@
 package com.example.dmitry.grades.domain.repositories.movie
 
-import com.example.dmitry.grades.domain.data.db.FavoriteDao
-import com.example.dmitry.grades.domain.data.db.MovieDao
-import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
-import com.example.dmitry.grades.domain.data.remote.HttpDataSource
+import com.example.core.data.db.inteface.FavoriteDao
+import com.example.core.data.db.inteface.MovieDao
+import com.example.core.data.preferences.PrivateDataSource
+import com.example.core.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie

@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.repositories.movie
 
-import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
+import com.example.core.data.preferences.PrivateDataSource
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.InjectMocks

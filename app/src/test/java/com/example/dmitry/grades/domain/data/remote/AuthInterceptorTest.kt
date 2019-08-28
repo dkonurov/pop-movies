@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations
 
 class AuthInterceptorTest {
 
-    private val interceptor = AuthInterceptor("test")
+    private val interceptor = com.example.core.data.remote.AuthInterceptor("test")
 
     private val mediaType = MediaType.parse("application/json")
 

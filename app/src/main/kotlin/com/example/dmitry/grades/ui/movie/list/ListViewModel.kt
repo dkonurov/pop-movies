@@ -2,8 +2,8 @@ package com.example.dmitry.grades.ui.movie.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.core.models.entity.Movie
 import com.example.dmitry.grades.domain.Logger
-import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieConfigRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository

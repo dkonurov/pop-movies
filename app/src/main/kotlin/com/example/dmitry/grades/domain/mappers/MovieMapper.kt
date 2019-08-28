@@ -1,9 +1,9 @@
 package com.example.dmitry.grades.domain.mappers
 
 
-import com.example.dmitry.grades.domain.models.DetailsMovie
-import com.example.dmitry.grades.domain.models.entity.Favorite
-import com.example.dmitry.grades.domain.models.entity.Movie
+import com.example.core.models.entity.Favorite
+import com.example.core.models.entity.Movie
+import com.example.core.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import javax.inject.Inject

@@ -1,16 +1,11 @@
 package com.example.dmitry.grades.ui.splash
 
 import androidx.lifecycle.Observer
-import com.example.dmitry.grades.R
-import com.example.dmitry.grades.domain.models.ImageConfig
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.movie.MainActivity
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
-import org.junit.Rule
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.robolectric.RobolectricTestRunner

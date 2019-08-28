@@ -1,8 +1,8 @@
 package com.example.dmitry.grades.ui.splash
 
 import androidx.lifecycle.LiveData
+import com.example.core.models.config.ImageConfig
 import com.example.dmitry.grades.domain.Logger
-import com.example.dmitry.grades.domain.models.ImageConfig
 import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.configurtaion.BaseConfigRepository
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider

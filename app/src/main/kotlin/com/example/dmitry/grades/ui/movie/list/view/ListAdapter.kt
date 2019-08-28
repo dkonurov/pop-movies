@@ -1,15 +1,15 @@
 package com.example.dmitry.grades.ui.movie.list.view
 
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.example.core.models.entity.Movie
 import com.example.dmitry.grades.R
-import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.ui.base.ui.LoadingViewHolder
 import com.example.dmitry.grades.ui.movie.MovieDiffUtils
 
-class ListAdapter(private val clickListener: (Movie) -> Unit) : androidx.recyclerview.widget.RecyclerView.Adapter<androidx.recyclerview.widget.RecyclerView.ViewHolder>() {
+class ListAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val FOOTER_TYPE = 1
@@ -20,13 +20,19 @@ class ListAdapter(private val clickListener: (Movie) -> Unit) : androidx.recycle
 
     private var _show: Boolean = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): androidx.recyclerview.widget.RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
             LoadingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_loading, parent, false))
         } else {
-            val holder = GridViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_grid, parent, false))
+            val holder = GridViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.list_item_grid,
+                    parent,
+                    false
+                )
+            )
             holder.itemView.setOnClickListener {
-                if (holder.adapterPosition != androidx.recyclerview.widget.RecyclerView.NO_POSITION) {
+                if (holder.adapterPosition != RecyclerView.NO_POSITION) {
                     clickListener(items[holder.adapterPosition])
                 }
             }
@@ -38,7 +44,7 @@ class ListAdapter(private val clickListener: (Movie) -> Unit) : androidx.recycle
         return items.size + if (_show) 1 else 0
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (!isFooter(position)) {
             (holder as GridViewHolder).bind(items[position].posterPath)
         }

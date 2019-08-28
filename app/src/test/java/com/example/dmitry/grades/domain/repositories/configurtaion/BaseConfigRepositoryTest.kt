@@ -1,8 +1,7 @@
 package com.example.dmitry.grades.domain.repositories.configurtaion
 
-import com.example.dmitry.grades.domain.data.preferences.PrivateDataSource
-import com.example.dmitry.grades.domain.data.remote.HttpDataSource
-import com.example.dmitry.grades.domain.models.ImageConfig
+import com.example.core.data.preferences.PrivateDataSource
+import com.example.core.data.remote.HttpDataSource
 import com.example.dmitry.grades.domain.models.response.ConfigResponse
 import io.reactivex.Single
 import org.junit.Before
