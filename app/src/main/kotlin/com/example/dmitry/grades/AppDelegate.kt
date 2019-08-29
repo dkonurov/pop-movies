@@ -1,14 +1,13 @@
 package com.example.dmitry.grades
 
 import android.app.Application
+import com.example.core.di.CoreScope
+import com.example.di.BaseUIScope
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
-import com.example.dmitry.grades.di.modules.DataModule
 import com.example.dmitry.grades.di.modules.RemoteModule
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
-import toothpick.registries.FactoryRegistryLocator
-import toothpick.registries.MemberInjectorRegistryLocator
 
 open class AppDelegate : Application() {
 
@@ -20,11 +19,13 @@ open class AppDelegate : Application() {
     }
 
     private fun initBaseScopes() {
-        Toothpick.openScope(Scopes.APP_SCOPE).apply {
-            installModules(DataModule(this@AppDelegate), AppModule())
+        CoreScope.initCoreScope(this)
+        Toothpick.openScopes(CoreScope.NAME, Scopes.APP_SCOPE).apply {
+            installModules(AppModule())
         }
+        BaseUIScope.initBaseUIScope(Scopes.APP_SCOPE)
 
-        Toothpick.openScopes(Scopes.APP_SCOPE, Scopes.REMOTE_SCOPE).apply {
+        Toothpick.openScopes(BaseUIScope.NAME, Scopes.REMOTE_SCOPE).apply {
             installModules(RemoteModule())
         }
     }
@@ -33,10 +34,7 @@ open class AppDelegate : Application() {
         if (BuildConfig.DEBUG) {
             Toothpick.setConfiguration(Configuration.forDevelopment().preventMultipleRootScopes())
         } else {
-            Toothpick.setConfiguration(Configuration.forProduction().disableReflection())
-            FactoryRegistryLocator.setRootRegistry(com.example.dmitry.grades.FactoryRegistry())
-            MemberInjectorRegistryLocator.setRootRegistry(com.example.dmitry.grades.MemberInjectorRegistry())
+            Toothpick.setConfiguration(Configuration.forProduction())
         }
     }
-
 }

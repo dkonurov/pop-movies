@@ -1,5 +1,7 @@
 package com.example.dmitry.grades.domain.repositories.favorite
 
+import com.example.base.extensions.await
+import com.example.base.schedulers.SchedulerProvider
 import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
@@ -7,8 +9,6 @@ import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
-import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
-import com.example.dmitry.grades.ui.base.extensions.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

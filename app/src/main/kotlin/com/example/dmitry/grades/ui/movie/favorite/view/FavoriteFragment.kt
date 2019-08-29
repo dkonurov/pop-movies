@@ -14,14 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.base.ui.observers.LoadingObserver
+import com.example.base.ui.ui.errors.ErrorHandler
+import com.example.base.ui.ui.errors.LoadingView
+import com.example.base.ui.ui.fragment.DIFragment
 import com.example.core.models.entity.Movie
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.Scopes
-import com.example.dmitry.grades.ui.RemoteScopeFactory
-import com.example.dmitry.grades.ui.base.observers.LoadingObserver
-import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
-import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
-import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
+import com.example.dmitry.grades.ui.ApplicationScopeFactory
 import com.example.dmitry.grades.ui.movie.MovieRouter
 import com.example.dmitry.grades.ui.movie.favorite.FavoriteViewModel
 import com.example.dmitry.grades.ui.movie.list.FilterType
@@ -46,7 +46,8 @@ class FavoriteFragment : DIFragment(), LoadingView {
 
     private var movieRouter: MovieRouter? = null
 
-    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(RemoteScopeFactory::class.java)
+    private val factory = Toothpick.openScope(Scopes.REMOTE_SCOPE)
+            .getInstance(ApplicationScopeFactory::class.java)
 
     private val adapter = ListAdapter { movie: Movie ->
         movieRouter?.let {
@@ -69,7 +70,11 @@ class FavoriteFragment : DIFragment(), LoadingView {
         movieRouter = null
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_grid, container, false)
         refreshLayout = rootView.findViewById(R.id.refresh)
         recyclerView = rootView.findViewById(R.id.recycler)

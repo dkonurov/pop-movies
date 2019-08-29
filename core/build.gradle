@@ -15,6 +15,10 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField('String', 'DB_NAME', '"app-database"')
+        buildConfigField('String', 'PROD_URL', '"https://api.themoviedb.org/3/"')
+        buildConfigField('String', 'APY_KEY', '"a24147a595afe1935af3d13e6a8c0f61"')
+
     }
 
     buildTypes {
@@ -36,8 +40,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    api 'com.squareup.retrofit2:retrofit:2.5.0'
+    api 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
@@ -46,12 +50,17 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+
+    //toothpick
+    api 'com.github.stephanenicolas.toothpick:ktp:3.0.1'
+    api'com.github.stephanenicolas.toothpick:smoothie-androidx:3.0.1'
+    kapt 'com.github.stephanenicolas.toothpick:toothpick-compiler:3.0.1'
+
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation "androidx.core:core-ktx:1.0.2"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
 repositories {
     mavenCentral()

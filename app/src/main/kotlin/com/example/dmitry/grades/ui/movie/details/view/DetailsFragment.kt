@@ -1,10 +1,6 @@
 package com.example.dmitry.grades.ui.movie.details.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,15 +8,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
+import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.example.base.ui.observers.LoadingObserver
+import com.example.base.ui.ui.errors.ErrorHandler
+import com.example.base.ui.ui.errors.LoadingView
+import com.example.base.ui.ui.fragment.DIFragment
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.MovieId
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
-import com.example.dmitry.grades.ui.base.observers.LoadingObserver
-import com.example.dmitry.grades.ui.base.ui.errors.ErrorHandler
-import com.example.dmitry.grades.ui.base.ui.errors.LoadingView
-import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModel
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModelFactory
 import toothpick.Toothpick
@@ -62,7 +61,8 @@ class DetailsFragment : DIFragment(), LoadingView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        factory = Toothpick.openScope(Scopes.MOVIE_DETAILS_SCOPE).getInstance(DetailsViewModelFactory::class.java)
+        factory = Toothpick.openScope(Scopes.MOVIE_DETAILS_SCOPE)
+                .getInstance(DetailsViewModelFactory::class.java)
         setHasOptionsMenu(true)
     }
 
@@ -93,7 +93,11 @@ class DetailsFragment : DIFragment(), LoadingView {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         poster = view.findViewById(R.id.poster)
         titleTv = view.findViewById(R.id.titleTv)
@@ -106,7 +110,6 @@ class DetailsFragment : DIFragment(), LoadingView {
         favoriteBtn = view.findViewById(R.id.favoriteBtn)
         return view
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

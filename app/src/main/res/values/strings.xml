@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">grades</string>
-    <string name="network_error">network error. please try again later</string>
-    <string name="splash">SPLASH</string>
     <string name="config.year">YEAR:</string>
     <string name="config.select">Select</string>
     <string name="list.filter">Filter</string>
@@ -16,7 +14,4 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="unknown_error">неизвестная ошибка</string>
-    <string name="non_auth_error">Вы не авторизованы</string>
-    <string name="repeat">repeat</string>
 </resources>

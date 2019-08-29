@@ -1,9 +1,9 @@
 package com.example.dmitry.grades.domain.repositories.configurtaion
 
+import com.example.base.extensions.await
+import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
 import com.example.core.models.config.ImageConfig
-import com.example.core.data.preferences.PrivateDataSource
-import com.example.dmitry.grades.ui.base.extensions.await
 import javax.inject.Inject
 
 class BaseConfigRepositoryImpl @Inject constructor(

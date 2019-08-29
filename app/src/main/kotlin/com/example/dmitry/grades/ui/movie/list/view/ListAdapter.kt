@@ -9,7 +9,8 @@ import com.example.dmitry.grades.R
 import com.example.dmitry.grades.ui.base.ui.LoadingViewHolder
 import com.example.dmitry.grades.ui.movie.MovieDiffUtils
 
-class ListAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListAdapter(private val clickListener: (Movie) -> Unit) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val FOOTER_TYPE = 1
@@ -22,7 +23,13 @@ class ListAdapter(private val clickListener: (Movie) -> Unit) : RecyclerView.Ada
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
-            LoadingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_item_loading, parent, false))
+            LoadingViewHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.list_item_loading,
+                    parent,
+                    false
+                )
+            )
         } else {
             val holder = GridViewHolder(
                 LayoutInflater.from(parent.context).inflate(
