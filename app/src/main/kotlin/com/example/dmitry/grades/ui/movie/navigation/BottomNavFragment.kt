@@ -1,16 +1,15 @@
 package com.example.dmitry.grades.ui.movie.navigation
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import com.example.base.ui.ui.fragment.DIFragment
 import com.example.dmitry.grades.R
-import com.example.dmitry.grades.ui.base.ui.fragment.DIFragment
 import com.example.dmitry.grades.ui.movie.favorite.view.FavoriteFragment
 import com.example.dmitry.grades.ui.movie.list.view.ListFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -45,7 +44,11 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val rootView = inflater.inflate(R.layout.fragment_bootom_nav, container, false)
         bottomNav = rootView.findViewById(R.id.bottomNav)
         bottomNav.setOnNavigationItemSelectedListener(this)

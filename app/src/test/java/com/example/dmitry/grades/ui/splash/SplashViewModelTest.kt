@@ -1,7 +1,6 @@
 package com.example.dmitry.grades.ui.splash
 
 import androidx.lifecycle.Observer
-import com.example.dmitry.grades.domain.repositories.ResourceRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import io.reactivex.Scheduler
