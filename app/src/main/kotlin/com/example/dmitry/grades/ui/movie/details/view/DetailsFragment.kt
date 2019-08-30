@@ -66,7 +66,7 @@ class DetailsFragment : DIFragment(), LoadingView {
         setHasOptionsMenu(true)
     }
 
-    override fun createScope(savedInstanceState: Bundle?) {
+    override fun createScope() {
         arguments?.let {
             val scope = Toothpick.openScopes(Scopes.REMOTE_SCOPE, Scopes.MOVIE_DETAILS_SCOPE)
             scope.installModules(object : Module() {

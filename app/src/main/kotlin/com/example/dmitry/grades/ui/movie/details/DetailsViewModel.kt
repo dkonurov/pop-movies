@@ -9,7 +9,6 @@ import com.example.core.data.message.ErrorMessageDataSource
 import com.example.dmitry.grades.di.MovieId
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
 import com.example.dmitry.grades.domain.models.ui.ViewMovie
-import com.example.dmitry.grades.domain.repositories.favorite.FavoriteRepository
 import com.example.dmitry.grades.domain.repositories.movie.MovieRepository
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
@@ -20,8 +19,8 @@ class DetailsViewModel @Inject constructor(
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
     @MovieId private val wrapperId: PrimitiveWrapper<Long>,
-    private val movieRepository: MovieRepository,
-    private val favoriteRepository: FavoriteRepository
+    private val movieRepository: MovieRepository
+//    private val favoriteListRepository: FavoriteListRepository
 ) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
 
     private val _movie = MutableLiveData<ViewMovie>()
@@ -38,7 +37,7 @@ class DetailsViewModel @Inject constructor(
     fun saveFavorite() {
         _movie.value?.let {
             coroutine {
-                favoriteRepository.saveFavorite(it)
+//                favoriteListRepository.saveFavorite(it)
                 it.isFavorite = true
                 _movie.value = it
             }
@@ -49,7 +48,7 @@ class DetailsViewModel @Inject constructor(
     fun removeFavorite() {
         _movie.value?.let {
             coroutine {
-                favoriteRepository.removeFavorite(it)
+//                favoriteListRepository.removeFavorite(it)
                 it.isFavorite = false
                 _movie.value = it
             }

@@ -19,15 +19,13 @@ open class AppDelegate : Application() {
     }
 
     private fun initBaseScopes() {
-        CoreScope.initCoreScope(this)
-        Toothpick.openScopes(CoreScope.NAME, Scopes.APP_SCOPE).apply {
-            installModules(AppModule())
-        }
-        BaseUIScope.initBaseUIScope(Scopes.APP_SCOPE)
+        val appScore = CoreScope.initCoreScope(this)
+                .openSubScope(Scopes.APP_SCOPE)
+                .installModules(AppModule())
 
-        Toothpick.openScopes(BaseUIScope.NAME, Scopes.REMOTE_SCOPE).apply {
-            installModules(RemoteModule())
-        }
+        BaseUIScope.initBaseUIScope(appScore)
+                .openSubScope(Scopes.REMOTE_SCOPE)
+                .installModules(RemoteModule())
     }
 
     private fun initToothpick() {
