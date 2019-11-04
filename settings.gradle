@@ -1,1 +1,9 @@
-include ':app', ':core', ':splash', ':baseui'
+include ':app',
+        ':components:core',
+        ':components:baseui',
+        ':components:bottom_navigation_core',
+        ':components:grid_list',
+        ':features:splash',
+        ':features:navigations',
+        ':features:navigations:libs:movie_list',
+        ':features:navigations:libs:favorite_list'

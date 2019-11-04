@@ -13,4 +13,8 @@ interface MovieRepository {
     suspend fun findMovie(id: Long): ViewMovie
 
     suspend fun clearCache()
+
+    suspend fun saveFavorite(viewMovie: ViewMovie)
+
+    suspend fun removeFavorite(viewMovie: ViewMovie)
 }

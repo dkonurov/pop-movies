@@ -10,19 +10,16 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.di.MovieId
-import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.domain.models.PrimitiveWrapper
 import com.example.dmitry.grades.ui.movie.details.DetailsViewModel
-import com.example.dmitry.grades.ui.movie.details.DetailsViewModelFactory
-import toothpick.Toothpick
 import toothpick.config.Module
 
 class DetailsFragment : DIFragment(), LoadingView {
@@ -38,8 +35,6 @@ class DetailsFragment : DIFragment(), LoadingView {
             return detailsFragment
         }
     }
-
-    private lateinit var factory: DetailsViewModelFactory
 
     private lateinit var poster: ImageView
 
@@ -61,26 +56,20 @@ class DetailsFragment : DIFragment(), LoadingView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        factory = Toothpick.openScope(Scopes.MOVIE_DETAILS_SCOPE)
-                .getInstance(DetailsViewModelFactory::class.java)
         setHasOptionsMenu(true)
     }
 
-    override fun createScope(savedInstanceState: Bundle?) {
-        arguments?.let {
-            val scope = Toothpick.openScopes(Scopes.REMOTE_SCOPE, Scopes.MOVIE_DETAILS_SCOPE)
-            scope.installModules(object : Module() {
+    override fun getModules(): Array<Module>? {
+        val module = arguments?.let {
+            object : Module() {
                 init {
                     bind(PrimitiveWrapper::class.java)
                             .withName(MovieId::class.java)
                             .toInstance(PrimitiveWrapper(it.getLong(MOVIE_ID)))
                 }
-            })
-        }
-    }
-
-    override fun closeScope() {
-        Toothpick.closeScope(Scopes.MOVIE_DETAILS_SCOPE)
+            }
+        } ?: throw IllegalArgumentException("Cannot be find Movie id")
+        return arrayOf(module)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -118,7 +107,7 @@ class DetailsFragment : DIFragment(), LoadingView {
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
             it.setTitle(R.string.details_title)
         }
-        val viewModel = ViewModelProviders.of(this, factory).get(DetailsViewModel::class.java)
+        val viewModel = viewModel { getScope().getInstance(DetailsViewModel::class.java) }
         viewModel.loading.observe(this, LoadingObserver(this))
         viewModel.movie.observe(this, Observer {
             it?.let {
