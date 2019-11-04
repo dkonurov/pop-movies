@@ -77,4 +77,16 @@ open class MovieRepositoryImpl @Inject constructor(
             movieDao.clear()
         }
     }
+
+    override suspend fun saveFavorite(viewMovie: ViewMovie) {
+        withContext(schedulerProvider.io()) {
+            favoriteDao.save(movieMapper.toFavorite(viewMovie))
+        }
+    }
+
+    override suspend fun removeFavorite(viewMovie: ViewMovie) {
+        withContext(schedulerProvider.io()) {
+            favoriteDao.delete(movieMapper.toFavorite(viewMovie))
+        }
+    }
 }

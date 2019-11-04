@@ -20,7 +20,6 @@ class DetailsViewModel @Inject constructor(
     logger: Logger,
     @MovieId private val wrapperId: PrimitiveWrapper<Long>,
     private val movieRepository: MovieRepository
-//    private val favoriteListRepository: FavoriteListRepository
 ) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
 
     private val _movie = MutableLiveData<ViewMovie>()
@@ -35,21 +34,21 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun saveFavorite() {
-        _movie.value?.let {
+        _movie.value?.let { movie ->
             coroutine {
-//                favoriteListRepository.saveFavorite(it)
-                it.isFavorite = true
-                _movie.value = it
+                movieRepository.saveFavorite(movie)
+                movie.isFavorite = true
+                _movie.value = movie
             }
         }
     }
 
     fun removeFavorite() {
-        _movie.value?.let {
+        _movie.value?.let { movie ->
             coroutine {
-//                favoriteListRepository.removeFavorite(it)
-                it.isFavorite = false
-                _movie.value = it
+                movieRepository.removeFavorite(movie)
+                movie.isFavorite = false
+                _movie.value = movie
             }
         }
     }
