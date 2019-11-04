@@ -35,74 +35,72 @@ class SplashViewModelTest {
         override fun ui(): Scheduler {
             return Schedulers.trampoline()
         }
-
     }
 
     private lateinit var splashViewModel: SplashViewModel
 
-//    @Before
-//    fun setup() {
-//        MockitoAnnotations.initMocks(this)
-//        splashViewModel = SplashViewModel(movieRepository, resourceRepository, schedulerProvider)
-//        clearInvocations(configObserver, toastObserver, progressObserver)
-//        splashViewModel.imageConfig.observeForever(configObserver)
-//        splashViewModel.error.observeForever(toastObserver)
-//        splashViewModel.loading.observeForever(progressObserver)
-//    }
-//
-//    @Test
-//    fun loadConfigErrorTest() {
-//        // Arrange
-//        val error = "error"
-//        `when`(movieRepository.getConfiguration()).thenReturn(Single.error(Throwable()))
-//        `when`(resourceRepository.getNetworkError()).thenReturn(error)
-//
-//        // Act
-//        splashViewModel.loadConfig()
-//
-//        // Asserts
-//        verify(toastObserver).onChanged(error)
-//        verify(progressObserver).onChanged(true)
-//        verify(progressObserver, atLeast(1)).onChanged(false)
-//        verify(configObserver, never()).onChanged(any(ImageConfig::class.java))
-//        verify(resourceRepository).getNetworkError()
-//    }
-//
-//
-//    @Test
-//    fun loadConfigTest() {
-//        // Arrange
-//        val config = ImageConfig("test", listOf("1", "2", "3"), listOf("1", "2", "3"))
-//        `when`(movieRepository.getConfiguration()).thenReturn(Single.just(config))
-//
-//
-//        // Act
-//        splashViewModel.loadConfig()
-//
-//        // Asserts
-//        verify(toastObserver, never()).onChanged(anyString())
-//        verify(progressObserver).onChanged(true)
-//        verify(progressObserver, atLeast(1)).onChanged(false)
-//        verify(configObserver).onChanged(config)
-//        verify(movieRepository).getConfiguration()
-//    }
-//
-//    @Test
-//    fun showedToastTest() {
-//        // Arrange
-//        val error = "error"
-//        `when`(movieRepository.getConfiguration()).thenReturn(Single.error(Throwable()))
-//        `when`(resourceRepository.getNetworkError()).thenReturn(error)
-//        splashViewModel.loadConfig()
-//        clearInvocations(toastObserver)
-//
-//        // Act
-//        splashViewModel.showedToast()
-//
-//        // Asserts
-//        verify(toastObserver).onChanged(null)
-//
-//
-//    }
-
+    //    @Before
+    //    fun setup() {
+    //        MockitoAnnotations.initMocks(this)
+    //        splashViewModel = SplashViewModel(movieRepository, resourceRepository, schedulerProvider)
+    //        clearInvocations(configObserver, toastObserver, progressObserver)
+    //        splashViewModel.imageConfig.observeForever(configObserver)
+    //        splashViewModel.error.observeForever(toastObserver)
+    //        splashViewModel.loading.observeForever(progressObserver)
+    //    }
+    //
+    //    @Test
+    //    fun loadConfigErrorTest() {
+    //        // Arrange
+    //        val error = "error"
+    //        `when`(movieRepository.getConfiguration()).thenReturn(Single.error(Throwable()))
+    //        `when`(resourceRepository.getNetworkError()).thenReturn(error)
+    //
+    //        // Act
+    //        splashViewModel.loadConfig()
+    //
+    //        // Asserts
+    //        verify(toastObserver).onChanged(error)
+    //        verify(progressObserver).onChanged(true)
+    //        verify(progressObserver, atLeast(1)).onChanged(false)
+    //        verify(configObserver, never()).onChanged(any(ImageConfig::class.java))
+    //        verify(resourceRepository).getNetworkError()
+    //    }
+    //
+    //
+    //    @Test
+    //    fun loadConfigTest() {
+    //        // Arrange
+    //        val config = ImageConfig("test", listOf("1", "2", "3"), listOf("1", "2", "3"))
+    //        `when`(movieRepository.getConfiguration()).thenReturn(Single.just(config))
+    //
+    //
+    //        // Act
+    //        splashViewModel.loadConfig()
+    //
+    //        // Asserts
+    //        verify(toastObserver, never()).onChanged(anyString())
+    //        verify(progressObserver).onChanged(true)
+    //        verify(progressObserver, atLeast(1)).onChanged(false)
+    //        verify(configObserver).onChanged(config)
+    //        verify(movieRepository).getConfiguration()
+    //    }
+    //
+    //    @Test
+    //    fun showedToastTest() {
+    //        // Arrange
+    //        val error = "error"
+    //        `when`(movieRepository.getConfiguration()).thenReturn(Single.error(Throwable()))
+    //        `when`(resourceRepository.getNetworkError()).thenReturn(error)
+    //        splashViewModel.loadConfig()
+    //        clearInvocations(toastObserver)
+    //
+    //        // Act
+    //        splashViewModel.showedToast()
+    //
+    //        // Asserts
+    //        verify(toastObserver).onChanged(null)
+    //
+    //
+    //    }
 }

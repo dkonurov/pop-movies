@@ -69,7 +69,6 @@ open class MovieRepositoryImpl @Inject constructor(
                 details, privateDataSource.baseUrlImg,
                 privateDataSource.posterSize, isFavorite
             )
-
         }
     }
 

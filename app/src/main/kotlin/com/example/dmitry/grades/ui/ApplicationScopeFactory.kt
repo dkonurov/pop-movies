@@ -10,5 +10,4 @@ class ApplicationScopeFactory @Inject constructor() : ViewModelProvider.Factory 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return Toothpick.openScope(Scopes.REMOTE_SCOPE).getInstance(modelClass)
     }
-
 }
