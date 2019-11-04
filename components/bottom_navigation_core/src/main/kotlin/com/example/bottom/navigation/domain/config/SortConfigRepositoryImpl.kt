@@ -3,7 +3,7 @@ package com.example.bottom.navigation.domain.config
 import com.example.core.data.preferences.PrivateDataSource
 import javax.inject.Inject
 
-internal class SortConfigRepositoryImpl @Inject constructor(
+class SortConfigRepositoryImpl @Inject constructor(
     private val privateDataSource: PrivateDataSource
 ) : SortConfigRepository {
 

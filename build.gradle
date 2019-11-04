@@ -10,6 +10,7 @@ buildscript {
             toothpick: '3.0.1',
             coroutine: '1.3.0-RC2',
             androidx : '1.0.2',
+            lifecycle: '2.1.0',
             recycler : '1.0.0',
             glide    : '4.7.1'
     ]
@@ -21,6 +22,7 @@ buildscript {
 
     ext.androidx = [
             core     : "androidx.core:core-ktx:$versions.androidx",
+            lifecycle: "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
             appcompat: "androidx.appcompat:appcompat:$versions.androidx"
     ]
 
@@ -42,7 +44,7 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }

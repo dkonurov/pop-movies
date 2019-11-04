@@ -3,24 +3,15 @@ package com.example.dmitry.grades.ui.movie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.bottom.navigation.ui.MovieRouter
+import androidx.lifecycle.Observer
+import com.example.base.extensions.viewModel
+import com.example.base.ui.ui.activity.DIActivity
 import com.example.dmitry.grades.R
 import com.example.dmitry.grades.ui.movie.details.view.DetailsFragment
 import com.example.navigation.BottomNavFragment
+import toothpick.config.Module
 
-class MainActivity : AppCompatActivity(), MovieRouter {
-
-    override fun showDetails(movieId: Long) {
-        supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.container,
-                    DetailsFragment.newInstance(movieId),
-                    DetailsFragment.javaClass.simpleName
-                )
-                .addToBackStack(DetailsFragment.javaClass.simpleName)
-                .commit()
-    }
+class MainActivity : DIActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,10 +21,22 @@ class MainActivity : AppCompatActivity(), MovieRouter {
                     .add(
                         R.id.container,
                         BottomNavFragment.newInstance(),
-                        BottomNavFragment.javaClass.simpleName
+                        BottomNavFragment::class.java.simpleName
                     )
                     .commit()
         }
+
+        val viewModel = viewModel { getScope().getInstance(MainViewModel::class.java) }
+        viewModel.screens.observe(this, Observer {
+            supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, DetailsFragment.newInstance(it))
+                    .addToBackStack(DetailsFragment::class.java.simpleName)
+                    .commit()
+        })
+    }
+
+    override fun getModules(): Array<Module>? {
+        return arrayOf(MainModule())
     }
 
     companion object {

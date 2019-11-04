@@ -5,7 +5,7 @@ import com.example.favorite.domain.repositories.FavoriteListRepositoryImpl
 import com.example.favorite.list.FavoriteViewModel
 import toothpick.config.Module
 
-class FavoriteListModule : Module() {
+internal class FavoriteListModule : Module() {
 
     init {
         bind(FavoriteViewModel::class.java).to(FavoriteViewModel::class.java).singleton()

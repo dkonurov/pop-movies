@@ -5,32 +5,16 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.base.ui.ui.fragment.DIFragment
-import com.example.bottom.navigation.di.BottomNavigationCoreScope
-import com.example.bottom.navigation.di.BottomNavigationModule
-import com.example.di.BaseUIScope
+import com.example.navigation.di.BottomNavigationModule
 import com.example.favorite.list.view.FavoriteFragment
 import com.example.movie.list.view.MovieListFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import toothpick.Toothpick
+import kotlinx.android.synthetic.main.fragment_bootom_nav.bottomNav
+import toothpick.config.Module
 
 class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
-
-    private var needLoad = false
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val fragment: androidx.fragment.app.Fragment? = when (item.itemId) {
-            R.id.nav_list -> MovieListFragment.newInstance()
-            R.id.nav_favorite -> FavoriteFragment.newInstance()
-            else -> null
-        }
-        fragment?.let {
-            setFragment(it)
-        }
-        return fragment != null
-    }
-
-    private lateinit var bottomNav: BottomNavigationView
 
     companion object {
         fun newInstance(): BottomNavFragment {
@@ -40,13 +24,20 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
         private const val SELECTED_ID = "com.example.navigation.selected_id"
     }
 
-    override fun createScope() {
-        BaseUIScope.getBaseUIScope().openSubScope(BottomNavigationCoreScope.NAME)
-                .installModules(BottomNavigationModule())
+    private var needLoad = false
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val fragment: Fragment? = when (item.itemId) {
+            R.id.nav_list -> MovieListFragment.newInstance()
+            R.id.nav_favorite -> FavoriteFragment.newInstance()
+            else -> null
+        }
+        fragment?.let(this::setFragment)
+        return fragment != null
     }
 
-    override fun closeScope() {
-        Toothpick.closeScope(BottomNavigationCoreScope.NAME)
+    override fun getModules(): Array<Module>? {
+        return arrayOf(BottomNavigationModule())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,15 +51,15 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_bootom_nav, container, false)
-        bottomNav = rootView.findViewById(R.id.bottomNav)
+    ): View = inflater.inflate(R.layout.fragment_bootom_nav, container, false)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bottomNav.setOnNavigationItemSelectedListener(this)
         if (needLoad) {
             setFragment(MovieListFragment.newInstance())
             needLoad = false
         }
-        return rootView
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -76,9 +67,9 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
         outState.putInt(SELECTED_ID, bottomNav.selectedItemId)
     }
 
-    private fun setFragment(it: androidx.fragment.app.Fragment): Int {
-        return childFragmentManager.beginTransaction()
-                .replace(R.id.nav_container, it)
+    private fun setFragment(fragment: Fragment) {
+        childFragmentManager.beginTransaction()
+                .replace(R.id.nav_container, fragment)
                 .commit()
     }
 }

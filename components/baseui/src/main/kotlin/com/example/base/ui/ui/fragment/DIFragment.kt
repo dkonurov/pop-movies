@@ -1,27 +1,83 @@
 package com.example.base.ui.ui.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import com.example.di.StoreScope
+import toothpick.Scope
+import toothpick.Toothpick
+import toothpick.config.Module
 
-open class DIFragment : BaseFragment() {
+open class DIFragment : BaseFragment(), StoreScope {
 
     private var isSaveState = false
+
+    private lateinit var scope: Scope
+
+    override fun onAttach(context: Context?) {
+        scope = getParentScope().openSubScope(this.javaClass.simpleName)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState == null) {
-            createScope()
+            val modules = getModules()
+            if (modules != null) {
+                scope.installModules(*modules)
+            }
+        }
+        scope.inject(this)
+    }
+
+    private fun getApplicationStore(): StoreScope? {
+        val application = requireActivity().application
+        return if (application is StoreScope) {
+            application
+        } else {
+            null
         }
     }
 
-    protected open fun createScope() {
-        // if need override
+    private fun getParentFragmentStore(): StoreScope? {
+        while (parentFragment != null) {
+            val parent = parentFragment
+            if (parent is StoreScope) {
+                return parent
+            }
+        }
+        return null
     }
 
-    protected open fun closeScope() {
-        // if need override
+    private fun getActivityStore(): StoreScope? {
+        val activity = requireActivity()
+        return if (activity is StoreScope) {
+            activity
+        } else {
+            null
+        }
+    }
+
+    private fun getParentScope(): Scope {
+        val store: StoreScope = getParentFragmentStore()
+                ?: getActivityStore()
+                ?: getApplicationStore()
+                ?: throw IllegalStateException(
+                    "parent fragment or activity or application must be implemented StoreScope"
+                )
+        return store.getScope()
+    }
+
+    protected open fun getModules(): Array<Module>? {
+        return null
+    }
+
+    override fun getScope(): Scope = scope
+
+    private fun closeScope() {
+        Toothpick.closeScope(scope.name)
     }
 
     override fun onStart() {

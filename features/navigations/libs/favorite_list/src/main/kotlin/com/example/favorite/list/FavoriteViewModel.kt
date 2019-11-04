@@ -8,6 +8,7 @@ import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
 import com.example.core.models.entity.Movie
 import com.example.favorite.domain.usecase.FavoriteListUseCase
+import com.example.favorite.list.view.FavoriteListRouter
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ internal class FavoriteViewModel @Inject constructor(
     schedulerProvider: SchedulerProvider,
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
+    private val favoriteListRouter: FavoriteListRouter,
     private val favoriteListUseCase: FavoriteListUseCase
 ) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
 
@@ -72,5 +74,9 @@ internal class FavoriteViewModel @Inject constructor(
                 load()
             }
         }
+    }
+
+    fun showDetails(id: Long) {
+        favoriteListRouter.showDetails(id)
     }
 }

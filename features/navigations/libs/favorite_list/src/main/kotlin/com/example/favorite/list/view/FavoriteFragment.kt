@@ -1,21 +1,18 @@
 package com.example.favorite.list.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
-import com.example.bottom.navigation.di.BottomNavigationCoreScope
-import com.example.bottom.navigation.ui.MovieRouter
 import com.example.core.models.entity.Movie
 import com.example.favorite.di.FavoriteListModule
-import com.example.favorite.di.FavoriteListScope
 import com.example.favorite.list.FavoriteViewModel
 import com.example.favorite.list.R
 import com.example.grid.MovieListAdapter
@@ -24,7 +21,7 @@ import com.example.grid.recycler.SpanSizeLookup
 import kotlinx.android.synthetic.main.fragment_grid.recycler
 import kotlinx.android.synthetic.main.fragment_grid.refresh
 import kotlinx.android.synthetic.main.fragment_grid.toolbar
-import toothpick.Toothpick
+import toothpick.config.Module
 
 class FavoriteFragment : DIFragment(), LoadingView {
 
@@ -34,19 +31,10 @@ class FavoriteFragment : DIFragment(), LoadingView {
         }
     }
 
-    private lateinit var viewModel: FavoriteViewModel
-
-    private var movieRouter: MovieRouter? = null
-
     private lateinit var adapter: MovieListAdapter
 
-    override fun createScope() {
-        Toothpick.openScopes(BottomNavigationCoreScope.NAME, FavoriteListScope.NAME)
-                .installModules(FavoriteListModule())
-    }
-
-    override fun closeScope() {
-        Toothpick.closeScope(FavoriteListScope.NAME)
+    override fun getModules(): Array<Module>? {
+        return arrayOf(FavoriteListModule())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,32 +42,19 @@ class FavoriteFragment : DIFragment(), LoadingView {
         setHasOptionsMenu(true)
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        movieRouter = context as? MovieRouter
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        movieRouter = null
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_grid, container, false)
-        adapter = MovieListAdapter(requireContext()) { movie: Movie ->
-            movieRouter?.showDetails(movie.id)
-        }
-        return rootView
-    }
+    ): View = inflater.inflate(R.layout.fragment_grid, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = Toothpick.openScope(FavoriteListScope.NAME)
-                .getInstance(FavoriteViewModel::class.java)
+        val viewModel = viewModel { getScope().getInstance(FavoriteViewModel::class.java) }
+        adapter = MovieListAdapter(requireContext()) { movie: Movie ->
+            viewModel.showDetails(movie.id)
+        }
+
         compatActivity?.let {
             it.setSupportActionBar(toolbar)
             it.setTitle(R.string.favorite_title)
@@ -93,7 +68,7 @@ class FavoriteFragment : DIFragment(), LoadingView {
         refresh.setOnRefreshListener {
             viewModel.forceLoad()
         }
-        initViewModel()
+        initViewModel(viewModel)
     }
 
     override fun showLoading() {
@@ -104,7 +79,7 @@ class FavoriteFragment : DIFragment(), LoadingView {
         refresh.isRefreshing = false
     }
 
-    private fun initViewModel() {
+    private fun initViewModel(viewModel: FavoriteViewModel) {
         viewModel.movies.observe(this, Observer {
             adapter.setData(it)
         })

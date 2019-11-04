@@ -22,10 +22,7 @@ internal class MovieListRepositoryImpl @Inject constructor(
     ): MovieResponse {
 
         val list = withContext(schedulerProvider.io()) {
-            movieDao.getMovies(
-                (page - 1) * config.perPage,
-                config.perPage
-            )
+            movieDao.getMovies((page - 1) * config.perPage, config.perPage)
         }
         return if (list.isEmpty()) {
             getRemoteMovies(page, sortBy)

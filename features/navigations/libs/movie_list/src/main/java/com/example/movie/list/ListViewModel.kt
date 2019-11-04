@@ -11,6 +11,7 @@ import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
 import com.example.core.models.entity.Movie
 import com.example.movie.domain.usecase.MovieListUseCase
+import com.example.movie.list.view.MovieListRouter
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ internal class ListViewModel @Inject constructor(
     schedulerProvider: SchedulerProvider,
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
+    private val movieListRouter: MovieListRouter,
     private val movieListUseCase: MovieListUseCase,
     private val sortConfigRepository: SortConfigRepository,
     private val config: Config
@@ -94,5 +96,9 @@ internal class ListViewModel @Inject constructor(
                 load()
             }
         }
+    }
+
+    fun showDetails(movieId: Long) {
+        movieListRouter.showDetails(movieId)
     }
 }

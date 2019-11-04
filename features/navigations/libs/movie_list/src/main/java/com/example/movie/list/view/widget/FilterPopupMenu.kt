@@ -1,20 +1,21 @@
 package com.example.movie.list.view.widget
 
-import android.content.Context
 import android.view.View
 import android.widget.PopupMenu
-import com.example.movie.list.ListViewModel
-import com.example.movie.R
+import com.example.base.extensions.viewModel
 import com.example.bottom.navigation.ui.models.FilterType
-import com.example.movie.di.MovieListScope
-import toothpick.Toothpick
+import com.example.movie.R
+import com.example.movie.list.ListViewModel
+import com.example.movie.list.view.MovieListFragment
 
-internal class FilterPopupMenu(context: Context, anchorView: View) :
-    PopupMenu(context, anchorView) {
+internal class FilterPopupMenu(fragment: MovieListFragment, anchorView: View) :
+    PopupMenu(fragment.requireContext(), anchorView) {
 
     init {
-        val viewModel = Toothpick.openScope(MovieListScope.NAME)
-                .getInstance(ListViewModel::class.java)
+        val viewModel = fragment.viewModel {
+            fragment.getScope().getInstance(ListViewModel::class.java)
+        }
+
         menuInflater.inflate(R.menu.filter_list, menu)
         setOnMenuItemClickListener { item ->
             when (item.itemId) {

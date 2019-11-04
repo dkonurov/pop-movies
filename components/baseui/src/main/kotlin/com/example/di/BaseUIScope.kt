@@ -12,7 +12,7 @@ object BaseUIScope {
     fun initBaseUIScope(parent: Scope): Scope {
 
         return parent.openSubScope(NAME).apply {
-            installModules(BaseUIModule())
+            installModules(RemoteModule())
             isInit = true
         }
     }

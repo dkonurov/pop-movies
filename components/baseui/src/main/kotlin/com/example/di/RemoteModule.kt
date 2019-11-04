@@ -8,7 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import toothpick.config.Module
 
-class BaseUIModule : Module() {
+class RemoteModule : Module() {
 
     init {
         //schedulers
