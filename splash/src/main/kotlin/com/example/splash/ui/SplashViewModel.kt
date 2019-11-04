@@ -37,4 +37,3 @@ internal class SplashViewModel @Inject constructor(
         splashNavigator.nextScreen(context)
     }
 }
-

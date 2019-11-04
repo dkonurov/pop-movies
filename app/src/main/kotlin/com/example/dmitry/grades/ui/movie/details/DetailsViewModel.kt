@@ -43,7 +43,6 @@ class DetailsViewModel @Inject constructor(
                 _movie.value = it
             }
         }
-
     }
 
     fun removeFavorite() {
@@ -54,6 +53,5 @@ class DetailsViewModel @Inject constructor(
                 _movie.value = it
             }
         }
-
     }
 }

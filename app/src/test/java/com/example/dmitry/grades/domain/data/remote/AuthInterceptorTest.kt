@@ -1,7 +1,13 @@
 package com.example.dmitry.grades.domain.data.remote
 
 import junit.framework.Assert
-import okhttp3.*
+import okhttp3.HttpUrl
+import okhttp3.Interceptor
+import okhttp3.MediaType
+import okhttp3.Protocol
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentCaptor
@@ -16,10 +22,8 @@ class AuthInterceptorTest {
 
     private val mediaType = MediaType.parse("application/json")
 
-
     @Mock
     private lateinit var chain: Interceptor.Chain
-
 
     @Before
     fun setup() {

@@ -4,8 +4,8 @@ import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
-import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.core.models.DetailsMovie
+import com.example.dmitry.grades.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.response.DiscoverResponse
 import com.example.dmitry.grades.domain.models.ui.MovieListInfo
@@ -13,7 +13,11 @@ import com.example.dmitry.grades.domain.models.ui.ViewMovie
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
-import org.mockito.*
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import org.mockito.Spy
 import java.util.concurrent.atomic.AtomicInteger
 
 class MovieRepositoryTest {
@@ -58,8 +62,14 @@ class MovieRepositoryTest {
     fun getMoviesRemoteErrorTest() {
         // Arrange
         val error = Throwable()
-        Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Single.just(arrayListOf()))
-        Mockito.`when`(httpDataSource.getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))).thenReturn(Single.error(error))
+        Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt()))
+                .thenReturn(Single.just(arrayListOf()))
+        Mockito.`when`(
+            httpDataSource.getListMovies(
+                Mockito.anyInt(),
+                Mockito.nullable(String::class.java)
+            )
+        ).thenReturn(Single.error(error))
 
         // Act
         val testObserver = movieRepository.getMovies().test()
@@ -81,8 +91,10 @@ class MovieRepositoryTest {
         list[0].posterPath = null
         val info = MovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, list, 1)
         testObserver.assertValue(info)
-        Mockito.verify(httpDataSource, Mockito.never()).getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
-        Mockito.verify(movieMapper).toMovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
+        Mockito.verify(httpDataSource, Mockito.never())
+                .getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
+        Mockito.verify(movieMapper)
+                .toMovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
     }
 
     @Test
@@ -101,11 +113,15 @@ class MovieRepositoryTest {
                         Single.just(list)
                     }
                 }
-        Mockito.`when`(httpDataSource.getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java)))
+        Mockito.`when`(
+            httpDataSource.getListMovies(
+                Mockito.anyInt(),
+                Mockito.nullable(String::class.java)
+            )
+        )
                 .thenReturn(Single.just(DiscoverResponse(page, 3000, totalPage, list)))
         // Act
         val testObserver = movieRepository.getMovies(page).test()
-
 
         // Asserts
         list[0].posterPath = null
@@ -120,7 +136,12 @@ class MovieRepositoryTest {
     fun findMovieError() {
         // Arrange
         val error = Throwable()
-        Mockito.`when`(httpDataSource.getDetailsMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
+        Mockito.`when`(
+            httpDataSource.getDetailsMovie(
+                Mockito.anyLong(),
+                Mockito.nullable(String::class.java)
+            )
+        )
                 .thenReturn(Single.error(error))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
@@ -133,28 +154,40 @@ class MovieRepositoryTest {
     fun findMovie() {
         // Arrange
         val details = prepareDetails()
-        Mockito.`when`(httpDataSource.getDetailsMovie(Mockito.anyLong(), Mockito.nullable(String::class.java)))
+        Mockito.`when`(
+            httpDataSource.getDetailsMovie(
+                Mockito.anyLong(),
+                Mockito.nullable(String::class.java)
+            )
+        )
                 .thenReturn(Single.just(details))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
 
         // Asserts
-        testObserver.assertValue(ViewMovie(details.id, details.title, details.overview, null, details.releaseDate,
-                details.runtime, details.releaseDate, false))
+        testObserver.assertValue(
+            ViewMovie(
+                details.id, details.title, details.overview, null, details.releaseDate,
+                details.runtime, details.releaseDate, false
+            )
+        )
         Mockito.verify(movieMapper).toViewMovie(details, null, null, false)
     }
 
     private fun prepareList(): MutableList<Movie> {
-        val movie = Movie(1, 1, "test", false, "test",
-                "test", listOf(1, 2, 3), "test", "test",
-                "test", "test", 0.0, 1, false, 0.2)
+        val movie = Movie(
+            1, 1, "test", false, "test",
+            "test", listOf(1, 2, 3), "test", "test",
+            "test", "test", 0.0, 1, false, 0.2
+        )
         return arrayListOf(movie)
     }
 
     private fun prepareDetails(): DetailsMovie {
-        return DetailsMovie(1, 1, "test", false, "test",
-                "test", listOf(1, 2, 3), "test", "test",
-                "test", "test", 0.0, 1, false, "60", 0.2)
+        return DetailsMovie(
+            1, 1, "test", false, "test",
+            "test", listOf(1, 2, 3), "test", "test",
+            "test", "test", 0.0, 1, false, "60", 0.2
+        )
     }
-
 }

@@ -12,7 +12,7 @@ import javax.inject.Inject
 class RemoteModule @Inject constructor() : Module() {
 
     init {
-        //repostories
+        // repostories
         bind(MovieRepository::class.java).to(MovieRepositoryImpl::class.java)
         bind(BaseConfigRepository::class.java).to(BaseConfigRepositoryImpl::class.java)
         bind(FavoriteRepository::class.java).to(FavoriteRepositoryImpl::class.java)

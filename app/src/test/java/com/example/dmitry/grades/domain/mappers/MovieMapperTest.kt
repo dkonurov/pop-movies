@@ -8,7 +8,6 @@ import org.junit.Test
 
 class MovieMapperTest {
 
-
     private val movieMapper = MovieMapper()
 
     @Test
@@ -158,21 +157,24 @@ class MovieMapperTest {
         Assert.assertEquals(viewMovie.id, favorite.id)
     }
 
-
     private fun prepareViewMovie(): ViewMovie {
         return ViewMovie(1, "test", "test", null, "test", null, "test", false)
     }
 
     private fun prepareList(): MutableList<Movie> {
-        val movie = Movie(1, 1, "test", false, "test",
-                "test", listOf(1, 2, 3), "test", "test",
-                "test", "test", 0.0, 1, false, 0.2)
+        val movie = Movie(
+            1, 1, "test", false, "test",
+            "test", listOf(1, 2, 3), "test", "test",
+            "test", "test", 0.0, 1, false, 0.2
+        )
         return arrayListOf(movie)
     }
 
     private fun prepareDetails(): DetailsMovie {
-        return DetailsMovie(1, 1, "test", false, "test",
-                "test", listOf(1, 2, 3), "test", "test",
-                "test", "test", 0.0, 1, false, "60", 0.2)
+        return DetailsMovie(
+            1, 1, "test", false, "test",
+            "test", listOf(1, 2, 3), "test", "test",
+            "test", "test", 0.0, 1, false, "60", 0.2
+        )
     }
 }

@@ -15,7 +15,6 @@ open class AppDelegate : Application() {
         super.onCreate()
         initToothpick()
         initBaseScopes()
-
     }
 
     private fun initBaseScopes() {
