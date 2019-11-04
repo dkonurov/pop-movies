@@ -67,7 +67,6 @@ class ListAdapter(private val clickListener: (Movie) -> Unit) :
         items.clear()
         items.addAll(saveMovies)
         result.dispatchUpdatesTo(this)
-
     }
 
     fun isFooter(position: Int): Boolean {

@@ -51,7 +51,6 @@ class PrivateDataSourceImplTest {
         Assert.assertEquals(privateDataSourceImpl.baseUrlImg, "test")
     }
 
-
     @Test
     fun savePosterSizesNull() {
         // Arrange
@@ -129,7 +128,13 @@ class PrivateDataSourceImplTest {
     @Test
     fun saveImageConfNull() {
         // Arrange
-        privateDataSourceImpl.saveImageConfig(ImageConfig("test", listOf("1", "2"), listOf("3", "4")))
+        privateDataSourceImpl.saveImageConfig(
+            ImageConfig(
+                "test",
+                listOf("1", "2"),
+                listOf("3", "4")
+            )
+        )
 
         // Act
         privateDataSourceImpl.saveImageConfig(null)
@@ -183,7 +188,13 @@ class PrivateDataSourceImplTest {
     @Test
     fun saveImageConf() {
         // Arrange
-        privateDataSourceImpl.saveImageConfig(ImageConfig("test", listOf("1", "2"), listOf("3", "4")))
+        privateDataSourceImpl.saveImageConfig(
+            ImageConfig(
+                "test",
+                listOf("1", "2"),
+                listOf("3", "4")
+            )
+        )
         val posters = listOf("1", "2", "3")
         val logos = listOf("4", "5", "6")
         val config = ImageConfig("test", logos, posters)
@@ -232,5 +243,4 @@ class PrivateDataSourceImplTest {
         // Asserts
         Assert.assertEquals(privateDataSourceImpl.sortBy, "test2")
     }
-
 }

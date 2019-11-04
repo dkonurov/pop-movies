@@ -135,9 +135,10 @@ class FavoriteFragment : DIFragment(), LoadingView {
                 val totalItemCount = layoutManager.itemCount
                 val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                    && totalItemCount >= 4) {
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+                    firstVisibleItemPosition >= 0 &&
+                    totalItemCount >= 4
+                ) {
                     viewModel.loadMore()
                 }
             }
@@ -174,5 +175,4 @@ class FavoriteFragment : DIFragment(), LoadingView {
             viewModel.load()
         }
     }
-
 }

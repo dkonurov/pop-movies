@@ -9,5 +9,4 @@ internal class SplashScopeFactory @Inject constructor() : ViewModelProvider.Fact
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return Toothpick.openScope(SplashScope.SPLASH_SCOPE).getInstance(modelClass)
     }
-
 }

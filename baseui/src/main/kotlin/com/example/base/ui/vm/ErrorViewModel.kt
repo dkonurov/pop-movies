@@ -84,5 +84,4 @@ open class ErrorViewModel(
     override fun hideLoading() {
         _loading.value = false
     }
-
 }
