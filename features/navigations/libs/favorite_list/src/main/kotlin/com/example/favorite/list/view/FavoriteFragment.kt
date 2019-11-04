@@ -89,5 +89,4 @@ class FavoriteFragment : DIFragment(), LoadingView {
             viewModel.load()
         }
     }
-
 }

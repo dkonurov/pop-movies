@@ -17,6 +17,5 @@ class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         } else {
             image.setImageBitmap(null)
         }
-
     }
 }

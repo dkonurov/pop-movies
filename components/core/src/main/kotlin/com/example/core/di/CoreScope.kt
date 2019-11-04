@@ -15,7 +15,6 @@ object CoreScope {
             installModules(CoreModule(context))
             isInit = true
         }
-
     }
 
     fun getCoreScope(): Scope {

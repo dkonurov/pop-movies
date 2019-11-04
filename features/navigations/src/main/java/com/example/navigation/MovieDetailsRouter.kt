@@ -19,5 +19,4 @@ class ChildMovieRouterImpl @Inject constructor(
     override fun showDetails(movieId: Long) {
         movieDetailsRouter.showDetails(movieId)
     }
-
 }

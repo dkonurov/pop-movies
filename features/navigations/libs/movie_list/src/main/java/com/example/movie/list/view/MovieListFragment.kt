@@ -116,5 +116,4 @@ class MovieListFragment : DIFragment(), LoadingView {
     override fun hideLoading() {
         refresh.isRefreshing = false
     }
-
 }

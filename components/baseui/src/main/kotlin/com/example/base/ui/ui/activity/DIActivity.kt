@@ -45,5 +45,4 @@ open class DIActivity : AppCompatActivity(), StoreScope {
     protected open fun closeScope() {
         Toothpick.closeScope(scope.name)
     }
-
 }
