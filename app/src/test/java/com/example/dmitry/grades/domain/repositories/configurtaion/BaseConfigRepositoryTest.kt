@@ -29,7 +29,8 @@ class BaseConfigRepositoryTest {
     @Test
     fun getConfigurationEmptyTest() {
         // Arrange
-        Mockito.`when`(httpDataSource.getConfiguration()).thenReturn(Single.just(ConfigResponse(null)))
+        Mockito.`when`(httpDataSource.getConfiguration())
+                .thenReturn(Single.just(ConfigResponse(null)))
 
         // Act
         val testObserver = baseConfigRepository.getConfiguration().test()
@@ -40,13 +41,13 @@ class BaseConfigRepositoryTest {
         }
     }
 
-
     @Test
     fun getConfigurationTest() {
         // Arrange
         val config = ImageConfig("test", listOf("1"), listOf("2"))
         Mockito.`when`(httpDataSource.getConfiguration()).thenReturn(
-                Single.just(ConfigResponse(config)))
+            Single.just(ConfigResponse(config))
+        )
         Mockito.`when`(privateDataSource.baseUrlImg).thenReturn("test")
 
         // Act

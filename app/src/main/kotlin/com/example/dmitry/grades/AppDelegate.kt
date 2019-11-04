@@ -17,7 +17,6 @@ open class AppDelegate : Application(), StoreScope {
         super.onCreate()
         initToothpick()
         initScopes()
-
     }
 
     private fun initScopes() {

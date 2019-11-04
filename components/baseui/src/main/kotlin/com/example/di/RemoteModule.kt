@@ -11,10 +11,10 @@ import toothpick.config.Module
 class RemoteModule : Module() {
 
     init {
-        //schedulers
+        // schedulers
         bind(SchedulerProvider::class.java).toInstance(SchedulerProviderImpl())
 
-        //scopes
+        // scopes
         bind(CompletableJob::class.java).toProviderInstance { SupervisorJob() }
         bind(CoroutineScope::class.java).toProvider(CoroutineScopeProvider::class.java)
     }

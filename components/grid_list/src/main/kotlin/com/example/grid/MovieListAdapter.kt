@@ -66,7 +66,6 @@ class MovieListAdapter(
         } else {
             result.dispatchUpdatesTo(this)
         }
-
     }
 
     fun isFooter(position: Int): Boolean {

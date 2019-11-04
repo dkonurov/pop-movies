@@ -8,7 +8,7 @@ import javax.inject.Inject
 class RemoteModule @Inject constructor() : Module() {
 
     init {
-        //repostories
+        // repostories
         bind(MovieRepository::class.java).to(MovieRepositoryImpl::class.java)
     }
 }

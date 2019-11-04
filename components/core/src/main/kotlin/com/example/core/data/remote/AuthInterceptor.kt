@@ -20,5 +20,4 @@ internal class AuthInterceptor(private val key: String) : Interceptor {
         }
         return chain.proceed(originalRequest)
     }
-
 }
