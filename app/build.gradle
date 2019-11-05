@@ -39,6 +39,7 @@ dependencies {
     kapt toothpick.compiler
     implementation project(':features:splash')
     implementation project(':features:navigations')
+    implementation project(':features:details')
     //android
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

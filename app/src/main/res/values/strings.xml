@@ -7,7 +7,6 @@
     <string name="release_date">Release Date</string>
     <string name="vote_count">Vote count</string>
     <string name="list.title">Popular Movie</string>
-    <string name="details.title">Details Movie</string>
     <string name="nav.list">List</string>
     <string name="nav.favorite">Favorite</string>
     <string name="title_activity_main2">Main2Activity</string>

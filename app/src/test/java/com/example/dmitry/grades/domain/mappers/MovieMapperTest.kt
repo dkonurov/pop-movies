@@ -2,13 +2,13 @@ package com.example.dmitry.grades.domain.mappers
 
 import com.example.core.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
-import com.example.dmitry.grades.domain.models.ui.ViewMovie
+import com.example.details.view.ViewMovie
 import junit.framework.Assert
 import org.junit.Test
 
 class MovieMapperTest {
 
-    private val movieMapper = MovieMapper()
+    private val movieMapper = com.example.details.domain.mappers.MovieMapper()
 
     @Test
     fun toMovieListNullPosterTest() {
@@ -157,8 +157,17 @@ class MovieMapperTest {
         Assert.assertEquals(viewMovie.id, favorite.id)
     }
 
-    private fun prepareViewMovie(): ViewMovie {
-        return ViewMovie(1, "test", "test", null, "test", null, "test", false)
+    private fun prepareViewMovie(): com.example.details.view.ViewMovie {
+        return com.example.details.view.ViewMovie(
+            1,
+            "test",
+            "test",
+            null,
+            "test",
+            null,
+            "test",
+            false
+        )
     }
 
     private fun prepareList(): MutableList<Movie> {
