@@ -6,7 +6,6 @@ import com.example.di.BaseUIScope
 import com.example.di.StoreScope
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
-import com.example.dmitry.grades.di.modules.RemoteModule
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
@@ -25,11 +24,9 @@ open class AppDelegate : Application(), StoreScope {
                 .installModules(AppModule())
 
         BaseUIScope.initBaseUIScope(appScore)
-                .openSubScope(Scopes.REMOTE_SCOPE)
-                .installModules(RemoteModule())
     }
 
-    override fun getScope(): Scope = Toothpick.openScope(Scopes.REMOTE_SCOPE)
+    override fun getScope(): Scope = BaseUIScope.getBaseUIScope()
 
     private fun initToothpick() {
         if (BuildConfig.DEBUG) {

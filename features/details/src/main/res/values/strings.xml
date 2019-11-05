@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">details</string>
+    <string name="details.title">Details Movie</string>
+</resources>

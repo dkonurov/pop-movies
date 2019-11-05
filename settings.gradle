@@ -6,4 +6,5 @@ include ':app',
         ':features:splash',
         ':features:navigations',
         ':features:navigations:libs:movie_list',
-        ':features:navigations:libs:favorite_list'
+        ':features:navigations:libs:favorite_list',
+        ':features:details'

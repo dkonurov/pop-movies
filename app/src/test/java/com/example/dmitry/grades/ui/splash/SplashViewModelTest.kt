@@ -1,7 +1,7 @@
 package com.example.dmitry.grades.ui.splash
 
 import androidx.lifecycle.Observer
-import com.example.dmitry.grades.domain.repositories.movie.MovieRepositoryImpl
+import com.example.details.domain.movie.MovieRepositoryImpl
 import com.example.dmitry.grades.domain.schedulers.SchedulerProvider
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +13,7 @@ import org.robolectric.RobolectricTestRunner
 class SplashViewModelTest {
 
     @Mock
-    private lateinit var movieRepository: MovieRepositoryImpl
+    private lateinit var movieRepository: com.example.details.domain.movie.MovieRepositoryImpl
 
     @Mock
     private lateinit var resourceRepository: ResourceRepository

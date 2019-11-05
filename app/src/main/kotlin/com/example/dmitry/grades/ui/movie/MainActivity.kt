@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.example.base.extensions.viewModel
 import com.example.base.ui.ui.activity.DIActivity
+import com.example.details.view.DetailsFragment
 import com.example.dmitry.grades.R
-import com.example.dmitry.grades.ui.movie.details.view.DetailsFragment
 import com.example.navigation.BottomNavFragment
 import toothpick.config.Module
 

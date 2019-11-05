@@ -5,11 +5,10 @@ import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
 import com.example.core.models.DetailsMovie
-import com.example.dmitry.grades.domain.mappers.MovieMapper
+import com.example.details.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.response.DiscoverResponse
-import com.example.dmitry.grades.domain.models.ui.MovieListInfo
-import com.example.dmitry.grades.domain.models.ui.ViewMovie
+import com.example.details.view.ViewMovie
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -23,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger
 class MovieRepositoryTest {
 
     @InjectMocks
-    private lateinit var movieRepository: MovieRepositoryImpl
+    private lateinit var movieRepository: com.example.details.domain.movie.MovieRepositoryImpl
 
     @Mock
     private lateinit var privateDataSource: PrivateDataSource
@@ -38,7 +37,7 @@ class MovieRepositoryTest {
     private lateinit var favoriteDao: FavoriteDao
 
     @Spy
-    private lateinit var movieMapper: MovieMapper
+    private lateinit var movieMapper: com.example.details.domain.mappers.MovieMapper
 
     @Before
     fun setup() {
@@ -89,12 +88,12 @@ class MovieRepositoryTest {
 
         // Asserts
         list[0].posterPath = null
-        val info = MovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, list, 1)
+        val info = MovieListInfo(com.example.details.domain.movie.MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, list, 1)
         testObserver.assertValue(info)
         Mockito.verify(httpDataSource, Mockito.never())
                 .getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
         Mockito.verify(movieMapper)
-                .toMovieListInfo(MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
+                .toMovieListInfo(com.example.details.domain.movie.MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
     }
 
     @Test
@@ -166,7 +165,7 @@ class MovieRepositoryTest {
 
         // Asserts
         testObserver.assertValue(
-            ViewMovie(
+            com.example.details.view.ViewMovie(
                 details.id, details.title, details.overview, null, details.releaseDate,
                 details.runtime, details.releaseDate, false
             )
