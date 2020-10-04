@@ -10,8 +10,8 @@ import com.example.grid.holders.LoadingViewHolder
 import com.example.grid.holders.MovieDiffUtils
 
 class MovieListAdapter(
-    context: Context,
-    private val clickListener: (Movie) -> Unit
+        context: Context,
+        private val clickListener: MovieClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -26,18 +26,19 @@ class MovieListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
             LoadingViewHolder(
-                layoutInflater.inflate(R.layout.list_item_loading, parent, false)
+                    layoutInflater.inflate(R.layout.list_item_loading, parent, false)
             )
         } else {
-            val holder = GridViewHolder(
-                layoutInflater.inflate(R.layout.list_item_grid, parent, false)
-            )
-            holder.itemView.setOnClickListener {
-                if (holder.adapterPosition != RecyclerView.NO_POSITION) {
-                    clickListener(items[holder.adapterPosition])
+            return GridViewHolder(
+                    layoutInflater.inflate(R.layout.list_item_grid, parent, false)
+            ).apply {
+                itemView.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        clickListener.onClick(items[position])
+                    }
                 }
             }
-            holder
         }
     }
 

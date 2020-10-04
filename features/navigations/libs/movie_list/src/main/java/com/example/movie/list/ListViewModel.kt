@@ -77,9 +77,9 @@ internal class ListViewModel @Inject constructor(
 
     fun filter(filterType: FilterType) {
         val text = when (filterType) {
-            FilterType.RELEASE_DATE -> FilterType.RELEASE_DATE.text()
-            FilterType.VOTE_COUNT -> FilterType.VOTE_COUNT.text()
-            else -> FilterType.POPULARITY.text()
+            FilterType.RELEASE_DATE -> FilterType.RELEASE_DATE.text
+            FilterType.VOTE_COUNT -> FilterType.VOTE_COUNT.text
+            else -> FilterType.POPULARITY.text
         }
         if (text != _sortyBy) {
             sortConfigRepository.sortBy = text
