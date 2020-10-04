@@ -2,7 +2,6 @@ package com.example.dmitry.grades.domain.mappers
 
 import com.example.core.models.DetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
-import com.example.details.view.ViewMovie
 import junit.framework.Assert
 import org.junit.Test
 
@@ -111,9 +110,9 @@ class MovieMapperTest {
     fun toViewMovieYearMin4Test() {
         // Arrange
         val movie = prepareDetails()
-                .apply {
-                    releaseDate = "a"
-                }
+            .apply {
+                releaseDate = "a"
+            }
 
         // Act
         val viewMovie = movieMapper.toViewMovie(movie, "test1", "test2", false)

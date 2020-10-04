@@ -11,7 +11,7 @@ import com.example.grid.holders.MovieDiffUtils
 
 class MovieListAdapter(
     context: Context,
-    private val clickListener: (Movie) -> Unit
+    private val clickListener: MovieClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -29,15 +29,16 @@ class MovieListAdapter(
                 layoutInflater.inflate(R.layout.list_item_loading, parent, false)
             )
         } else {
-            val holder = GridViewHolder(
+            return GridViewHolder(
                 layoutInflater.inflate(R.layout.list_item_grid, parent, false)
-            )
-            holder.itemView.setOnClickListener {
-                if (holder.adapterPosition != RecyclerView.NO_POSITION) {
-                    clickListener(items[holder.adapterPosition])
+            ).apply {
+                itemView.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        clickListener.onClick(items[position])
+                    }
                 }
             }
-            holder
         }
     }
 

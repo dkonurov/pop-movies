@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
@@ -18,9 +17,7 @@ import com.example.favorite.list.R
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
-import kotlinx.android.synthetic.main.fragment_grid.recycler
-import kotlinx.android.synthetic.main.fragment_grid.refresh
-import kotlinx.android.synthetic.main.fragment_grid.toolbar
+import kotlinx.android.synthetic.main.fragment_grid.*
 import toothpick.config.Module
 
 class FavoriteFragment : DIFragment(), LoadingView {
@@ -80,9 +77,12 @@ class FavoriteFragment : DIFragment(), LoadingView {
     }
 
     private fun initViewModel(viewModel: FavoriteViewModel) {
-        viewModel.movies.observe(this, Observer {
-            adapter.setData(it)
-        })
+        viewModel.movies.observe(
+            this,
+            {
+                adapter.setData(it)
+            }
+        )
         viewModel.loading.observe(this, LoadingObserver(this))
         ErrorHandler.handleError(viewModel, this)
         if (viewModel.movies.value == null) {

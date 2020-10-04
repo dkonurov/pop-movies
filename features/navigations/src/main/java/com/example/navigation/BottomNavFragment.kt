@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.base.ui.ui.fragment.DIFragment
-import com.example.navigation.di.BottomNavigationModule
 import com.example.favorite.list.view.FavoriteFragment
 import com.example.movie.list.view.MovieListFragment
+import com.example.navigation.di.BottomNavigationModule
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_bootom_nav.bottomNav
+import kotlinx.android.synthetic.main.fragment_bootom_nav.*
 import toothpick.config.Module
 
 class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -69,7 +69,7 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
 
     private fun setFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
-                .replace(R.id.nav_container, fragment)
-                .commit()
+            .replace(R.id.nav_container, fragment)
+            .commit()
     }
 }

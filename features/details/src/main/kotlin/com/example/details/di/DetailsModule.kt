@@ -12,7 +12,7 @@ internal class DetailsModule(private val movieId: Long) : Module() {
         bind(MovieMapper::class.java).to(MovieMapper::class.java).singleton()
         bind(MovieRepository::class.java).to(MovieRepositoryImpl::class.java).singleton()
         bind(PrimitiveWrapper::class.java)
-                .withName(MovieId::class.java)
-                .toInstance(PrimitiveWrapper(movieId))
+            .withName(MovieId::class.java)
+            .toInstance(PrimitiveWrapper(movieId))
     }
 }

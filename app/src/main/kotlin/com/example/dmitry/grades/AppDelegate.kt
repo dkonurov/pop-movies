@@ -20,8 +20,8 @@ open class AppDelegate : Application(), StoreScope {
 
     private fun initScopes() {
         val appScore = CoreScope.initCoreScope(this)
-                .openSubScope(Scopes.APP_SCOPE)
-                .installModules(AppModule())
+            .openSubScope(Scopes.APP_SCOPE)
+            .installModules(AppModule())
 
         BaseUIScope.initBaseUIScope(appScore)
     }

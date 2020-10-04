@@ -10,6 +10,6 @@ internal class FavoriteListModule : Module() {
     init {
         bind(FavoriteViewModel::class.java).to(FavoriteViewModel::class.java).singleton()
         bind(FavoriteListRepository::class.java).to(FavoriteListRepositoryImpl::class.java)
-                .singleton()
+            .singleton()
     }
 }

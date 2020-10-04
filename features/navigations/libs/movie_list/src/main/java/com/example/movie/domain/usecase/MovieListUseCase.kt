@@ -1,8 +1,8 @@
 package com.example.movie.domain.usecase
 
-import com.example.movie.domain.repositories.MovieListRepository
-import com.example.bottom.navigation.ui.models.MovieListInfo
 import com.example.bottom.navigation.domain.mappers.MovieListMapper
+import com.example.bottom.navigation.ui.models.MovieListInfo
+import com.example.movie.domain.repositories.MovieListRepository
 import javax.inject.Inject
 
 internal class MovieListUseCase

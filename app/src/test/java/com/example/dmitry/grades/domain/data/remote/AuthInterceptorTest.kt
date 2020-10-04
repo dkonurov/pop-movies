@@ -35,9 +35,9 @@ class AuthInterceptorTest {
         // Arrange
         val testUrl = "http://test.ru"
         val request = Request.Builder().post(RequestBody.create(mediaType, "{}"))
-                .url(HttpUrl.get(testUrl)).build()
+            .url(HttpUrl.get(testUrl)).build()
         val response = Response.Builder().request(request)
-                .protocol(Protocol.HTTP_1_0).message("any").code(200).build()
+            .protocol(Protocol.HTTP_1_0).message("any").code(200).build()
         Mockito.`when`(chain.request()).thenReturn(request)
         Mockito.`when`(chain.proceed(any(Request::class.java))).thenReturn(response)
 
@@ -54,9 +54,9 @@ class AuthInterceptorTest {
         val testUrl = "http://test.ru"
         val argument = ArgumentCaptor.forClass(Request::class.java)
         val request = Request.Builder().get()
-                .url(HttpUrl.get(testUrl)).build()
+            .url(HttpUrl.get(testUrl)).build()
         val response = Response.Builder().request(request)
-                .protocol(Protocol.HTTP_1_0).message("any").code(200).build()
+            .protocol(Protocol.HTTP_1_0).message("any").code(200).build()
         Mockito.`when`(chain.request()).thenReturn(request)
         Mockito.`when`(chain.proceed(any(Request::class.java))).thenReturn(response)
 
