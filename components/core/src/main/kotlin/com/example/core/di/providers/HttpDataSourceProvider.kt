@@ -27,18 +27,18 @@ internal class HttpDataSourceProvider @Inject constructor(
             level = HttpLoggingInterceptor.Level.BODY
         }
         return OkHttpClient.Builder()
-                .addInterceptor(AuthInterceptor(key))
-                .addInterceptor(httpLogger)
-                .connectTimeout(serverInfo.connectTimeout, TimeUnit.SECONDS)
-                .writeTimeout(serverInfo.timeoutWrite, TimeUnit.SECONDS)
-                .readTimeout(serverInfo.timeoutRead, TimeUnit.SECONDS)
-                .build()
+            .addInterceptor(AuthInterceptor(key))
+            .addInterceptor(httpLogger)
+            .connectTimeout(serverInfo.connectTimeout, TimeUnit.SECONDS)
+            .writeTimeout(serverInfo.timeoutWrite, TimeUnit.SECONDS)
+            .readTimeout(serverInfo.timeoutRead, TimeUnit.SECONDS)
+            .build()
     }
 
     private fun provideRetrofit(url: String, key: String, serverInfo: ServerInfo) =
-            Retrofit.Builder()
-                    .baseUrl(url)
-                    .client(provideOkhttpClient(key, serverInfo))
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build()
+        Retrofit.Builder()
+            .baseUrl(url)
+            .client(provideOkhttpClient(key, serverInfo))
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
 }

@@ -7,5 +7,5 @@ class SpanSizeLookup(
     private val isFooter: (Int) -> Boolean
 ) : GridLayoutManager.SpanSizeLookup() {
     override fun getSpanSize(position: Int): Int =
-            if (isFooter.invoke(position)) layoutManager.spanCount else 1
+        if (isFooter.invoke(position)) layoutManager.spanCount else 1
 }

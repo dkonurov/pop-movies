@@ -27,7 +27,7 @@ open class DIActivity : AppCompatActivity(), StoreScope {
 
     private fun getApplicationScope(): Scope {
         val store = application as? StoreScope
-                ?: throw IllegalStateException("application must be implemented StoreScope")
+            ?: throw IllegalStateException("application must be implemented StoreScope")
         return store.getScope()
     }
 

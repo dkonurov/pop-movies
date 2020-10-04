@@ -30,7 +30,7 @@ class BaseConfigRepositoryTest {
     fun getConfigurationEmptyTest() {
         // Arrange
         Mockito.`when`(httpDataSource.getConfiguration())
-                .thenReturn(Single.just(ConfigResponse(null)))
+            .thenReturn(Single.just(ConfigResponse(null)))
 
         // Act
         val testObserver = baseConfigRepository.getConfiguration().test()

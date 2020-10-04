@@ -30,7 +30,7 @@ internal class CoreModule(context: Context) : Module() {
         bind(Logger::class.java).toInstance(LoggerImpl())
         bind(ErrorMessageDataSource::class.java).toInstance(ErrorMessageDataSourceImpl(context))
         bind(HttpDataSource::class.java).toProvider(HttpDataSourceProvider::class.java)
-                .providesSingleton()
+            .providesSingleton()
         bind(Config::class.java).toInstance(Config(-1, 20))
     }
 

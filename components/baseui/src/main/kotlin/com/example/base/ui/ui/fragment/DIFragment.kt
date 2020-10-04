@@ -62,11 +62,11 @@ open class DIFragment : BaseFragment(), StoreScope {
 
     private fun getParentScope(): Scope {
         val store: StoreScope = getParentFragmentStore()
-                ?: getActivityStore()
-                ?: getApplicationStore()
-                ?: throw IllegalStateException(
-                    "parent fragment or activity or application must be implemented StoreScope"
-                )
+            ?: getActivityStore()
+            ?: getApplicationStore()
+            ?: throw IllegalStateException(
+                "parent fragment or activity or application must be implemented StoreScope"
+            )
         return store.getScope()
     }
 

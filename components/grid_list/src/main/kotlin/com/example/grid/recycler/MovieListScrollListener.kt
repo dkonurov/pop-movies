@@ -13,9 +13,11 @@ class MovieListScrollListener(
         val totalItemCount = layoutManager.itemCount
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
-        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+        if (
+            visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
             firstVisibleItemPosition >= 0 &&
-            totalItemCount >= 4) {
+            totalItemCount >= 4
+        ) {
             loadMoreListener.loadMore()
         }
     }

@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
@@ -22,9 +21,7 @@ import com.example.movie.R
 import com.example.movie.di.MovieListModule
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.widget.FilterPopupMenu
-import kotlinx.android.synthetic.main.fragment_grid.recycler
-import kotlinx.android.synthetic.main.fragment_grid.refresh
-import kotlinx.android.synthetic.main.fragment_grid.toolbar
+import kotlinx.android.synthetic.main.fragment_grid.*
 import toothpick.config.Module
 
 class MovieListFragment : DIFragment(), LoadingView {
@@ -99,9 +96,12 @@ class MovieListFragment : DIFragment(), LoadingView {
     }
 
     private fun initViewModel() {
-        viewModel.movies.observe(this, Observer {
-            adapter.setData(it)
-        })
+        viewModel.movies.observe(
+            this,
+            {
+                adapter.setData(it)
+            }
+        )
         viewModel.loading.observe(this, LoadingObserver(this))
         ErrorHandler.handleError(viewModel, this)
         if (viewModel.movies.value == null) {

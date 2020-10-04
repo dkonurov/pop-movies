@@ -14,8 +14,8 @@ internal class AuthInterceptor(private val key: String) : Interceptor {
         if (originalRequest.method() == "GET") {
             originalRequest = originalRequest.newBuilder().url(
                 originalRequest.url()
-                        .newBuilder()
-                        .addQueryParameter(API_KEY, key).build()
+                    .newBuilder()
+                    .addQueryParameter(API_KEY, key).build()
             ).build()
         }
         return chain.proceed(originalRequest)

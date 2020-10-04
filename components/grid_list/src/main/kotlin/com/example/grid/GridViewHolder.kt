@@ -12,8 +12,8 @@ class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(poster: String?) {
         if (poster != null) {
             Glide.with(image)
-                    .load(poster)
-                    .into(image)
+                .load(poster)
+                .into(image)
         } else {
             image.setImageBitmap(null)
         }

@@ -5,10 +5,8 @@ import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
 import com.example.core.models.DetailsMovie
-import com.example.details.domain.mappers.MovieMapper
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.response.DiscoverResponse
-import com.example.details.view.ViewMovie
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -49,7 +47,7 @@ class MovieRepositoryTest {
         // Arrange
         val error = Throwable()
         Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt()))
-                .thenReturn(Single.error(error))
+            .thenReturn(Single.error(error))
         // Act
         val testObserver = movieRepository.getMovies().test()
 
@@ -62,7 +60,7 @@ class MovieRepositoryTest {
         // Arrange
         val error = Throwable()
         Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt()))
-                .thenReturn(Single.just(arrayListOf()))
+            .thenReturn(Single.just(arrayListOf()))
         Mockito.`when`(
             httpDataSource.getListMovies(
                 Mockito.anyInt(),
@@ -82,7 +80,7 @@ class MovieRepositoryTest {
         // Arrange
         val list = prepareList()
         Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt()))
-                .thenReturn(Single.just(list))
+            .thenReturn(Single.just(list))
         // Act
         val testObserver = movieRepository.getMovies().test()
 
@@ -91,9 +89,9 @@ class MovieRepositoryTest {
         val info = MovieListInfo(com.example.details.domain.movie.MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, list, 1)
         testObserver.assertValue(info)
         Mockito.verify(httpDataSource, Mockito.never())
-                .getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
+            .getListMovies(Mockito.anyInt(), Mockito.nullable(String::class.java))
         Mockito.verify(movieMapper)
-                .toMovieListInfo(com.example.details.domain.movie.MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
+            .toMovieListInfo(com.example.details.domain.movie.MovieRepositoryImpl.UNKNOWN_COUNT_PAGE, null, null, list, 1)
     }
 
     @Test
@@ -104,21 +102,21 @@ class MovieRepositoryTest {
         val page = 1
         val count = AtomicInteger()
         Mockito.`when`(movieDao.getMovies(Mockito.anyInt(), Mockito.anyInt()))
-                .thenAnswer {
-                    if (count.get() == 0) {
-                        count.incrementAndGet()
-                        Single.just(arrayListOf())
-                    } else {
-                        Single.just(list)
-                    }
+            .thenAnswer {
+                if (count.get() == 0) {
+                    count.incrementAndGet()
+                    Single.just(arrayListOf())
+                } else {
+                    Single.just(list)
                 }
+            }
         Mockito.`when`(
             httpDataSource.getListMovies(
                 Mockito.anyInt(),
                 Mockito.nullable(String::class.java)
             )
         )
-                .thenReturn(Single.just(DiscoverResponse(page, 3000, totalPage, list)))
+            .thenReturn(Single.just(DiscoverResponse(page, 3000, totalPage, list)))
         // Act
         val testObserver = movieRepository.getMovies(page).test()
 
@@ -141,7 +139,7 @@ class MovieRepositoryTest {
                 Mockito.nullable(String::class.java)
             )
         )
-                .thenReturn(Single.error(error))
+            .thenReturn(Single.error(error))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
 
@@ -159,7 +157,7 @@ class MovieRepositoryTest {
                 Mockito.nullable(String::class.java)
             )
         )
-                .thenReturn(Single.just(details))
+            .thenReturn(Single.just(details))
         // Act
         val testObserver = movieRepository.findMovie(1).test()
 

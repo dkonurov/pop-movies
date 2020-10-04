@@ -3,7 +3,6 @@ package com.example.dmitry.grades.ui.movie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import com.example.base.extensions.viewModel
 import com.example.base.ui.ui.activity.DIActivity
 import com.example.details.view.DetailsFragment
@@ -18,21 +17,24 @@ class MainActivity : DIActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .add(
-                        R.id.container,
-                        BottomNavFragment.newInstance(),
-                        BottomNavFragment::class.java.simpleName
-                    )
-                    .commit()
+                .add(
+                    R.id.container,
+                    BottomNavFragment.newInstance(),
+                    BottomNavFragment::class.java.simpleName
+                )
+                .commit()
         }
 
         val viewModel = viewModel { getScope().getInstance(MainViewModel::class.java) }
-        viewModel.screens.observe(this, Observer {
-            supportFragmentManager.beginTransaction()
+        viewModel.screens.observe(
+            this,
+            {
+                supportFragmentManager.beginTransaction()
                     .replace(R.id.container, DetailsFragment.newInstance(it))
                     .addToBackStack(DetailsFragment::class.java.simpleName)
                     .commit()
-        })
+            }
+        )
     }
 
     override fun getModules(): Array<Module>? {

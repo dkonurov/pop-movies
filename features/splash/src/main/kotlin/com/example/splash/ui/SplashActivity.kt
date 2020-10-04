@@ -3,7 +3,6 @@ package com.example.splash.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.activity.DIActivity
@@ -12,9 +11,7 @@ import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.errors.StubErrorView
 import com.example.splash.R
 import com.example.splash.di.SplashModule
-import kotlinx.android.synthetic.main.activity_splash.network
-import kotlinx.android.synthetic.main.activity_splash.progress
-import kotlinx.android.synthetic.main.activity_splash.repeat
+import kotlinx.android.synthetic.main.activity_splash.*
 import toothpick.config.Module
 
 class SplashActivity : DIActivity(), StubErrorView, LoadingView {
@@ -45,10 +42,13 @@ class SplashActivity : DIActivity(), StubErrorView, LoadingView {
         }
         ErrorHandler.handleError(splashViewModel, this)
         splashViewModel.loading.observe(this, LoadingObserver(this))
-        splashViewModel.imageConfig.observe(this, Observer {
-            splashViewModel.nextScreen(this@SplashActivity)
-            finish()
-        })
+        splashViewModel.imageConfig.observe(
+            this,
+            {
+                splashViewModel.nextScreen(this@SplashActivity)
+                finish()
+            }
+        )
 
         if (savedInstanceState == null) {
             splashViewModel.loadConfig()

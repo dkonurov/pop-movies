@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
@@ -60,7 +59,7 @@ class DetailsFragment : DIFragment(), LoadingView {
 
     override fun getModules(): Array<Module>? {
         val id = arguments?.getLong(MOVIE_ID)
-                ?: throw IllegalArgumentException("Cannot be find Movie id")
+            ?: throw IllegalArgumentException("Cannot be find Movie id")
         return arrayOf(DetailsModule(id))
     }
 
@@ -101,18 +100,21 @@ class DetailsFragment : DIFragment(), LoadingView {
         }
         val viewModel = viewModel { getScope().getInstance(DetailsViewModel::class.java) }
         viewModel.loading.observe(this, LoadingObserver(this))
-        viewModel.movie.observe(this, Observer {
-            it?.let {
-                titleTv.text = it.title
-                yearTv.text = it.year
-                timeTv.text = it.time
-                releaseTv.text = it.release
-                aboutTv.text = it.about
-                Glide.with(this@DetailsFragment)
+        viewModel.movie.observe(
+            this,
+            {
+                it?.let {
+                    titleTv.text = it.title
+                    yearTv.text = it.year
+                    timeTv.text = it.time
+                    releaseTv.text = it.release
+                    aboutTv.text = it.about
+                    Glide.with(this@DetailsFragment)
                         .load(it.poster).into(poster)
-                favoriteBtn.isChecked = it.isFavorite
+                    favoriteBtn.isChecked = it.isFavorite
+                }
             }
-        })
+        )
         ErrorHandler.handleError(viewModel, this)
         favoriteBtn.setOnClickListener {
             if (favoriteBtn.isChecked) {
