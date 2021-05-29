@@ -33,6 +33,10 @@ ext.toothpick = [
 ]
 
 ext.dagger = [
-        core      : "com.google.dagger:dagger:$versions.dagger",
-        processor : "com.google.dagger:dagger-compiler:$versions.dagger"
+        core     : "com.google.dagger:dagger:$versions.dagger",
+        processor: "com.google.dagger:dagger-compiler:$versions.dagger"
+]
+
+ext.kotlinLib = [
+        std: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 ]

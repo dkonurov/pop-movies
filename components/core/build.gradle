@@ -51,14 +51,11 @@ dependencies {
     kapt "androidx.room:room-compiler:$versions.room"
 
 
-    //toothpick
-    api toothpick.ktp
-    api toothpick.androidx
-    kapt toothpick.compiler
+    //dagger
     kapt dagger.processor
     implementation dagger.core
 
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+    implementation kotlinLib.std
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

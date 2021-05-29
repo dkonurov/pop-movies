@@ -16,11 +16,11 @@ import com.example.core.data.preferences.PrivateDataSourceImpl
 import com.example.core.di.scope.CoreScope
 import com.google.gson.Gson
 import dagger.Binds
+import dagger.Module
 import dagger.Provides
-import toothpick.config.Module
 
-@dagger.Module
-internal abstract class CoreModule(context: Context) : Module() {
+@Module
+internal abstract class CoreModule(context: Context) {
 
     companion object {
         @Provides
