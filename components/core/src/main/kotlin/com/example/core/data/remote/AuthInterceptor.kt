@@ -11,9 +11,9 @@ internal class AuthInterceptor(private val key: String) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var originalRequest = chain.request()
-        if (originalRequest.method() == "GET") {
+        if (originalRequest.method == "GET") {
             originalRequest = originalRequest.newBuilder().url(
-                originalRequest.url()
+                originalRequest.url
                     .newBuilder()
                     .addQueryParameter(API_KEY, key).build()
             ).build()

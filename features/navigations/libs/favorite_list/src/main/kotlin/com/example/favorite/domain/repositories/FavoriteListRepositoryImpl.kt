@@ -1,6 +1,5 @@
 package com.example.favorite.domain.repositories
 
-import com.example.base.extensions.await
 import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.data.config.Config
@@ -27,7 +26,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
         )
         val requests = movieIds.asSequence().map { id ->
             async(schedulerProvider.io()) {
-                httpDataSource.getMovie(id).await()
+                httpDataSource.getMovie(id)
             }
         }.toList()
         val movies = requests.awaitAll()

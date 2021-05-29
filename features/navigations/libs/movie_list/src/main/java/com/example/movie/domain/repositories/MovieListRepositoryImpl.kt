@@ -1,6 +1,5 @@
 package com.example.movie.domain.repositories
 
-import com.example.base.extensions.await
 import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.data.config.Config
@@ -35,7 +34,7 @@ internal class MovieListRepositoryImpl @Inject constructor(
         page: Int = 1,
         sortBy: String? = null
     ): MovieResponse = withContext(schedulerProvider.io()) {
-        val response = httpDataSource.getListMovies(page, sortBy).await()
+        val response = httpDataSource.getListMovies(page, sortBy)
         movieDao.save(response.movies)
         MovieResponse(response.totalPages, response.movies)
     }

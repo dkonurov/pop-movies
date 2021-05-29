@@ -2,12 +2,12 @@ package com.example.base.ui.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.load.HttpException
 import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.ui.errors.UIError
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
-import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -66,7 +66,7 @@ open class ErrorViewModel(
     }
 
     protected fun handleHttpException(e: HttpException) {
-        if (e.code() == AUTH_ERROR_HTTP_CODE) {
+        if (e.statusCode == AUTH_ERROR_HTTP_CODE) {
             _error.value = UIError(e, errorMessageDataSource.getNotAuthError())
         } else {
             handleUnexpectedError(e)

@@ -1,6 +1,5 @@
 package com.example.splash.domain.repositories.configurtaion
 
-import com.example.base.extensions.await
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.remote.HttpDataSource
 import com.example.core.models.config.ImageConfig
@@ -12,7 +11,7 @@ internal class BaseConfigRepositoryImpl @Inject constructor(
 ) : BaseConfigRepository {
 
     override suspend fun getConfiguration(): ImageConfig {
-        val response = httpDataSource.getConfiguration().await()
+        val response = httpDataSource.getConfiguration()
         privateDataSource.saveImageConfig(response.imageConfig)
         return response.imageConfig!!
     }
