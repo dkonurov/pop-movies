@@ -55,6 +55,8 @@ dependencies {
     api toothpick.ktp
     api toothpick.androidx
     kapt toothpick.compiler
+    kapt dagger.processor
+    implementation dagger.core
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     testImplementation 'junit:junit:4.12'

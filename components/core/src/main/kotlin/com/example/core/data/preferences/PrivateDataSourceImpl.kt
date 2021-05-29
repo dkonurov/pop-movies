@@ -4,8 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
 import com.example.core.models.config.ImageConfig
+import javax.inject.Inject
 
-internal class PrivateDataSourceImpl constructor(context: Context) : PrivateDataSource {
+internal class PrivateDataSourceImpl @Inject constructor(context: Context) : PrivateDataSource {
 
     companion object {
         private const val SHARED_NAME = "com.example.dmitry.grades.domain.data.preferences.shared_name"

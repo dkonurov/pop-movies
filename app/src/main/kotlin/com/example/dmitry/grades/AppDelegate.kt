@@ -1,7 +1,7 @@
 package com.example.dmitry.grades
 
 import android.app.Application
-import com.example.core.di.CoreScope
+import com.example.core.di.CoreDependenicesFactories
 import com.example.di.BaseUIScope
 import com.example.di.StoreScope
 import com.example.dmitry.grades.di.Scopes
@@ -19,9 +19,9 @@ open class AppDelegate : Application(), StoreScope {
     }
 
     private fun initScopes() {
-        val appScore = CoreScope.initCoreScope(this)
-            .openSubScope(Scopes.APP_SCOPE)
-            .installModules(AppModule())
+        val dependencies = CoreDependenicesFactories().create(this)
+        val appScore = Toothpick.openScope(Scopes.APP_SCOPE)
+            .installModules(AppModule(dependencies))
 
         BaseUIScope.initBaseUIScope(appScore)
     }
