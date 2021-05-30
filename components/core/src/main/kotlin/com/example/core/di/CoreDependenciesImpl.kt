@@ -6,5 +6,4 @@ import dagger.Component
 
 @Component(modules = [CoreModule::class])
 @CoreScope
-internal interface CoreDependenciesImpl : CoreDependencies {
-}
+internal interface CoreDependenciesImpl : CoreDependencies
