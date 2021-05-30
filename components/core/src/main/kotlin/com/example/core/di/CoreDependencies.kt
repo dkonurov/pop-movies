@@ -22,7 +22,12 @@ interface CoreDependencies {
     fun getConfig(): Config
 }
 
-
 class CoreDependenicesFactories {
-    fun create(context: Context): CoreDependencies = DaggerCoreDependenciesImpl.factory().create(context, RemoteDependenciesFactory().create(BuildConfig.PROD_URL, BuildConfig.APY_KEY))
+    fun create(context: Context): CoreDependencies = DaggerCoreDependenciesImpl
+        .factory()
+        .create(
+            context = context,
+            remoteDependencies = RemoteDependenciesFactory()
+                .create(url = BuildConfig.PROD_URL, key = BuildConfig.APY_KEY)
+        )
 }
