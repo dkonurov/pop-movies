@@ -10,13 +10,13 @@ import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
-import com.example.core.models.entity.LocalMovie
 import com.example.favorite.di.FavoriteListModule
 import com.example.favorite.list.FavoriteViewModel
 import com.example.favorite.list.R
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
+import com.example.storage.db.entity.LocalMovie
 import kotlinx.android.synthetic.main.fragment_grid.*
 import toothpick.config.Module
 

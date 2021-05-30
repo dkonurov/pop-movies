@@ -28,6 +28,7 @@ android {
 dependencies {
     api project(":components:bottom_navigation_core")
     implementation project(":components:grid_list")
+    implementation project(':core:storage')
 
     //toothpick
     kapt toothpick.compiler

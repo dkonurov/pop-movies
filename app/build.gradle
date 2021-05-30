@@ -13,6 +13,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField('String', 'PROD_URL', '"https://api.themoviedb.org/3/"')
+        buildConfigField('String', 'APY_KEY', '"a24147a595afe1935af3d13e6a8c0f61"')
     }
 
     buildTypes {
@@ -40,6 +43,8 @@ dependencies {
     implementation project(':features:splash')
     implementation project(':features:navigations')
     implementation project(':features:details')
+    implementation project(':core:network')
+    implementation project(':core:storage')
     //android
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

@@ -1,6 +1,6 @@
 package com.example.bottom.navigation.domain.config
 
-import com.example.core.data.preferences.PrivateDataSource
+import com.example.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
 class SortConfigRepositoryImpl @Inject constructor(

@@ -1,10 +1,7 @@
 package com.example.core.models
 
-import androidx.room.PrimaryKey
-
 data class LocalDetailsMovie(
     val id: Long,
-    @PrimaryKey(autoGenerate = true)
     val localId: Long,
     var posterPath: String?,
     val adult: Boolean,

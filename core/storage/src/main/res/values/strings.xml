@@ -1,0 +1,5 @@
+<resources>
+    <string name="unknown_error">неизвестная ошибка</string>
+    <string name="non_auth_error">Вы не авторизованы</string>
+    <string name="network_error">network error. please try again later</string>
+</resources>

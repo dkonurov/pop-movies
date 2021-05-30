@@ -34,6 +34,7 @@ android {
 dependencies {
     //core
     api project(':components:core')
+    implementation project(':core:storage')
 
     api toothpick.ktp
     api toothpick.androidx

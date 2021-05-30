@@ -32,6 +32,7 @@ android {
 
 dependencies {
     api project(':components:baseui')
+    implementation project(':core:storage')
     api "androidx.recyclerview:recyclerview:$versions.recycler"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

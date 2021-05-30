@@ -2,7 +2,7 @@ package com.example.bottom.navigation.domain.mappers
 
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.bottom.navigation.ui.models.MovieListInfo
-import com.example.core.data.preferences.PrivateDataSource
+import com.example.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
 class MovieListMapper
