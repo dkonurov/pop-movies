@@ -7,8 +7,8 @@ import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
 import com.example.core.di.CoreDependencies
+import com.example.core.network.remote.HttpDataSource
 import com.example.dmitry.grades.domain.navigators.SplashNavigatorImpl
 import com.example.splash.domain.SplashNavigator
 import toothpick.config.Module

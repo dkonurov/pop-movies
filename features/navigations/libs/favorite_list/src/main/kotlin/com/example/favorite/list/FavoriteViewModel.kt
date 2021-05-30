@@ -6,7 +6,7 @@ import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 import com.example.favorite.domain.usecase.FavoriteListUseCase
 import com.example.favorite.list.view.FavoriteListRouter
 import kotlinx.coroutines.CoroutineScope
@@ -21,13 +21,13 @@ internal class FavoriteViewModel @Inject constructor(
     private val favoriteListUseCase: FavoriteListUseCase
 ) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
 
-    private val _movies = MutableLiveData<MutableList<Movie>>()
+    private val _movies = MutableLiveData<MutableList<LocalMovie>>()
 
     private var page = 1
 
     private var countPage: Int? = null
 
-    val movies: LiveData<MutableList<Movie>>
+    val movies: LiveData<MutableList<LocalMovie>>
         get() = _movies
 
     private var moreMovies = false

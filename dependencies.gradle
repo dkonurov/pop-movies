@@ -7,7 +7,8 @@ ext.versions = [
         lifecycle: '2.1.0',
         recycler : '1.0.0',
         glide    : '4.7.1',
-        dagger   : '2.36'
+        dagger   : '2.36',
+        viewModel: '2.3.1'
 ]
 
 ext.glide = [
@@ -18,7 +19,8 @@ ext.glide = [
 ext.androidx = [
         core     : "androidx.core:core-ktx:$versions.androidx",
         lifecycle: "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle",
-        appcompat: "androidx.appcompat:appcompat:$versions.androidx"
+        appcompat: "androidx.appcompat:appcompat:$versions.androidx",
+        viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.viewModel"
 ]
 
 ext.coroutine = [

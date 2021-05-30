@@ -3,7 +3,7 @@ package com.example.details.domain.movie
 import com.example.base.schedulers.SchedulerProvider
 import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.remote.HttpDataSource
 import com.example.details.domain.mappers.MovieMapper
 import com.example.details.view.ViewMovie
 import kotlinx.coroutines.withContext

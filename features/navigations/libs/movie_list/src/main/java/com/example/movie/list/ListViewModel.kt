@@ -9,7 +9,7 @@ import com.example.bottom.navigation.ui.models.FilterType
 import com.example.core.data.config.Config
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 import com.example.movie.domain.usecase.MovieListUseCase
 import com.example.movie.list.view.MovieListRouter
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +26,7 @@ internal class ListViewModel @Inject constructor(
     private val config: Config
 ) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
 
-    private val _movies = MutableLiveData<MutableList<Movie>>()
+    private val _movies = MutableLiveData<MutableList<LocalMovie>>()
 
     private var page = 1
 
@@ -36,7 +36,7 @@ internal class ListViewModel @Inject constructor(
 
     private var moreMovies = false
 
-    val movies: LiveData<MutableList<Movie>>
+    val movies: LiveData<MutableList<LocalMovie>>
         get() = _movies
 
     override fun showLoading() {

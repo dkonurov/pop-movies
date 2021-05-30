@@ -10,6 +10,6 @@ internal class LoggerImpl @Inject constructor() : Logger {
     }
 
     override fun error(throwable: Throwable) {
-        Log.e(throwable.javaClass.simpleName, throwable.message)
+        Log.e(throwable.javaClass.simpleName, throwable.message, throwable)
     }
 }

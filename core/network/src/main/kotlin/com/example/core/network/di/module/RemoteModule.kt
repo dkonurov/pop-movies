@@ -1,10 +1,9 @@
-package com.example.core.di.module
+package com.example.core.network.di.module
 
-import com.example.core.BuildConfig
-import com.example.core.data.remote.AuthInterceptor
-import com.example.core.data.remote.HttpDataSource
-import com.example.core.di.scope.CoreScope
-import com.example.core.models.config.ServerInfo
+import com.example.core.network.di.annotation.RemoteScope
+import com.example.core.network.di.annotation.Url
+import com.example.core.network.models.ServerInfo
+import com.example.core.network.remote.HttpDataSource
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -18,13 +17,19 @@ import java.util.concurrent.TimeUnit
 internal class RemoteModule {
 
     @Provides
+    @RemoteScope
+    fun provideGson(): Gson = Gson()
+
+    @Provides
     fun provideServerInfo(): ServerInfo = ServerInfo(30, 30, 30)
 
     @Provides
-    @CoreScope
-    fun provideOkhttpClient(serverInfo: ServerInfo, interceptors: Set<@JvmSuppressWildcards Interceptor>): OkHttpClient {
+    @RemoteScope
+    fun provideOkhttpClient(
+        serverInfo: ServerInfo,
+        interceptors: Set<@JvmSuppressWildcards Interceptor>
+    ): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(BuildConfig.APY_KEY))
             .also {
                 interceptors.forEach { interceptor ->
                     it.addInterceptor(interceptor)
@@ -37,15 +42,18 @@ internal class RemoteModule {
     }
 
     @Provides
-    @CoreScope
-    fun provideRetrofit(client: OkHttpClient, gson: Gson): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.PROD_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+    @RemoteScope
+    fun provideRetrofit(
+        client: OkHttpClient,
+        gson: Gson,
+        @Url url: String
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(url)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .build()
 
     @Provides
-    @CoreScope
+    @RemoteScope
     fun provideHttpDataSource(retrofit: Retrofit): HttpDataSource = retrofit.create(HttpDataSource::class.java)
 }

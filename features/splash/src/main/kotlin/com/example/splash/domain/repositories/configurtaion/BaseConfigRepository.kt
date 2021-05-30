@@ -1,8 +1,8 @@
 package com.example.splash.domain.repositories.configurtaion
 
-import com.example.core.models.config.ImageConfig
+import com.example.core.network.models.ImageConfigDTO
 
 internal interface BaseConfigRepository {
 
-    suspend fun getConfiguration(): ImageConfig
+    suspend fun getConfiguration(): ImageConfigDTO
 }

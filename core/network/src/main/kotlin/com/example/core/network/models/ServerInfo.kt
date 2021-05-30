@@ -1,6 +1,6 @@
-package com.example.core.models.config
+package com.example.core.network.models
 
-data class ServerInfo(
+internal data class ServerInfo(
     val timeoutRead: Long,
     val timeoutWrite: Long,
     val connectTimeout: Long

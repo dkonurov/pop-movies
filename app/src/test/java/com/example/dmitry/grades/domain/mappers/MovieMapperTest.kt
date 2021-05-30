@@ -1,6 +1,6 @@
 package com.example.dmitry.grades.domain.mappers
 
-import com.example.core.models.DetailsMovie
+import com.example.core.models.LocalDetailsMovie
 import com.example.dmitry.grades.domain.models.entity.Movie
 import junit.framework.Assert
 import org.junit.Test
@@ -178,8 +178,8 @@ class MovieMapperTest {
         return arrayListOf(movie)
     }
 
-    private fun prepareDetails(): DetailsMovie {
-        return DetailsMovie(
+    private fun prepareDetails(): LocalDetailsMovie {
+        return LocalDetailsMovie(
             1, 1, "test", false, "test",
             "test", listOf(1, 2, 3), "test", "test",
             "test", "test", 0.0, 1, false, "60", 0.2

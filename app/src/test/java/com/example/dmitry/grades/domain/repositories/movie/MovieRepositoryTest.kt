@@ -3,8 +3,8 @@ package com.example.dmitry.grades.domain.repositories.movie
 import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
-import com.example.core.models.DetailsMovie
+import com.example.core.models.LocalDetailsMovie
+import com.example.core.network.remote.HttpDataSource
 import com.example.dmitry.grades.domain.models.entity.Movie
 import com.example.dmitry.grades.domain.models.response.DiscoverResponse
 import io.reactivex.Single
@@ -180,8 +180,8 @@ class MovieRepositoryTest {
         return arrayListOf(movie)
     }
 
-    private fun prepareDetails(): DetailsMovie {
-        return DetailsMovie(
+    private fun prepareDetails(): LocalDetailsMovie {
+        return LocalDetailsMovie(
             1, 1, "test", false, "test",
             "test", listOf(1, 2, 3), "test", "test",
             "test", "test", 0.0, 1, false, "60", 0.2

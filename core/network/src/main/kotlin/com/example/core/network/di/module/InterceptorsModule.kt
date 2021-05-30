@@ -1,6 +1,7 @@
-package com.example.core.di.module
+package com.example.core.network.di.module
 
-import com.example.core.di.scope.CoreScope
+import com.example.core.network.di.annotation.RemoteScope
+import com.example.core.network.remote.AuthInterceptor
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,7 @@ internal abstract class InterceptorsModule {
 
     companion object {
         @Provides
-        @CoreScope
+        @RemoteScope
         fun provideHttpLogingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -22,4 +23,8 @@ internal abstract class InterceptorsModule {
     @IntoSet
     @Binds
     abstract fun bindLoggingIntereceptors(impl: HttpLoggingInterceptor): Interceptor
+
+    @IntoSet
+    @Binds
+    abstract fun bindAuthInterceptor(impl: AuthInterceptor): Interceptor
 }

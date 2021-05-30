@@ -14,19 +14,14 @@ import com.example.core.data.message.ErrorMessageDataSourceImpl
 import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.data.preferences.PrivateDataSourceImpl
 import com.example.core.di.scope.CoreScope
-import com.google.gson.Gson
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
 @Module
-internal abstract class CoreModule(context: Context) {
+internal abstract class CoreModule {
 
     companion object {
-        @Provides
-        @CoreScope
-        fun provideGson(): Gson = Gson()
-
         @Provides
         @CoreScope
         fun provideDb(context: Context): AppDatabase = getDb(context)

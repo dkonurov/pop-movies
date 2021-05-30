@@ -1,13 +1,15 @@
 package com.example.core.di
 
 import android.content.Context
+import com.example.core.BuildConfig
 import com.example.core.data.config.Config
 import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.db.inteface.MovieDao
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.di.RemoteDependenciesFactory
+import com.example.core.network.remote.HttpDataSource
 
 interface CoreDependencies {
     fun getContext(): Context
@@ -22,5 +24,5 @@ interface CoreDependencies {
 
 
 class CoreDependenicesFactories {
-    fun create(context: Context): CoreDependencies = DaggerCoreDependenciesImpl.factory().create(context)
+    fun create(context: Context): CoreDependencies = DaggerCoreDependenciesImpl.factory().create(context, RemoteDependenciesFactory().create(BuildConfig.PROD_URL, BuildConfig.APY_KEY))
 }

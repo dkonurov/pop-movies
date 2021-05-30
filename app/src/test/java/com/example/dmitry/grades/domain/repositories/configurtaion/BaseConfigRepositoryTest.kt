@@ -1,7 +1,7 @@
 package com.example.dmitry.grades.domain.repositories.configurtaion
 
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.remote.HttpDataSource
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test

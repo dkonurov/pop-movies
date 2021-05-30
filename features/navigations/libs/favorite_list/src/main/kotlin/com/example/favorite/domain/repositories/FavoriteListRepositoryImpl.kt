@@ -4,7 +4,7 @@ import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.data.config.Config
 import com.example.core.data.db.inteface.FavoriteDao
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.remote.HttpDataSource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -14,6 +14,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
     private val favoriteDao: FavoriteDao,
     private val httpDataSource: HttpDataSource,
     private val schedulerProvider: SchedulerProvider,
+    private val movieMapper: MovieMapper,
     private val config: Config
 ) : FavoriteListRepository {
 
@@ -29,7 +30,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
                 httpDataSource.getMovie(id)
             }
         }.toList()
-        val movies = requests.awaitAll()
+        val movies = requests.awaitAll().map { movieMapper.mapFromDTOToLocal(it) }
         MovieResponse(countPages, movies)
     }
 }

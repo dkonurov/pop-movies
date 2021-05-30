@@ -3,7 +3,7 @@ package com.example.core.data.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.example.core.models.config.ImageConfig
+import com.example.core.network.models.ImageConfigDTO
 import javax.inject.Inject
 
 internal class PrivateDataSourceImpl @Inject constructor(context: Context) : PrivateDataSource {
@@ -14,6 +14,7 @@ internal class PrivateDataSourceImpl @Inject constructor(context: Context) : Pri
         private const val LOGO_SIZES = "com.example.dmitry.grades.domain.data.preferences.logo_sizes"
         private const val POSTERS_SIZES = "com.example.dmitry.grades.domain.data.preferences.posters_sizes"
         private const val SORT_BY = "com.example.dmitry.grades.domain.data.preferences.sort_by"
+
         @VisibleForTesting
         const val SORT_BY_DEFAULT = "popularity.desc"
     }
@@ -23,16 +24,10 @@ internal class PrivateDataSourceImpl @Inject constructor(context: Context) : Pri
         Context.MODE_PRIVATE
     )
 
-    override fun saveImageConfig(imageConfig: ImageConfig?) {
-        if (imageConfig != null) {
-            baseUrlImg = imageConfig.baseUrl
-            logoSizes = imageConfig.logosSize
-            posterSizes = imageConfig.postersSize
-        } else {
-            baseUrlImg = null
-            logoSizes = null
-            posterSizes = null
-        }
+    override fun saveImageConfig(config: ImageConfigDTO) {
+        baseUrlImg = config.baseUrl
+        logoSizes = config.logosSize
+        posterSizes = config.postersSize
     }
 
     override val posterSize: String?

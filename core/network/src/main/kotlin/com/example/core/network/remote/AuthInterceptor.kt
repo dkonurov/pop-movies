@@ -1,9 +1,15 @@
-package com.example.core.data.remote
+package com.example.core.network.remote
 
+import com.example.core.network.di.annotation.Key
+import com.example.core.network.di.annotation.RemoteScope
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
 
-internal class AuthInterceptor(private val key: String) : Interceptor {
+@RemoteScope
+internal class AuthInterceptor @Inject constructor(
+    @Key private val key: String
+) : Interceptor {
 
     companion object {
         const val API_KEY = "api_key"
