@@ -7,4 +7,6 @@ include ':app',
         ':features:navigations',
         ':features:navigations:libs:movie_list',
         ':features:navigations:libs:favorite_list',
-        ':features:details'
+        ':features:details',
+        ':core',
+        ':core:network'

@@ -35,6 +35,9 @@ dependencies {
     //core
     api project(':components:core')
 
+    api toothpick.ktp
+    api toothpick.androidx
+
     kapt toothpick.compiler
 
     //android

@@ -5,26 +5,26 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.core.models.entity.Favorite
+import com.example.core.models.entity.LocalFavorite
 
 @Dao
 interface FavoriteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(favorite: Favorite)
+    fun save(favorite: LocalFavorite)
 
     @Delete
-    fun delete(favorite: Favorite)
+    fun delete(favorite: LocalFavorite)
 
-    @Query("DELETE FROM ${Favorite.TABLE_NAME} WHERE id = :id")
+    @Query("DELETE FROM ${LocalFavorite.TABLE_NAME} WHERE id = :id")
     fun deleteById(id: Long)
 
-    @Query("SELECT * FROM ${Favorite.TABLE_NAME} WHERE id = :id")
-    fun findById(id: Long): Favorite?
+    @Query("SELECT * FROM ${LocalFavorite.TABLE_NAME} WHERE id = :id")
+    fun findById(id: Long): LocalFavorite?
 
-    @Query("SELECT id FROM ${Favorite.TABLE_NAME} LIMIT :offset, :limit")
+    @Query("SELECT id FROM ${LocalFavorite.TABLE_NAME} LIMIT :offset, :limit")
     fun getMoviesId(offset: Int, limit: Int): List<Long>
 
-    @Query("SELECT COUNT(id) FROM ${Favorite.TABLE_NAME}")
+    @Query("SELECT COUNT(id) FROM ${LocalFavorite.TABLE_NAME}")
     fun count(): Int
 }

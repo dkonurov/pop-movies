@@ -13,7 +13,7 @@ import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
@@ -75,7 +75,7 @@ class MovieListFragment : DIFragment(), LoadingView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = viewModel { getScope().getInstance(ListViewModel::class.java) }
-        adapter = MovieListAdapter(requireContext()) { movie: Movie ->
+        adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
             viewModel.showDetails(movie.id)
         }
 

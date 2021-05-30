@@ -3,8 +3,8 @@ package com.example.core.models.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = Favorite.TABLE_NAME)
-data class Favorite(
+@Entity(tableName = LocalFavorite.TABLE_NAME)
+data class LocalFavorite(
     @PrimaryKey val id: Long,
     val title: String,
     val about: String,

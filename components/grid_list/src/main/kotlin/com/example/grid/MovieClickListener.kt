@@ -1,7 +1,7 @@
 package com.example.grid
 
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 
 fun interface MovieClickListener {
-    fun onClick(movie: Movie)
+    fun onClick(movie: LocalMovie)
 }

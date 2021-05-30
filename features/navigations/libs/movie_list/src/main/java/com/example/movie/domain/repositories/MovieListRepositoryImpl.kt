@@ -1,11 +1,10 @@
 package com.example.movie.domain.repositories
 
-import com.example.base.extensions.await
 import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.data.config.Config
 import com.example.core.data.db.inteface.MovieDao
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.remote.HttpDataSource
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -13,6 +12,7 @@ internal class MovieListRepositoryImpl @Inject constructor(
     private val httpDataSource: HttpDataSource,
     private val movieDao: MovieDao,
     private val schedulerProvider: SchedulerProvider,
+    private val mapper: MovieMapper,
     private val config: Config
 ) : MovieListRepository {
 
@@ -35,9 +35,10 @@ internal class MovieListRepositoryImpl @Inject constructor(
         page: Int = 1,
         sortBy: String? = null
     ): MovieResponse = withContext(schedulerProvider.io()) {
-        val response = httpDataSource.getListMovies(page, sortBy).await()
-        movieDao.save(response.movies)
-        MovieResponse(response.totalPages, response.movies)
+        val response = httpDataSource.getListMovies(page, sortBy)
+        val mapped = response.movies.map { mapper.mapFromDTOToLocal(it) }
+        movieDao.save(mapped)
+        MovieResponse(response.totalPages, mapped)
     }
 
     override suspend fun clearCache() = withContext(schedulerProvider.io()) {

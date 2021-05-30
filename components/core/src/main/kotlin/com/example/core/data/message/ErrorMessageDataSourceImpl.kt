@@ -2,8 +2,9 @@ package com.example.core.data.message
 
 import android.content.Context
 import com.example.core.R
+import javax.inject.Inject
 
-internal class ErrorMessageDataSourceImpl(private val context: Context) : ErrorMessageDataSource {
+internal class ErrorMessageDataSourceImpl @Inject constructor(private val context: Context) : ErrorMessageDataSource {
 
     override fun getNetworkError(): String {
         return context.getString(R.string.network_error)

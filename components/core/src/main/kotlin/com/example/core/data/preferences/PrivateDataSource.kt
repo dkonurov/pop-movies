@@ -1,6 +1,6 @@
 package com.example.core.data.preferences
 
-import com.example.core.models.config.ImageConfig
+import com.example.core.network.models.ImageConfigDTO
 
 interface PrivateDataSource {
     var baseUrlImg: String?
@@ -13,5 +13,5 @@ interface PrivateDataSource {
 
     var sortBy: String?
 
-    fun saveImageConfig(imageConfig: ImageConfig?)
+    fun saveImageConfig(config: ImageConfigDTO)
 }

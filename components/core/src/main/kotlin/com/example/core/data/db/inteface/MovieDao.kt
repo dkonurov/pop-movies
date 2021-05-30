@@ -4,20 +4,20 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 
 @Dao
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun save(movies: List<Movie>)
+    fun save(movies: List<LocalMovie>)
 
-    @Query("SELECT * FROM ${Movie.TABLE_NAME} LIMIT :offset, :limit")
-    fun getMovies(offset: Int, limit: Int): MutableList<Movie>
+    @Query("SELECT * FROM ${LocalMovie.TABLE_NAME} LIMIT :offset, :limit")
+    fun getMovies(offset: Int, limit: Int): MutableList<LocalMovie>
 
-    @Query("SELECT * FROM ${Movie.TABLE_NAME} WHERE localId = :id")
-    fun findById(id: Int): Movie
+    @Query("SELECT * FROM ${LocalMovie.TABLE_NAME} WHERE localId = :id")
+    fun findById(id: Int): LocalMovie
 
-    @Query("DELETE FROM ${Movie.TABLE_NAME}")
+    @Query("DELETE FROM ${LocalMovie.TABLE_NAME}")
     fun clear()
 }

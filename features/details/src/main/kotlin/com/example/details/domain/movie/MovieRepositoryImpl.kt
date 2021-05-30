@@ -1,10 +1,9 @@
 package com.example.details.domain.movie
 
-import com.example.base.extensions.await
 import com.example.base.schedulers.SchedulerProvider
 import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.data.preferences.PrivateDataSource
-import com.example.core.data.remote.HttpDataSource
+import com.example.core.network.remote.HttpDataSource
 import com.example.details.domain.mappers.MovieMapper
 import com.example.details.view.ViewMovie
 import kotlinx.coroutines.withContext
@@ -20,7 +19,7 @@ internal class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun findMovie(id: Long): ViewMovie {
         return withContext(schedulerProvider.io()) {
-            val details = httpDataSource.getDetailsMovie(id).await()
+            val details = httpDataSource.getDetailsMovie(id)
             val isFavorite = favoriteDao.findById(id) != null
             movieMapper.toViewMovie(
                 details, privateDataSource.baseUrlImg,

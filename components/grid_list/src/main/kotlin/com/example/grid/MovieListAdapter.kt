@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 import com.example.grid.holders.LoadingViewHolder
 import com.example.grid.holders.MovieDiffUtils
 
@@ -21,7 +21,7 @@ class MovieListAdapter(
 
     private val layoutInflater = LayoutInflater.from(context)
 
-    private val items: MutableList<Movie> = arrayListOf()
+    private val items: MutableList<LocalMovie> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
@@ -57,7 +57,7 @@ class MovieListAdapter(
         return if (isFooter(position)) FOOTER_TYPE else DEFAULT_TYPE
     }
 
-    fun setData(movies: List<Movie>?) {
+    fun setData(movies: List<LocalMovie>?) {
         val saveMovies = movies ?: emptyList()
         val result = DiffUtil.calculateDiff(MovieDiffUtils(items, saveMovies))
         items.clear()

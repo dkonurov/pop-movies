@@ -1,9 +1,9 @@
 package com.example.grid.holders
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.core.models.entity.Movie
+import com.example.core.models.entity.LocalMovie
 
-class MovieDiffUtils(private val oldList: List<Movie>, private val newList: List<Movie>) : DiffUtil.Callback() {
+class MovieDiffUtils(private val oldList: List<LocalMovie>, private val newList: List<LocalMovie>) : DiffUtil.Callback() {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return oldList[oldItemPosition] === newList[newItemPosition]
     }

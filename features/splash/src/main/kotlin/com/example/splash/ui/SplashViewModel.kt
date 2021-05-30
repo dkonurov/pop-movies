@@ -7,7 +7,7 @@ import com.example.base.ui.vm.ErrorViewModel
 import com.example.base.ui.vm.SingleLiveEvent
 import com.example.core.data.logger.Logger
 import com.example.core.data.message.ErrorMessageDataSource
-import com.example.core.models.config.ImageConfig
+import com.example.core.network.models.ImageConfigDTO
 import com.example.splash.domain.SplashNavigator
 import com.example.splash.domain.repositories.configurtaion.BaseConfigRepository
 import kotlinx.coroutines.CoroutineScope
@@ -22,10 +22,10 @@ internal class SplashViewModel @Inject constructor(
     private val splashNavigator: SplashNavigator
 ) : ErrorViewModel(coroutineScope, schedulerProvider, messageDataSource, logger) {
 
-    val imageConfig: LiveData<ImageConfig>
+    val imageConfig: LiveData<ImageConfigDTO>
         get() = _imageConfig
 
-    private val _imageConfig = SingleLiveEvent<ImageConfig>()
+    private val _imageConfig = SingleLiveEvent<ImageConfigDTO>()
 
     fun loadConfig() {
         coroutine {

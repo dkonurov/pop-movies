@@ -1,7 +1,7 @@
 package com.example.details.domain.mappers
 
-import com.example.core.models.DetailsMovie
-import com.example.core.models.entity.Favorite
+import com.example.core.models.entity.LocalFavorite
+import com.example.core.network.models.DetailsMovieDTO
 import com.example.details.view.ViewMovie
 import javax.inject.Inject
 
@@ -12,7 +12,7 @@ internal class MovieMapper @Inject constructor() {
     }
 
     fun toViewMovie(
-        movie: DetailsMovie,
+        movie: DetailsMovieDTO,
         pathImg: String?,
         sizeImg: String?,
         isFavorite: Boolean
@@ -37,8 +37,8 @@ internal class MovieMapper @Inject constructor() {
         )
     }
 
-    fun toFavorite(viewMovie: ViewMovie): Favorite {
-        return Favorite(
+    fun toFavorite(viewMovie: ViewMovie): LocalFavorite {
+        return LocalFavorite(
             viewMovie.id,
             viewMovie.title,
             viewMovie.about,
