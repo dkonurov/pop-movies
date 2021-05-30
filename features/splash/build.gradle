@@ -33,6 +33,7 @@ android {
 
 dependencies {
     api project(':components:baseui')
+    implementation project(':core:storage')
     kapt toothpick.compiler
     implementation androidx.core
 

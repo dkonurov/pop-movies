@@ -6,12 +6,12 @@ import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.bottom.navigation.domain.config.SortConfigRepository
 import com.example.bottom.navigation.ui.models.FilterType
-import com.example.core.data.config.Config
 import com.example.core.data.logger.Logger
-import com.example.core.data.message.ErrorMessageDataSource
-import com.example.core.models.entity.LocalMovie
 import com.example.movie.domain.usecase.MovieListUseCase
 import com.example.movie.list.view.MovieListRouter
+import com.example.storage.config.Config
+import com.example.storage.db.entity.LocalMovie
+import com.example.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

@@ -2,9 +2,9 @@ package com.example.favorite.domain.repositories
 
 import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
-import com.example.core.data.config.Config
-import com.example.core.data.db.inteface.FavoriteDao
 import com.example.core.network.remote.HttpDataSource
+import com.example.storage.config.Config
+import com.example.storage.db.inteface.FavoriteDao
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext

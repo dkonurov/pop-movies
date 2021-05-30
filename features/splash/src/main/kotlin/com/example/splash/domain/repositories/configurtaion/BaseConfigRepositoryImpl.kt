@@ -1,8 +1,10 @@
 package com.example.splash.domain.repositories.configurtaion
 
-import com.example.core.data.preferences.PrivateDataSource
 import com.example.core.network.models.ImageConfigDTO
+import com.example.core.network.models.response.ConfigResponse
 import com.example.core.network.remote.HttpDataSource
+import com.example.storage.db.entity.LocalImageConfig
+import com.example.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
 internal class BaseConfigRepositoryImpl @Inject constructor(
@@ -12,7 +14,14 @@ internal class BaseConfigRepositoryImpl @Inject constructor(
 
     override suspend fun getConfiguration(): ImageConfigDTO {
         val response = httpDataSource.getConfiguration()
-        privateDataSource.saveImageConfig(response.imageConfig)
+        val config = mapToLocal(response)
+        privateDataSource.saveImageConfig(config)
         return response.imageConfig
     }
+
+    private fun mapToLocal(response: ConfigResponse) = LocalImageConfig(
+        response.imageConfig.baseUrl,
+        response.imageConfig.logosSize,
+        response.imageConfig.postersSize
+    )
 }

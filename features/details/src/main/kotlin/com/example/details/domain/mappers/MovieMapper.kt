@@ -1,8 +1,8 @@
 package com.example.details.domain.mappers
 
-import com.example.core.models.entity.LocalFavorite
 import com.example.core.network.models.DetailsMovieDTO
 import com.example.details.view.ViewMovie
+import com.example.storage.db.entity.LocalFavorite
 import javax.inject.Inject
 
 internal class MovieMapper @Inject constructor() {

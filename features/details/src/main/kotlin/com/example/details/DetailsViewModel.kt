@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
-import com.example.core.data.message.ErrorMessageDataSource
 import com.example.details.di.MovieId
 import com.example.details.domain.PrimitiveWrapper
 import com.example.details.domain.movie.MovieRepository
 import com.example.details.view.ViewMovie
+import com.example.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
