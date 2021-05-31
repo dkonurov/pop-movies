@@ -1,7 +1,7 @@
 package com.example.base.ui.vm
 
 import androidx.lifecycle.ViewModel
-import com.example.base.schedulers.SchedulerProvider
+import com.example.core.network.schedulers.SchedulerProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job

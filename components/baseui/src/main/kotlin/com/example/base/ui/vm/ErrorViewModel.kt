@@ -3,9 +3,9 @@ package com.example.base.ui.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.load.HttpException
-import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.ui.errors.UIError
 import com.example.core.data.logger.Logger
+import com.example.core.network.schedulers.SchedulerProvider
 import com.example.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import java.net.ConnectException

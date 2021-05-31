@@ -1,8 +1,8 @@
 package com.example.favorite.domain.repositories
 
-import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.network.remote.HttpDataSource
+import com.example.core.network.schedulers.SchedulerProvider
 import com.example.storage.config.Config
 import com.example.storage.db.inteface.FavoriteDao
 import kotlinx.coroutines.async

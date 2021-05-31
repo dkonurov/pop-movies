@@ -1,9 +1,10 @@
-package com.example.base.schedulers
+package com.example.core.network.schedulers
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-internal class SchedulerProviderImpl : SchedulerProvider {
+internal class SchedulerProviderImpl @Inject constructor() : SchedulerProvider {
 
     override fun io(): CoroutineDispatcher = Dispatchers.IO
 

@@ -2,9 +2,9 @@ package com.example.favorite.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
+import com.example.core.network.schedulers.SchedulerProvider
 import com.example.favorite.domain.usecase.FavoriteListUseCase
 import com.example.favorite.list.view.FavoriteListRouter
 import com.example.storage.db.entity.LocalMovie

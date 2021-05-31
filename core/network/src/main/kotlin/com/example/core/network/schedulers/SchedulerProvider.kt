@@ -1,4 +1,4 @@
-package com.example.base.schedulers
+package com.example.core.network.schedulers
 
 import kotlinx.coroutines.CoroutineDispatcher
 

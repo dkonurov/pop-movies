@@ -4,7 +4,10 @@ import com.example.core.network.di.annotation.RemoteScope
 import com.example.core.network.di.annotation.Url
 import com.example.core.network.models.ServerInfo
 import com.example.core.network.remote.HttpDataSource
+import com.example.core.network.schedulers.SchedulerProvider
+import com.example.core.network.schedulers.SchedulerProviderImpl
 import com.google.gson.Gson
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
@@ -14,46 +17,52 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 @Module
-internal class RemoteModule {
+internal abstract class RemoteModule {
 
-    @Provides
-    @RemoteScope
-    fun provideGson(): Gson = Gson()
+    companion object {
+        @Provides
+        @RemoteScope
+        fun provideGson(): Gson = Gson()
 
-    @Provides
-    fun provideServerInfo(): ServerInfo = ServerInfo(30, 30, 30)
+        @Provides
+        fun provideServerInfo(): ServerInfo = ServerInfo(30, 30, 30)
 
-    @Provides
-    @RemoteScope
-    fun provideOkhttpClient(
-        serverInfo: ServerInfo,
-        interceptors: Set<@JvmSuppressWildcards Interceptor>
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .also {
-                interceptors.forEach { interceptor ->
-                    it.addInterceptor(interceptor)
+        @Provides
+        @RemoteScope
+        fun provideOkhttpClient(
+            serverInfo: ServerInfo,
+            interceptors: Set<@JvmSuppressWildcards Interceptor>
+        ): OkHttpClient {
+            return OkHttpClient.Builder()
+                .also {
+                    interceptors.forEach { interceptor ->
+                        it.addInterceptor(interceptor)
+                    }
                 }
-            }
-            .connectTimeout(serverInfo.connectTimeout, TimeUnit.SECONDS)
-            .writeTimeout(serverInfo.timeoutWrite, TimeUnit.SECONDS)
-            .readTimeout(serverInfo.timeoutRead, TimeUnit.SECONDS)
+                .connectTimeout(serverInfo.connectTimeout, TimeUnit.SECONDS)
+                .writeTimeout(serverInfo.timeoutWrite, TimeUnit.SECONDS)
+                .readTimeout(serverInfo.timeoutRead, TimeUnit.SECONDS)
+                .build()
+        }
+
+        @Provides
+        @RemoteScope
+        fun provideRetrofit(
+            client: OkHttpClient,
+            gson: Gson,
+            @Url url: String
+        ): Retrofit = Retrofit.Builder()
+            .baseUrl(url)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
+
+        @Provides
+        @RemoteScope
+        fun provideHttpDataSource(retrofit: Retrofit): HttpDataSource = retrofit.create(HttpDataSource::class.java)
     }
 
-    @Provides
+    @Binds
     @RemoteScope
-    fun provideRetrofit(
-        client: OkHttpClient,
-        gson: Gson,
-        @Url url: String
-    ): Retrofit = Retrofit.Builder()
-        .baseUrl(url)
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create(gson))
-        .build()
-
-    @Provides
-    @RemoteScope
-    fun provideHttpDataSource(retrofit: Retrofit): HttpDataSource = retrofit.create(HttpDataSource::class.java)
+    abstract fun provideSchedulerProvider(impl: SchedulerProviderImpl): SchedulerProvider
 }

@@ -1,7 +1,7 @@
 package com.example.details.domain.movie
 
-import com.example.base.schedulers.SchedulerProvider
 import com.example.core.network.remote.HttpDataSource
+import com.example.core.network.schedulers.SchedulerProvider
 import com.example.details.domain.mappers.MovieMapper
 import com.example.details.view.ViewMovie
 import com.example.storage.db.inteface.FavoriteDao

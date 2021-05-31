@@ -3,7 +3,6 @@ package com.example.dmitry.grades
 import android.app.Application
 import com.example.core.di.CoreDependenicesFactories
 import com.example.core.network.di.RemoteContainerFactory
-import com.example.di.BaseUIScope
 import com.example.di.StoreScope
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
@@ -13,6 +12,8 @@ import toothpick.Toothpick
 import toothpick.configuration.Configuration
 
 open class AppDelegate : Application(), StoreScope {
+
+    private lateinit var scope: Scope
 
     override fun onCreate() {
         super.onCreate()
@@ -24,7 +25,7 @@ open class AppDelegate : Application(), StoreScope {
         val coreContainer = CoreDependenicesFactories.create()
         val remoteContainer = RemoteContainerFactory.create(BuildConfig.PROD_URL, BuildConfig.APY_KEY)
         val storageContainer = StorageContainerFactory.create(this)
-        val appScore = Toothpick.openScope(Scopes.APP_SCOPE)
+        scope = Toothpick.openScope(Scopes.APP_SCOPE)
             .installModules(
                 AppModule(
                     this,
@@ -33,11 +34,9 @@ open class AppDelegate : Application(), StoreScope {
                     coreContainer
                 )
             )
-
-        BaseUIScope.initBaseUIScope(appScore)
     }
 
-    override fun getScope(): Scope = BaseUIScope.getBaseUIScope()
+    override fun getScope(): Scope = scope
 
     private fun initToothpick() {
         if (BuildConfig.DEBUG) {

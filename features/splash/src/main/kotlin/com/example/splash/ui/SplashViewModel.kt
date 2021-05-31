@@ -2,11 +2,11 @@ package com.example.splash.ui
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.base.ui.vm.SingleLiveEvent
 import com.example.core.data.logger.Logger
 import com.example.core.network.models.ImageConfigDTO
+import com.example.core.network.schedulers.SchedulerProvider
 import com.example.splash.domain.SplashNavigator
 import com.example.splash.domain.repositories.configurtaion.BaseConfigRepository
 import com.example.storage.preferences.ErrorMessageDataSource
