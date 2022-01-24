@@ -1,11 +1,11 @@
-package com.example.storage.db.inteface
+package com.example.core.storage.db.inteface
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.storage.db.entity.LocalFavorite
+import com.example.core.storage.db.entity.LocalFavorite
 
 @Dao
 interface FavoriteDao {

@@ -1,7 +1,7 @@
 package com.example.movie.domain.repositories
 
 import com.example.core.network.models.MovieDTO
-import com.example.storage.db.entity.LocalMovie
+import com.example.core.storage.db.entity.LocalMovie
 import javax.inject.Inject
 
 internal class MovieMapper @Inject constructor() {

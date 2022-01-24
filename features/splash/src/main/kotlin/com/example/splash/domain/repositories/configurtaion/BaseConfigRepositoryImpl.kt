@@ -3,8 +3,8 @@ package com.example.splash.domain.repositories.configurtaion
 import com.example.core.network.models.ImageConfigDTO
 import com.example.core.network.models.response.ConfigResponse
 import com.example.core.network.remote.HttpDataSource
-import com.example.storage.db.entity.LocalImageConfig
-import com.example.storage.preferences.PrivateDataSource
+import com.example.core.storage.db.entity.LocalImageConfig
+import com.example.core.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
 internal class BaseConfigRepositoryImpl @Inject constructor(

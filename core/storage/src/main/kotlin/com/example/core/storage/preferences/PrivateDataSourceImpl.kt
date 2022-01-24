@@ -1,8 +1,8 @@
-package com.example.storage.preferences
+package com.example.core.storage.preferences
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.example.storage.db.entity.LocalImageConfig
+import com.example.core.storage.db.entity.LocalImageConfig
 import javax.inject.Inject
 
 internal class PrivateDataSourceImpl @Inject constructor(

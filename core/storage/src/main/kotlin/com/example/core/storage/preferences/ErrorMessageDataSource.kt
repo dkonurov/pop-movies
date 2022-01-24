@@ -1,4 +1,4 @@
-package com.example.storage.preferences
+package com.example.core.storage.preferences
 
 interface ErrorMessageDataSource {
 

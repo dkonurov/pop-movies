@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
+import com.example.core.storage.db.entity.LocalMovie
+import com.example.core.storage.preferences.ErrorMessageDataSource
 import com.example.favorite.domain.usecase.FavoriteListUseCase
 import com.example.favorite.list.view.FavoriteListRouter
-import com.example.storage.db.entity.LocalMovie
-import com.example.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

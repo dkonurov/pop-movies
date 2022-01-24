@@ -2,10 +2,10 @@ package com.example.details.domain.movie
 
 import com.example.base.schedulers.SchedulerProvider
 import com.example.core.network.remote.HttpDataSource
+import com.example.core.storage.db.inteface.FavoriteDao
+import com.example.core.storage.preferences.PrivateDataSource
 import com.example.details.domain.mappers.MovieMapper
 import com.example.details.view.ViewMovie
-import com.example.storage.db.inteface.FavoriteDao
-import com.example.storage.preferences.PrivateDataSource
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

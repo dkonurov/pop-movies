@@ -1,10 +1,10 @@
-package com.example.storage.db.inteface
+package com.example.core.storage.db.inteface
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.storage.db.entity.LocalMovie
+import com.example.core.storage.db.entity.LocalMovie
 
 @Dao
 interface MovieDao {

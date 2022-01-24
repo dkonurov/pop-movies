@@ -1,17 +1,17 @@
-package com.example.storage.di.module
+package com.example.core.storage.di.module
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
-import com.example.storage.config.Config
-import com.example.storage.db.AppDatabase
-import com.example.storage.db.inteface.FavoriteDao
-import com.example.storage.db.inteface.MovieDao
-import com.example.storage.di.scope.StorageScope
-import com.example.storage.preferences.ErrorMessageDataSource
-import com.example.storage.preferences.ErrorMessageDataSourceImpl
-import com.example.storage.preferences.PrivateDataSource
-import com.example.storage.preferences.PrivateDataSourceImpl
+import com.example.core.storage.config.Config
+import com.example.core.storage.db.AppDatabase
+import com.example.core.storage.db.inteface.FavoriteDao
+import com.example.core.storage.db.inteface.MovieDao
+import com.example.core.storage.di.scope.StorageScope
+import com.example.core.storage.preferences.ErrorMessageDataSource
+import com.example.core.storage.preferences.ErrorMessageDataSourceImpl
+import com.example.core.storage.preferences.PrivateDataSource
+import com.example.core.storage.preferences.PrivateDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

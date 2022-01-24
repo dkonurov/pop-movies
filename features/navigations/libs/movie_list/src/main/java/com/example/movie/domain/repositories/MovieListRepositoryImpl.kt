@@ -3,8 +3,8 @@ package com.example.movie.domain.repositories
 import com.example.base.schedulers.SchedulerProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.network.remote.HttpDataSource
-import com.example.storage.config.Config
-import com.example.storage.db.inteface.MovieDao
+import com.example.core.storage.config.Config
+import com.example.core.storage.db.inteface.MovieDao
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 

@@ -1,8 +1,8 @@
-package com.example.storage.di.container
+package com.example.core.storage.di.container
 
 import android.content.Context
-import com.example.storage.di.module.StorageModule
-import com.example.storage.di.scope.StorageScope
+import com.example.core.storage.di.module.StorageModule
+import com.example.core.storage.di.scope.StorageScope
 import dagger.BindsInstance
 import dagger.Component
 

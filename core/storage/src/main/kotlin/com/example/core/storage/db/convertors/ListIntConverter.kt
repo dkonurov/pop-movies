@@ -1,4 +1,4 @@
-package com.example.storage.db.convertors
+package com.example.core.storage.db.convertors
 
 import androidx.room.TypeConverter
 

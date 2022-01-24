@@ -6,7 +6,7 @@ import com.bumptech.glide.load.HttpException
 import com.example.base.schedulers.SchedulerProvider
 import com.example.base.ui.ui.errors.UIError
 import com.example.core.data.logger.Logger
-import com.example.storage.preferences.ErrorMessageDataSource
+import com.example.core.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import java.net.ConnectException
 import java.net.SocketTimeoutException

@@ -1,6 +1,6 @@
-package com.example.storage.preferences
+package com.example.core.storage.preferences
 
-import com.example.storage.db.entity.LocalImageConfig
+import com.example.core.storage.db.entity.LocalImageConfig
 
 interface PrivateDataSource {
     var baseUrlImg: String?

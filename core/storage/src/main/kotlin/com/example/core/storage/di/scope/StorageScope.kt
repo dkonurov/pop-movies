@@ -1,4 +1,4 @@
-package com.example.storage.di.scope
+package com.example.core.storage.di.scope
 
 import javax.inject.Scope
 

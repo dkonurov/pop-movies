@@ -1,4 +1,3 @@
-include ':core:storage'
 include ':app',
         ':components:core',
         ':components:baseui',
@@ -10,4 +9,5 @@ include ':app',
         ':features:navigations:libs:favorite_list',
         ':features:details',
         ':core',
-        ':core:network'
+        ':core:network',
+        ':core:storage'

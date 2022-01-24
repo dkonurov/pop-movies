@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
-apply from: 'config/jacoco.gradle'
+//apply from: 'config/jacoco.gradle'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion application.compileSdk
     defaultConfig {
         applicationId "com.example.dmitry.grades"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion application.minSdk
+        targetSdkVersion application.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
