@@ -1,11 +1,11 @@
-package com.example.storage.di.container
+package com.example.core.storage.di.container
 
 import android.content.Context
-import com.example.storage.config.Config
-import com.example.storage.db.inteface.FavoriteDao
-import com.example.storage.db.inteface.MovieDao
-import com.example.storage.preferences.ErrorMessageDataSource
-import com.example.storage.preferences.PrivateDataSource
+import com.example.core.storage.config.Config
+import com.example.core.storage.db.inteface.FavoriteDao
+import com.example.core.storage.db.inteface.MovieDao
+import com.example.core.storage.preferences.ErrorMessageDataSource
+import com.example.core.storage.preferences.PrivateDataSource
 
 interface StorageContainer {
     fun getFavoriteDao(): FavoriteDao

@@ -15,7 +15,7 @@ open class DIFragment : BaseFragment(), StoreScope {
 
     private lateinit var scope: Scope
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         scope = getParentScope().openSubScope(this.javaClass.simpleName)
         super.onAttach(context)
     }

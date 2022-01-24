@@ -7,11 +7,11 @@ import com.example.base.ui.vm.ErrorViewModel
 import com.example.bottom.navigation.domain.config.SortConfigRepository
 import com.example.bottom.navigation.ui.models.FilterType
 import com.example.core.data.logger.Logger
+import com.example.core.storage.config.Config
+import com.example.core.storage.db.entity.LocalMovie
+import com.example.core.storage.preferences.ErrorMessageDataSource
 import com.example.movie.domain.usecase.MovieListUseCase
 import com.example.movie.list.view.MovieListRouter
-import com.example.storage.config.Config
-import com.example.storage.db.entity.LocalMovie
-import com.example.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 

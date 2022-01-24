@@ -63,8 +63,8 @@ class DetailsFragment : DIFragment(), LoadingView {
         return arrayOf(DetailsModule(id))
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
                 activity?.onBackPressed()
                 true
@@ -99,9 +99,9 @@ class DetailsFragment : DIFragment(), LoadingView {
             it.setTitle(R.string.details_title)
         }
         val viewModel = viewModel { getScope().getInstance(DetailsViewModel::class.java) }
-        viewModel.loading.observe(this, LoadingObserver(this))
+        viewModel.loading.observe(viewLifecycleOwner, LoadingObserver(this))
         viewModel.movie.observe(
-            this,
+            viewLifecycleOwner,
             {
                 it?.let {
                     titleTv.text = it.title

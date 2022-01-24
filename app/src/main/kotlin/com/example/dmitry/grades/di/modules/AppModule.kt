@@ -5,14 +5,14 @@ import com.example.core.data.logger.Logger
 import com.example.core.di.CoreDependencies
 import com.example.core.network.di.RemoteContainer
 import com.example.core.network.remote.HttpDataSource
+import com.example.core.storage.config.Config
+import com.example.core.storage.db.inteface.FavoriteDao
+import com.example.core.storage.db.inteface.MovieDao
+import com.example.core.storage.di.container.StorageContainer
+import com.example.core.storage.preferences.ErrorMessageDataSource
+import com.example.core.storage.preferences.PrivateDataSource
 import com.example.dmitry.grades.domain.navigators.SplashNavigatorImpl
 import com.example.splash.domain.SplashNavigator
-import com.example.storage.config.Config
-import com.example.storage.db.inteface.FavoriteDao
-import com.example.storage.db.inteface.MovieDao
-import com.example.storage.di.container.StorageContainer
-import com.example.storage.preferences.ErrorMessageDataSource
-import com.example.storage.preferences.PrivateDataSource
 import toothpick.config.Module
 
 class AppModule(

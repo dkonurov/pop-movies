@@ -13,6 +13,7 @@ import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
+import com.example.core.storage.db.entity.LocalMovie
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
@@ -20,8 +21,9 @@ import com.example.movie.R
 import com.example.movie.di.MovieListModule
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.widget.FilterPopupMenu
-import com.example.storage.db.entity.LocalMovie
-import kotlinx.android.synthetic.main.fragment_grid.*
+import kotlinx.android.synthetic.main.fragment_grid.recycler
+import kotlinx.android.synthetic.main.fragment_grid.refresh
+import kotlinx.android.synthetic.main.fragment_grid.toolbar
 import toothpick.config.Module
 
 class MovieListFragment : DIFragment(), LoadingView {
@@ -58,8 +60,8 @@ class MovieListFragment : DIFragment(), LoadingView {
         inflater.inflate(R.menu.list_movie, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.filter -> showPopupFilter()
             else -> super.onOptionsItemSelected(item)
         }
@@ -97,12 +99,12 @@ class MovieListFragment : DIFragment(), LoadingView {
 
     private fun initViewModel() {
         viewModel.movies.observe(
-            this,
+            viewLifecycleOwner,
             {
                 adapter.setData(it)
             }
         )
-        viewModel.loading.observe(this, LoadingObserver(this))
+        viewModel.loading.observe(viewLifecycleOwner, LoadingObserver(this))
         ErrorHandler.handleError(viewModel, this)
         if (viewModel.movies.value == null) {
             viewModel.load()

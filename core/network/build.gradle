@@ -5,12 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion application.compileSdk
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion application.minSdk
+        targetSdkVersion application.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -45,10 +44,10 @@ dependencies {
     implementation kotlinLib.std
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.8.2'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.8.2'
+    implementation network.retrofit
+    implementation network.okhttp
+    implementation network.logging
+    implementation network.converter
 
     //dagger
     kapt dagger.processor

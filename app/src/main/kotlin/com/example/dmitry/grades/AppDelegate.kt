@@ -3,11 +3,11 @@ package com.example.dmitry.grades
 import android.app.Application
 import com.example.core.di.CoreDependenicesFactories
 import com.example.core.network.di.RemoteContainerFactory
+import com.example.core.storage.di.container.StorageContainerFactory
 import com.example.di.BaseUIScope
 import com.example.di.StoreScope
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
-import com.example.storage.di.container.StorageContainerFactory
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.configuration.Configuration

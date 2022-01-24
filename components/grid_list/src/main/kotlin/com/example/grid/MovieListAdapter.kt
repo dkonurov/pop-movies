@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.storage.db.entity.LocalMovie
 import com.example.grid.holders.LoadingViewHolder
 import com.example.grid.holders.MovieDiffUtils
-import com.example.storage.db.entity.LocalMovie
 
 class MovieListAdapter(
     context: Context,
