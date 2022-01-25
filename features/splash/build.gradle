@@ -22,6 +22,15 @@ android {
         }
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion versions.kotlin
+        kotlinCompilerExtensionVersion "1.0.5"
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         debug.java.srcDirs += 'src/debug/kotlin'
@@ -33,8 +42,26 @@ android {
 dependencies {
     api project(':components:baseui')
     implementation project(':core:storage')
-    kapt toothpick.compiler
     implementation androidx.core
+
+    implementation compose.ui
+    implementation compose.tooling
+    implementation compose.foundation
+    implementation compose.material
+    implementation compose.icons
+    implementation compose.extendend
+    implementation compose.activity
+    implementation compose.viewModel
+    implementation compose.livedata
+    implementation compose.rxjava
+    implementation compose.compiler
+
+    //dagger
+    kapt dagger.processor
+    implementation dagger.core
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
