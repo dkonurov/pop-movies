@@ -1,35 +1,37 @@
 package com.example.splash.ui
 
 import android.content.Context
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.base.schedulers.SchedulerProvider
-import com.example.base.ui.vm.ErrorViewModel
-import com.example.base.ui.vm.SingleLiveEvent
-import com.example.core.data.logger.Logger
-import com.example.core.network.models.ImageConfigDTO
-import com.example.core.storage.preferences.ErrorMessageDataSource
 import com.example.splash.domain.SplashNavigator
 import com.example.splash.domain.repositories.configurtaion.BaseConfigRepository
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class SplashViewModel @Inject constructor(
-    coroutineScope: CoroutineScope,
-    schedulerProvider: SchedulerProvider,
-    messageDataSource: ErrorMessageDataSource,
-    logger: Logger,
+    private val schedulerProvider: SchedulerProvider,
     private val baseConfigRepository: BaseConfigRepository,
     private val splashNavigator: SplashNavigator
-) : ErrorViewModel(coroutineScope, schedulerProvider, messageDataSource, logger) {
+) : ViewModel() {
 
-    val imageConfig: LiveData<ImageConfigDTO>
-        get() = _imageConfig
-
-    private val _imageConfig = SingleLiveEvent<ImageConfigDTO>()
+    var state by mutableStateOf<State>(value = State.Empty)
+        private set
 
     fun loadConfig() {
-        coroutine {
-            _imageConfig.value = baseConfigRepository.getConfiguration()
+        viewModelScope.launch {
+            state = State.Loading
+            val result =
+                withContext(schedulerProvider.io()) { baseConfigRepository.getConfiguration() }
+            state = if (result.isSuccess) {
+                State.Success
+            } else {
+                State.Error(result.exceptionOrNull())
+            }
         }
     }
 

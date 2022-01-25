@@ -1,6 +1,5 @@
 package com.example.splash.domain.repositories.configurtaion
 
-import com.example.core.network.models.ImageConfigDTO
 import com.example.core.network.models.response.ConfigResponse
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.db.entity.LocalImageConfig
@@ -12,11 +11,9 @@ internal class BaseConfigRepositoryImpl @Inject constructor(
     private val privateDataSource: PrivateDataSource
 ) : BaseConfigRepository {
 
-    override suspend fun getConfiguration(): ImageConfigDTO {
+    override suspend fun getConfiguration(): Result<LocalImageConfig> = runCatching {
         val response = httpDataSource.getConfiguration()
-        val config = mapToLocal(response)
-        privateDataSource.saveImageConfig(config)
-        return response.imageConfig
+        mapToLocal(response).also { privateDataSource.saveImageConfig(it) }
     }
 
     private fun mapToLocal(response: ConfigResponse) = LocalImageConfig(

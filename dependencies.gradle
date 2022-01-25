@@ -4,7 +4,7 @@ ext.application = [
         minSdk       : 24
 ]
 ext.versions = [
-        kotlin   : '1.6.10',
+        kotlin   : '1.5.31',
         room     : '2.4.1',
         toothpick: '3.0.1',
         coroutine: '1.6.0',
@@ -16,7 +16,12 @@ ext.versions = [
         viewModel: '2.4.0',
         appcompat: '1.4.1',
         retrofit : '2.9.0',
-        okhttp   : '4.9.3'
+        okhttp   : '4.9.3',
+        compose  : [
+                'base': '1.0.5',
+                'acitivty': '1.4.0',
+                'viewmodel': '2.4.0'
+        ]
 ]
 
 ext.glide = [
@@ -61,4 +66,18 @@ ext.network = [
 ext.room = [
         lib     : "androidx.room:room-runtime:$versions.room",
         compiler: "androidx.room:room-compiler:$versions.room"
+]
+
+ext.compose = [
+        ui : "androidx.compose.ui:ui:$versions.compose.base",
+        tooling: "androidx.compose.ui:ui-tooling:$versions.compose.base",
+        foundation: "androidx.compose.foundation:foundation:$versions.compose.base",
+        material: "androidx.compose.material:material:$versions.compose.base",
+        icons: "androidx.compose.material:material-icons-core:$versions.compose.base",
+        extendend: "androidx.compose.material:material-icons-extended:$versions.compose.base",
+        activity: "androidx.activity:activity-compose:$versions.compose.activity",
+        viewModel: "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose.viewmodel",
+        livedata: "androidx.compose.runtime:runtime-livedata:$versions.compose.base",
+        rxjava: "androidx.compose.runtime:runtime-rxjava2:$versions.compose.base",
+        compiler: "androidx.compose.compiler:compiler:$versions.compose.base"
 ]

@@ -58,6 +58,11 @@ dependencies {
     kapt dagger.processor
     implementation dagger.core
 
+    implementation compose.ui
+    implementation compose.tooling
+    implementation compose.foundation
+    implementation compose.material
+
     implementation kotlinLib.std
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
