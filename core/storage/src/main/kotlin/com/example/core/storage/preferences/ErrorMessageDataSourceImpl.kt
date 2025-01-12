@@ -1,7 +1,7 @@
 package com.example.core.storage.preferences
 
 import android.content.Context
-import com.example.core.storage.R
+import com.example.dmitry.grades.core.storage.R
 import javax.inject.Inject
 
 internal class ErrorMessageDataSourceImpl @Inject constructor(private val context: Context) : ErrorMessageDataSource {

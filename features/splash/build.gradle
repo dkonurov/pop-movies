@@ -1,9 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'com.google.devtools.ksp'
 android {
     compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.features.splash"
 
     defaultConfig {
         minSdkVersion application.minSdk
@@ -22,34 +23,44 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion versions.kotlin
-        kotlinCompilerExtensionVersion "1.0.5"
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         debug.java.srcDirs += 'src/debug/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
 
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.9.20"
+    }
+
+
 }
 
 dependencies {
+    def composeBom = platform(compose.bom)
     api project(':components:baseui')
     implementation project(':core:storage')
+    implementation composeBom
     implementation androidx.core
+    implementation androidx.constraint
 
     implementation compose.ui
-    implementation compose.tooling
-    implementation compose.foundation
+    debugImplementation compose.tooling
     implementation compose.material
-    implementation compose.icons
-    implementation compose.extendend
     implementation compose.activity
     implementation compose.viewModel
     implementation compose.livedata
@@ -57,7 +68,7 @@ dependencies {
     implementation compose.compiler
 
     //dagger
-    kapt dagger.processor
+    ksp dagger.processor
     implementation dagger.core
 
     // UI Tests

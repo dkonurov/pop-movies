@@ -17,13 +17,11 @@ import com.example.core.storage.db.entity.LocalMovie
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
-import com.example.movie.R
+import com.example.dmitry.grades.features.libs.movie_list.R
+import com.example.dmitry.grades.features.libs.movie_list.databinding.FragmentGridBinding
 import com.example.movie.di.MovieListModule
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.widget.FilterPopupMenu
-import kotlinx.android.synthetic.main.fragment_grid.recycler
-import kotlinx.android.synthetic.main.fragment_grid.refresh
-import kotlinx.android.synthetic.main.fragment_grid.toolbar
 import toothpick.config.Module
 
 class MovieListFragment : DIFragment(), LoadingView {
@@ -37,6 +35,8 @@ class MovieListFragment : DIFragment(), LoadingView {
     private lateinit var viewModel: ListViewModel
 
     private lateinit var adapter: MovieListAdapter
+
+    private var binding: FragmentGridBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,25 +76,27 @@ class MovieListFragment : DIFragment(), LoadingView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentGridBinding.bind(view)
         viewModel = viewModel { getScope().getInstance(ListViewModel::class.java) }
         adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
             viewModel.showDetails(movie.id)
         }
 
         compatActivity?.let {
-            it.setSupportActionBar(toolbar)
+            it.setSupportActionBar(binding.toolbar)
             it.setTitle(R.string.list_title)
         }
-        recycler.adapter = adapter
+        binding.recycler.adapter = adapter
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.spanSizeLookup = SpanSizeLookup(layoutManager, adapter::isFooter)
-        recycler.layoutManager = layoutManager
-        recycler.addOnScrollListener(MovieListScrollListener(layoutManager, viewModel::loadMore))
+        binding.recycler.layoutManager = layoutManager
+        binding.recycler.addOnScrollListener(MovieListScrollListener(layoutManager, viewModel::loadMore))
 
-        refresh.setOnRefreshListener {
+        binding.refresh.setOnRefreshListener {
             viewModel.forceLoad()
         }
         initViewModel()
+        this.binding = binding
     }
 
     private fun initViewModel() {
@@ -111,11 +113,16 @@ class MovieListFragment : DIFragment(), LoadingView {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.binding = null
+    }
+
     override fun showLoading() {
-        refresh.isRefreshing = true
+        binding?.refresh?.isRefreshing = true
     }
 
     override fun hideLoading() {
-        refresh.isRefreshing = false
+        binding?.refresh?.isRefreshing = false
     }
 }

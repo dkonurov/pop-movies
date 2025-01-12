@@ -5,9 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.ToggleButton
 import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.example.base.extensions.viewModel
@@ -16,8 +13,9 @@ import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
 import com.example.details.DetailsViewModel
-import com.example.details.R
 import com.example.details.di.DetailsModule
+import com.example.dmitry.grades.features.details.R
+import com.example.dmitry.grades.features.details.databinding.FragmentDetailBinding
 import toothpick.config.Module
 
 class DetailsFragment : DIFragment(), LoadingView {
@@ -34,23 +32,9 @@ class DetailsFragment : DIFragment(), LoadingView {
         }
     }
 
-    private lateinit var poster: ImageView
-
-    private lateinit var titleTv: TextView
-
-    private lateinit var yearTv: TextView
-
-    private lateinit var timeTv: TextView
-
-    private lateinit var releaseTv: TextView
-
-    private lateinit var aboutTv: TextView
-
     private lateinit var toolbar: Toolbar
 
     private lateinit var refresh: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-
-    private lateinit var favoriteBtn: ToggleButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +53,7 @@ class DetailsFragment : DIFragment(), LoadingView {
                 activity?.onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -79,20 +64,14 @@ class DetailsFragment : DIFragment(), LoadingView {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
-        poster = view.findViewById(R.id.poster)
-        titleTv = view.findViewById(R.id.titleTv)
-        yearTv = view.findViewById(R.id.yearTv)
-        timeTv = view.findViewById(R.id.timeTv)
-        releaseTv = view.findViewById(R.id.releaseTv)
-        aboutTv = view.findViewById(R.id.aboutTv)
         toolbar = view.findViewById(R.id.toolbar)
         refresh = view.findViewById(R.id.refresh)
-        favoriteBtn = view.findViewById(R.id.favoriteBtn)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentDetailBinding.bind(view)
         compatActivity?.let {
             it.setSupportActionBar(toolbar)
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -104,20 +83,21 @@ class DetailsFragment : DIFragment(), LoadingView {
             viewLifecycleOwner,
             {
                 it?.let {
-                    titleTv.text = it.title
-                    yearTv.text = it.year
-                    timeTv.text = it.time
-                    releaseTv.text = it.release
-                    aboutTv.text = it.about
+
+                    binding.titleTv.text = it.title
+                    binding.yearTv.text = it.year
+                    binding.timeTv.text = it.time
+                    binding.releaseTv.text = it.release
+                    binding.aboutTv.text = it.about
                     Glide.with(this@DetailsFragment)
-                        .load(it.poster).into(poster)
-                    favoriteBtn.isChecked = it.isFavorite
+                        .load(it.poster).into(binding.poster)
+                    binding.favoriteBtn.isChecked = it.isFavorite
                 }
             }
         )
         ErrorHandler.handleError(viewModel, this)
-        favoriteBtn.setOnClickListener {
-            if (favoriteBtn.isChecked) {
+        binding.favoriteBtn.setOnClickListener {
+            if (binding.favoriteBtn.isChecked) {
                 viewModel.saveFavorite()
             } else {
                 viewModel.removeFavorite()

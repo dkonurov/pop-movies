@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.base.ui.ui.fragment.DIFragment
+import com.example.dmitry.grades.features.navigations.R
+import com.example.dmitry.grades.features.navigations.databinding.FragmentBootomNavBinding
 import com.example.favorite.list.view.FavoriteFragment
 import com.example.movie.list.view.MovieListFragment
 import com.example.navigation.di.BottomNavigationModule
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_bootom_nav.*
 import toothpick.config.Module
 
 class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +26,8 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
     }
 
     private var needLoad = false
+
+    private var binding: FragmentBootomNavBinding? = null
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragment: Fragment? = when (item.itemId) {
@@ -55,21 +58,28 @@ class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bottomNav.setOnNavigationItemSelectedListener(this)
+        val binding = FragmentBootomNavBinding.bind(view)
+        binding.bottomNav.setOnNavigationItemSelectedListener(this)
         if (needLoad) {
             setFragment(MovieListFragment.newInstance())
             needLoad = false
         }
+        this.binding = binding
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_ID, bottomNav.selectedItemId)
+        outState.putInt(SELECTED_ID, requireNotNull(binding).bottomNav.selectedItemId)
     }
 
     private fun setFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.nav_container, fragment)
             .commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
