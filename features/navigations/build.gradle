@@ -1,9 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'com.google.devtools.ksp'
 android {
     compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.features.navigations"
 
     defaultConfig {
         minSdkVersion application.minSdk
@@ -22,12 +23,24 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = "21"
+    }
 }
 
 dependencies {
     implementation project(':features:navigations:libs:movie_list')
     implementation project(':features:navigations:libs:favorite_list')
-    kapt toothpick.compiler
+    implementation androidx.constraint
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

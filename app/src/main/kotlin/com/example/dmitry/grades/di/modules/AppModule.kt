@@ -31,6 +31,6 @@ class AppModule(
         bind(Logger::class.java).toInstance(coreDependencies.getLogger())
         bind(ErrorMessageDataSource::class.java).toInstance(storageContainer.getErrorMessageDataSource())
         bind(Config::class.java).toInstance(storageContainer.getConfig())
-        bind(SplashNavigator::class.java).to(SplashNavigatorImpl::class.java)
+        bind(SplashNavigator::class.java).toInstance(SplashNavigatorImpl())
     }
 }

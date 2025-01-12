@@ -5,13 +5,11 @@ import com.example.base.ui.ui.errors.LoadingView
 
 class LoadingObserver(private val loadingView: LoadingView) : Observer<Boolean> {
 
-    override fun onChanged(state: Boolean?) {
-        state?.let {
-            if (it) {
-                loadingView.showLoading()
-            } else {
-                loadingView.hideLoading()
-            }
+    override fun onChanged(value: Boolean) {
+        if (value) {
+            loadingView.showLoading()
+        } else {
+            loadingView.hideLoading()
         }
     }
 }

@@ -26,11 +26,11 @@ class MovieListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
             LoadingViewHolder(
-                layoutInflater.inflate(R.layout.list_item_loading, parent, false)
+                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_loading, parent, false)
             )
         } else {
             return GridViewHolder(
-                layoutInflater.inflate(R.layout.list_item_grid, parent, false)
+                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_grid, parent, false)
             ).apply {
                 itemView.setOnClickListener {
                     val position = adapterPosition

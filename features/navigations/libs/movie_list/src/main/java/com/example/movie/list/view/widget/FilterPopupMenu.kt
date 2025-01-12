@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.PopupMenu
 import com.example.base.extensions.viewModel
 import com.example.bottom.navigation.ui.models.FilterType
-import com.example.movie.R
+import com.example.dmitry.grades.features.libs.movie_list.R
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.MovieListFragment
 

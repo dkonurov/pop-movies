@@ -1,9 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'com.google.devtools.ksp'
 android {
     compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.components.base_ui"
 
     defaultConfig {
         minSdkVersion application.minSdk
@@ -28,6 +29,24 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.9.20"
+    }
+
 }
 
 dependencies {
@@ -37,8 +56,6 @@ dependencies {
 
     api toothpick.ktp
     api toothpick.androidx
-
-    kapt toothpick.compiler
 
     //android
     api 'com.google.android.material:material:1.0.0'

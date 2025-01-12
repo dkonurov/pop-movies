@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'com.google.devtools.ksp'
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.features.libs.favorite_list"
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion application.minSdk
+        targetSdkVersion application.targetSdk
         versionCode 1
         versionName "1.0"
 
@@ -29,17 +29,25 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = "21"
+    }
+
 }
 
 dependencies {
     api project(":components:bottom_navigation_core")
     implementation project(":components:grid_list")
     implementation project(':core:storage')
-
-    //toothpick
-    kapt toothpick.compiler
-    //glide
-    kapt glide.compiler
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"

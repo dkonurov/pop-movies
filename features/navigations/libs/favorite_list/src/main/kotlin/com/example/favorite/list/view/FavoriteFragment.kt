@@ -11,15 +11,13 @@ import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
 import com.example.base.ui.ui.fragment.DIFragment
 import com.example.core.storage.db.entity.LocalMovie
+import com.example.dmitry.grades.features.libs.favorite_list.R
+import com.example.dmitry.grades.features.libs.favorite_list.databinding.FragmentGridBinding
 import com.example.favorite.di.FavoriteListModule
 import com.example.favorite.list.FavoriteViewModel
-import com.example.favorite.list.R
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
-import kotlinx.android.synthetic.main.fragment_grid.recycler
-import kotlinx.android.synthetic.main.fragment_grid.refresh
-import kotlinx.android.synthetic.main.fragment_grid.toolbar
 import toothpick.config.Module
 
 class FavoriteFragment : DIFragment(), LoadingView {
@@ -31,6 +29,8 @@ class FavoriteFragment : DIFragment(), LoadingView {
     }
 
     private lateinit var adapter: MovieListAdapter
+
+    private var binding: FragmentGridBinding? = null
 
     override fun getModules(): Array<Module>? {
         return arrayOf(FavoriteListModule())
@@ -49,43 +49,50 @@ class FavoriteFragment : DIFragment(), LoadingView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val binding = FragmentGridBinding.bind(view)
         val viewModel = viewModel { getScope().getInstance(FavoriteViewModel::class.java) }
         adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
             viewModel.showDetails(movie.id)
         }
 
         compatActivity?.let {
-            it.setSupportActionBar(toolbar)
+            it.setSupportActionBar(binding.toolbar)
             it.setTitle(R.string.favorite_title)
         }
-        recycler.adapter = adapter
+        binding.recycler.adapter = adapter
         val layoutManager = GridLayoutManager(context, 2)
         layoutManager.spanSizeLookup = SpanSizeLookup(layoutManager, adapter::isFooter)
-        recycler.layoutManager = layoutManager
-        recycler.addOnScrollListener(MovieListScrollListener(layoutManager, viewModel::loadMore))
+        binding.recycler.layoutManager = layoutManager
+        binding.recycler.addOnScrollListener(MovieListScrollListener(layoutManager, viewModel::loadMore))
 
-        refresh.setOnRefreshListener {
+        binding.refresh.setOnRefreshListener {
             viewModel.forceLoad()
         }
         initViewModel(viewModel)
+        this.binding = binding
     }
 
     override fun showLoading() {
-        refresh.isRefreshing = true
+        binding?.refresh?.isRefreshing = true
     }
 
     override fun hideLoading() {
-        refresh.isRefreshing = false
+        binding?.refresh?.isRefreshing = false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        this.binding = null
     }
 
     private fun initViewModel(viewModel: FavoriteViewModel) {
         viewModel.movies.observe(
-            this,
+            viewLifecycleOwner,
             {
                 adapter.setData(it)
             }
         )
-        viewModel.loading.observe(this, LoadingObserver(this))
+        viewModel.loading.observe(viewLifecycleOwner, LoadingObserver(this))
         ErrorHandler.handleError(viewModel, this)
         if (viewModel.movies.value == null) {
             viewModel.load()

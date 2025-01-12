@@ -2,10 +2,12 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
 }
 
 android {
     compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.core.storage"
 
     defaultConfig {
         minSdkVersion application.minSdk
@@ -25,12 +27,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "11"
     }
 
     sourceSets {
@@ -44,10 +46,10 @@ dependencies {
     implementation kotlinLib.std
 
     //dagger
-    kapt dagger.processor
+    ksp dagger.processor
     implementation dagger.core
 
     //room
     implementation room.lib
-    kapt room.compiler
+    ksp room.compiler
 }

@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'com.google.devtools.ksp'
 
 android {
     compileSdkVersion application.compileSdk
+    namespace "com.example.dmitry.grades.components.core"
 
     defaultConfig {
         minSdkVersion application.minSdk
@@ -42,25 +42,42 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
     }
 
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    def composeBom = platform(compose.bom)
+    api composeBom
+    api compose.ui
     api project(":core:network")
+    implementation composeBom
 
     //components
     implementation "androidx.room:room-runtime:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
+    ksp "androidx.room:room-compiler:$versions.room"
 
 
     //dagger
-    kapt dagger.processor
+    ksp dagger.processor
     implementation dagger.core
 
     implementation compose.ui
-    implementation compose.tooling
-    implementation compose.foundation
+    debugImplementation compose.tooling
     implementation compose.material
 
     implementation kotlinLib.std

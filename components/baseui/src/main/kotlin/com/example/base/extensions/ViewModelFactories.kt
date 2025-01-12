@@ -9,7 +9,7 @@ inline fun <reified T : ViewModel> FragmentActivity.viewModel(crossinline init: 
     return ViewModelProvider(
         this,
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = init.invoke() as T
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = init.invoke() as T
         }
     ).get(T::class.java)
 }
@@ -18,7 +18,7 @@ inline fun <reified T : ViewModel> Fragment.viewModel(crossinline init: () -> T)
     return ViewModelProvider(
         this,
         object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T = init.invoke() as T
+            override fun <T : ViewModel> create(modelClass: Class<T>): T = init.invoke() as T
         }
     ).get(T::class.java)
 }

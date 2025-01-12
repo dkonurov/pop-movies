@@ -6,9 +6,7 @@ import com.example.base.ui.ui.errors.UIError
 
 class ErrorObserver(private val view: ErrorView) : Observer<UIError> {
 
-    override fun onChanged(error: UIError?) {
-        error?.let {
-            view.showMessage(it.message)
-        }
+    override fun onChanged(value: UIError) {
+        view.showMessage(value.message)
     }
 }

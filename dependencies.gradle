@@ -1,26 +1,31 @@
 ext.application = [
-        compileSdk   : 31,
-        targetVersion: 28,
+        compileSdk   : 35,
+        targetVersion: 33,
         minSdk       : 24
 ]
 ext.versions = [
-        kotlin   : '1.5.31',
-        room     : '2.4.1',
-        toothpick: '3.0.1',
-        coroutine: '1.6.0',
-        androidx : '1.7.0',
-        lifecycle: '2.4.0',
-        recycler : '1.2.1',
-        glide    : '4.12.0',
-        dagger   : '2.39.1',
-        viewModel: '2.4.0',
-        appcompat: '1.4.1',
-        retrofit : '2.9.0',
-        okhttp   : '4.9.3',
-        compose  : [
-                'base': '1.0.5',
-                'acitivty': '1.4.0',
-                'viewmodel': '2.4.0'
+        kotlin       : '2.0.21',
+        room         : '2.4.1',
+        toothpick    : '3.1.0',
+        toothpick_ksp: '1.1.0',
+        coroutine    : '1.9.0',
+        androidx     : '1.7.0',
+        lifecycle    : '2.4.0',
+        recycler     : '1.2.1',
+        glide        : '4.12.0',
+        dagger       : '2.53',
+        viewModel    : '2.8.7',
+        appcompat    : '1.4.1',
+        retrofit     : '2.9.0',
+        okhttp       : '4.9.3',
+        constraint   : '2.2.0',
+        compose      : [
+                'base'           : '1.7.5',
+                'acitivty'       : '1.4.0',
+                'viewmodel'      : '2.4.0',
+                'constrainLayout': '1.1.0',
+                'bom'            : '2024.11.00',
+                'compiler'       : '1.5.14'
         ]
 ]
 
@@ -30,10 +35,11 @@ ext.glide = [
 ]
 
 ext.androidx = [
-        core     : "androidx.core:core-ktx:$versions.androidx",
-        livedata : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
-        appcompat: "androidx.appcompat:appcompat:$versions.appcompat",
-        viewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.viewModel"
+        core      : "androidx.core:core-ktx:$versions.androidx",
+        livedata  : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle",
+        appcompat : "androidx.appcompat:appcompat:$versions.appcompat",
+        viewModel : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.viewModel",
+        constraint: "androidx.constraintlayout:constraintlayout:$versions.constraint"
 ]
 
 ext.coroutine = [
@@ -42,9 +48,8 @@ ext.coroutine = [
 ]
 
 ext.toothpick = [
-        compiler: "com.github.stephanenicolas.toothpick:toothpick-compiler:$versions.toothpick",
         ktp     : "com.github.stephanenicolas.toothpick:ktp:$versions.toothpick",
-        androidx: "com.github.stephanenicolas.toothpick:smoothie-androidx:$versions.toothpick"
+        androidx: "com.github.stephanenicolas.toothpick:smoothie-androidx:$versions.toothpick",
 ]
 
 ext.dagger = [
@@ -69,15 +74,18 @@ ext.room = [
 ]
 
 ext.compose = [
-        ui : "androidx.compose.ui:ui:$versions.compose.base",
-        tooling: "androidx.compose.ui:ui-tooling:$versions.compose.base",
-        foundation: "androidx.compose.foundation:foundation:$versions.compose.base",
-        material: "androidx.compose.material:material:$versions.compose.base",
-        icons: "androidx.compose.material:material-icons-core:$versions.compose.base",
-        extendend: "androidx.compose.material:material-icons-extended:$versions.compose.base",
-        activity: "androidx.activity:activity-compose:$versions.compose.activity",
-        viewModel: "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose.viewmodel",
-        livedata: "androidx.compose.runtime:runtime-livedata:$versions.compose.base",
-        rxjava: "androidx.compose.runtime:runtime-rxjava2:$versions.compose.base",
-        compiler: "androidx.compose.compiler:compiler:$versions.compose.base"
+        bom             : "androidx.compose:compose-bom:$versions.compose.bom",
+        ui              : "androidx.compose.ui:ui",
+        tooling         : "androidx.compose.ui:ui-tooling",
+        graphics        : "androidx.compose.ui:ui-graphics",
+        icons_core      : 'androidx.compose.material:material-icons-core',
+        icons_extend    : 'androidx.compose.material:material-icons-extended',
+        adaptive        : 'androidx.compose.material3.adaptive:adaptive',
+        material        : "androidx.compose.material:material",
+        activity        : "androidx.activity:activity-compose",
+        viewModel       : "androidx.lifecycle:lifecycle-viewmodel-compose:$versions.compose.viewmodel",
+        livedata        : "androidx.compose.runtime:runtime-livedata",
+        rxjava          : "androidx.compose.runtime:runtime-rxjava2",
+        compiler        : "androidx.compose.compiler:compiler:$versions.compose.compiler",
+        constraintlayout: "androidx.constraintlayout.constraintlayout-compose:$versions.compose.constrainLayout"
 ]

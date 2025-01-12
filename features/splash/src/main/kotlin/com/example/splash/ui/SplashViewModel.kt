@@ -19,7 +19,7 @@ internal class SplashViewModel @Inject constructor(
     private val splashNavigator: SplashNavigator
 ) : ViewModel() {
 
-    var state by mutableStateOf<State>(value = State.Empty)
+    var state by mutableStateOf<State>(value = State.Loading)
         private set
 
     fun loadConfig() {
