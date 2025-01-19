@@ -2,7 +2,7 @@ package com.example.favorite.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
 import com.example.core.storage.db.entity.LocalMovie
@@ -14,12 +14,12 @@ import javax.inject.Inject
 
 internal class FavoriteViewModel @Inject constructor(
     coroutineScope: CoroutineScope,
-    schedulerProvider: SchedulerProvider,
+    dispatcherProvider: DispatcherProvider,
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
     private val favoriteListRouter: FavoriteListRouter,
     private val favoriteListUseCase: FavoriteListUseCase
-) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
+) : ErrorViewModel(coroutineScope, dispatcherProvider, errorMessageDataSource, logger) {
 
     private val _movies = MutableLiveData<MutableList<LocalMovie>>()
 

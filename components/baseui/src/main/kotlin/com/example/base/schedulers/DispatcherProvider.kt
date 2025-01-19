@@ -2,7 +2,7 @@ package com.example.base.schedulers
 
 import kotlinx.coroutines.CoroutineDispatcher
 
-interface SchedulerProvider {
+interface DispatcherProvider {
 
     fun io(): CoroutineDispatcher
 

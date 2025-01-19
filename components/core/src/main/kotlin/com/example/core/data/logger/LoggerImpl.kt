@@ -9,7 +9,7 @@ internal class LoggerImpl @Inject constructor() : Logger {
         Log.d(message, message)
     }
 
-    override fun error(throwable: Throwable) {
-        Log.e(throwable.javaClass.simpleName, throwable.message, throwable)
+    override fun error(throwable: Throwable, message: String?) {
+        Log.e(throwable.javaClass.simpleName, message ?: throwable.message, throwable)
     }
 }

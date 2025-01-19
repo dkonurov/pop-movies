@@ -1,7 +1,7 @@
 package com.example.di
 
-import com.example.base.schedulers.SchedulerProvider
-import com.example.base.schedulers.SchedulerProviderImpl
+import com.example.base.schedulers.DispatcherProvider
+import com.example.base.schedulers.DispatcherProviderImpl
 import com.example.di.providers.CoroutineScopeProvider
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ class RemoteModule : Module() {
 
     init {
         // schedulers
-        bind(SchedulerProvider::class.java).toInstance(SchedulerProviderImpl())
+        bind(DispatcherProvider::class.java).toInstance(DispatcherProviderImpl())
 
         // scopes
         bind(CompletableJob::class.java).toProviderInstance { SupervisorJob() }

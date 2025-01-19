@@ -1,7 +1,6 @@
 package com.example.splash.ui
 
-sealed class State {
-    object Loading : State()
-    object Success : State()
-    data class Error(val throwable: Throwable?) : State()
+internal sealed interface State {
+    data object Loading : State
+    data class Error(val throwable: Throwable) : State
 }

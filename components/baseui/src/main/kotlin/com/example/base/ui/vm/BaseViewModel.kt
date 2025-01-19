@@ -1,7 +1,7 @@
 package com.example.base.ui.vm
 
 import androidx.lifecycle.ViewModel
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -10,10 +10,9 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class BaseViewModel
-constructor(
+abstract class BaseViewModel(
     private val scope: CoroutineScope,
-    protected val schedulerProvider: SchedulerProvider
+    protected val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
     protected abstract fun handleError(t: Throwable)

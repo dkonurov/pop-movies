@@ -1,6 +1,6 @@
 package com.example.movie.domain.repositories
 
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.config.Config
@@ -11,7 +11,7 @@ import javax.inject.Inject
 internal class MovieListRepositoryImpl @Inject constructor(
     private val httpDataSource: HttpDataSource,
     private val movieDao: MovieDao,
-    private val schedulerProvider: SchedulerProvider,
+    private val schedulerProvider: DispatcherProvider,
     private val mapper: MovieMapper,
     private val config: Config
 ) : MovieListRepository {

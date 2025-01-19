@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion application.compileSdk
@@ -69,11 +69,11 @@ dependencies {
 
     //components
     implementation "androidx.room:room-runtime:$versions.room"
-    ksp "androidx.room:room-compiler:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
 
 
     //dagger
-    ksp dagger.processor
+    kapt dagger.processor
     implementation dagger.core
 
     implementation compose.ui

@@ -8,10 +8,12 @@ import com.example.di.BaseUIScope
 import com.example.di.StoreScope
 import com.example.dmitry.grades.di.Scopes
 import com.example.dmitry.grades.di.modules.AppModule
+import dagger.hilt.android.HiltAndroidApp
 import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.configuration.Configuration
 
+@HiltAndroidApp
 open class AppDelegate : Application(), StoreScope {
 
     override fun onCreate() {

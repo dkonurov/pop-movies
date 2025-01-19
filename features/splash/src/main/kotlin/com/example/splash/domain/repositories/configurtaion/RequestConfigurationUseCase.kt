@@ -6,14 +6,15 @@ import com.example.core.storage.db.entity.LocalImageConfig
 import com.example.core.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
-internal class BaseConfigRepositoryImpl @Inject constructor(
+internal class RequestConfigurationUseCase @Inject constructor(
     private val httpDataSource: HttpDataSource,
     private val privateDataSource: PrivateDataSource
-) : BaseConfigRepository {
+) {
 
-    override suspend fun getConfiguration(): Result<LocalImageConfig> = runCatching {
+    suspend fun execute() {
         val response = httpDataSource.getConfiguration()
-        mapToLocal(response).also { privateDataSource.saveImageConfig(it) }
+        val config = mapToLocal(response)
+        privateDataSource.saveImageConfig(config)
     }
 
     private fun mapToLocal(response: ConfigResponse) = LocalImageConfig(

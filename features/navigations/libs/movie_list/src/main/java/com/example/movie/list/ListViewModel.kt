@@ -2,7 +2,7 @@ package com.example.movie.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.bottom.navigation.domain.config.SortConfigRepository
 import com.example.bottom.navigation.ui.models.FilterType
@@ -17,14 +17,14 @@ import javax.inject.Inject
 
 internal class ListViewModel @Inject constructor(
     coroutineScope: CoroutineScope,
-    schedulerProvider: SchedulerProvider,
+    dispatcherProvider: DispatcherProvider,
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
     private val movieListRouter: MovieListRouter,
     private val movieListUseCase: MovieListUseCase,
     private val sortConfigRepository: SortConfigRepository,
     private val config: Config
-) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
+) : ErrorViewModel(coroutineScope, dispatcherProvider, errorMessageDataSource, logger) {
 
     private val _movies = MutableLiveData<MutableList<LocalMovie>>()
 

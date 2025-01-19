@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.components.grid_list"

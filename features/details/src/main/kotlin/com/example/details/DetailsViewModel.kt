@@ -2,7 +2,7 @@ package com.example.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
 import com.example.core.storage.preferences.ErrorMessageDataSource
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 internal class DetailsViewModel @Inject constructor(
     coroutineScope: CoroutineScope,
-    schedulerProvider: SchedulerProvider,
+    schedulerProvider: DispatcherProvider,
     errorMessageDataSource: ErrorMessageDataSource,
     logger: Logger,
     @MovieId private val wrapperId: PrimitiveWrapper<Long>,

@@ -1,0 +1,26 @@
+name: Android CI
+
+on:
+  pull_request:
+    types: [ "opened", "reopened", "synchronize" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2.0.10
+
+      - name: build
+        run: ./gradlew assembleDebug
+
+      - name: run checks
+        run: ./gradlew ktlintCheck detekt

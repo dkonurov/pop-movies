@@ -1,41 +1,41 @@
 package com.example.splash.ui
 
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.base.schedulers.SchedulerProvider
-import com.example.splash.domain.SplashNavigator
-import com.example.splash.domain.repositories.configurtaion.BaseConfigRepository
+import com.example.base.schedulers.DispatcherProvider
+import com.example.coroutine.resultOf
+import com.example.splash.domain.repositories.configurtaion.RequestConfigurationUseCase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class SplashViewModel @Inject constructor(
-    private val schedulerProvider: SchedulerProvider,
-    private val baseConfigRepository: BaseConfigRepository,
-    private val splashNavigator: SplashNavigator
+    private val dispatcherProvider: DispatcherProvider,
+    private val requestConfigurationUseCase: RequestConfigurationUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf<State>(value = State.Loading)
         private set
 
+    private val mutableSideEffects = MutableSharedFlow<SideEffects>()
+
+    val sideEffect: Flow<SideEffects> = mutableSideEffects
+
+
     fun loadConfig() {
         viewModelScope.launch {
             state = State.Loading
-            val result =
-                withContext(schedulerProvider.io()) { baseConfigRepository.getConfiguration() }
-            state = if (result.isSuccess) {
-                State.Success
-            } else {
-                State.Error(result.exceptionOrNull())
-            }
+            resultOf {
+                withContext(dispatcherProvider.io()) {
+                    requestConfigurationUseCase.execute()
+                }
+                mutableSideEffects.emit(SideEffects.NextScreen)
+            }.onFailure { State.Error(it) }
         }
-    }
-
-    fun nextScreen(context: Context) {
-        splashNavigator.nextScreen(context)
     }
 }
