@@ -1,6 +1,6 @@
 package com.example.details.domain.mappers
 
-import com.example.core.network.models.DetailsMovieDTO
+import com.example.core.network.model.DetailsMovieDTO
 import com.example.core.storage.db.entity.LocalFavorite
 import com.example.details.view.ViewMovie
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.core.network.models
+package com.example.core.network.model
 
 sealed class Result<T> {
     data class Success<T>(val value: T) : Result<T>()

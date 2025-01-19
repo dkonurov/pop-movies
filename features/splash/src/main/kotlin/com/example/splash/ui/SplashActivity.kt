@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.example.base.extensions.viewModel
+import com.example.core.model.PresentationError
 import com.example.core.ui.Theming
 import com.example.splash.di.DaggerSplashComponent
 import com.example.splash.di.SplashDependenciesImpl
@@ -56,9 +57,9 @@ class SplashActivity : AppCompatActivity() {
     @Composable
     private fun SplashScreen(viewModel: SplashViewModel) = MaterialTheme {
         SplashBackground()
-        when (viewModel.state) {
+        when (val state = viewModel.state) {
             is State.Loading -> Progress()
-            is State.Error -> ErrorScreen(viewModel)
+            is State.Error -> ErrorScreen(state.present, viewModel)
         }
 
     }
@@ -78,7 +79,10 @@ class SplashActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun ErrorScreen(viewModel: SplashViewModel) {
+    private fun ErrorScreen(
+        error: PresentationError,
+        viewModel: SplashViewModel
+    ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -86,7 +90,7 @@ class SplashActivity : AppCompatActivity() {
                 .fillMaxSize()
                 .background(Theming.colorPrimaryDark)
         ) {
-            Text(text = "Sorry. Something was going to wrong", color = Color.White)
+            Text(text = error.message, color = Color.White)
             Button(onClick = { viewModel.loadConfig() }, Modifier.padding(0.dp, 8.dp)) {
                 Text(text = "Repeat")
             }

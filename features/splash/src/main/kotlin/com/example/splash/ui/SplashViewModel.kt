@@ -6,7 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.base.schedulers.DispatcherProvider
-import com.example.coroutine.resultOf
+import com.example.core.coroutine.resultOf
+import com.example.core.mapper.ErrorMapper
 import com.example.splash.domain.repositories.configurtaion.RequestConfigurationUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +18,7 @@ import javax.inject.Inject
 internal class SplashViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val requestConfigurationUseCase: RequestConfigurationUseCase,
+    private val errorMapper: ErrorMapper
 ) : ViewModel() {
 
     var state by mutableStateOf<State>(value = State.Loading)
@@ -35,7 +37,7 @@ internal class SplashViewModel @Inject constructor(
                     requestConfigurationUseCase.execute()
                 }
                 mutableSideEffects.emit(SideEffects.NextScreen)
-            }.onFailure { State.Error(it) }
+            }.onFailure { State.Error(errorMapper.map(it)) }
         }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.splash.domain.repositories.configurtaion
 
-import com.example.core.network.models.response.ConfigResponse
+import com.example.core.network.model.response.ConfigResponse
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.db.entity.LocalImageConfig
 import com.example.core.storage.preferences.PrivateDataSource

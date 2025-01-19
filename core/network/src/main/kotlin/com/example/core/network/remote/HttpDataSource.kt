@@ -1,9 +1,9 @@
 package com.example.core.network.remote
 
-import com.example.core.network.models.DetailsMovieDTO
-import com.example.core.network.models.MovieDTO
-import com.example.core.network.models.response.ConfigResponse
-import com.example.core.network.models.response.DiscoverResponse
+import com.example.core.network.model.DetailsMovieDTO
+import com.example.core.network.model.MovieDTO
+import com.example.core.network.model.response.ConfigResponse
+import com.example.core.network.model.response.DiscoverResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

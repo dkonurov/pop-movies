@@ -1,6 +1,6 @@
 package com.example.favorite.domain.repositories
 
-import com.example.core.network.models.MovieDTO
+import com.example.core.network.model.MovieDTO
 import com.example.core.storage.db.entity.LocalMovie
 import javax.inject.Inject
 

@@ -31,12 +31,7 @@ open class ErrorViewModel(
     val error: LiveData<UIError?>
         get() = _error
 
-    val notStub: LiveData<Boolean>
-        get() = _noStub
-
     protected val _error = SingleLiveEvent<UIError?>()
-
-    protected val _noStub = MutableLiveData<Boolean>()
 
     val loading: LiveData<Boolean>
         get() = _loading
@@ -53,15 +48,10 @@ open class ErrorViewModel(
     }
 
     private fun handleNetworkException(t: Throwable) {
-        if (_noStub.hasObservers()) {
-            _noStub.value = true
-        } else {
-            _error.value = UIError(t, errorMessageDataSource.getNetworkError())
-        }
+        _error.value = UIError(t, errorMessageDataSource.getNetworkError())
     }
 
     override fun hideError() {
-        _noStub.value = false
         _error.value = null
     }
 

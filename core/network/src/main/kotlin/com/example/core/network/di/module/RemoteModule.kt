@@ -2,7 +2,7 @@ package com.example.core.network.di.module
 
 import com.example.core.network.di.annotation.RemoteScope
 import com.example.core.network.di.annotation.Url
-import com.example.core.network.models.ServerInfo
+import com.example.core.network.model.ServerInfo
 import com.example.core.network.remote.HttpDataSource
 import com.google.gson.Gson
 import dagger.Module

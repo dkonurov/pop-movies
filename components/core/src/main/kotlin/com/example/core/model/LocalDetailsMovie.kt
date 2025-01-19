@@ -1,4 +1,4 @@
-package com.example.core.models
+package com.example.core.model
 
 data class LocalDetailsMovie(
     val id: Long,

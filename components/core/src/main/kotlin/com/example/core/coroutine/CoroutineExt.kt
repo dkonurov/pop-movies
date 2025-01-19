@@ -1,4 +1,4 @@
-package com.example.coroutine
+package com.example.core.coroutine
 
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlin.coroutines.cancellation.CancellationException
