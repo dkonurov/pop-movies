@@ -33,7 +33,7 @@ class MovieListAdapter(
                 layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_grid, parent, false)
             ).apply {
                 itemView.setOnClickListener {
-                    val position = adapterPosition
+                    val position = bindingAdapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         clickListener.onClick(items[position])
                     }
