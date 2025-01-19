@@ -4,16 +4,16 @@ ext.application = [
         minSdk       : 24
 ]
 ext.versions = [
-        kotlin       : '2.0.21',
+        kotlin       : '1.9.24',
         room         : '2.4.1',
         toothpick    : '3.1.0',
-        toothpick_ksp: '1.1.0',
         coroutine    : '1.9.0',
         androidx     : '1.7.0',
         lifecycle    : '2.4.0',
         recycler     : '1.2.1',
         glide        : '4.12.0',
         dagger       : '2.53',
+        dagger_hilt  : '2.51.1',
         viewModel    : '2.8.7',
         appcompat    : '1.4.1',
         retrofit     : '2.9.0',
@@ -48,13 +48,16 @@ ext.coroutine = [
 ]
 
 ext.toothpick = [
+        compiler: "com.github.stephanenicolas.toothpick:toothpick-compiler:$versions.toothpick",
         ktp     : "com.github.stephanenicolas.toothpick:ktp:$versions.toothpick",
         androidx: "com.github.stephanenicolas.toothpick:smoothie-androidx:$versions.toothpick",
 ]
 
 ext.dagger = [
-        core     : "com.google.dagger:dagger:$versions.dagger",
-        processor: "com.google.dagger:dagger-compiler:$versions.dagger"
+        core         : "com.google.dagger:dagger:$versions.dagger",
+        processor    : "com.google.dagger:dagger-compiler:$versions.dagger",
+        hilt         : "com.google.dagger:hilt-android:$versions.dagger_hilt",
+        hilt_compiler: "com.google.dagger:hilt-compiler:$versions.dagger_hilt"
 ]
 
 ext.kotlinLib = [

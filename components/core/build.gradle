@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion application.compileSdk
@@ -28,12 +27,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     // For Kotlin projects
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     sourceSets {
@@ -48,8 +47,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
@@ -69,11 +68,11 @@ dependencies {
 
     //components
     implementation "androidx.room:room-runtime:$versions.room"
-    ksp "androidx.room:room-compiler:$versions.room"
+    kapt "androidx.room:room-compiler:$versions.room"
 
 
     //dagger
-    ksp dagger.processor
+    kapt dagger.processor
     implementation dagger.core
 
     implementation compose.ui

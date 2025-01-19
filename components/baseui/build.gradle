@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'com.google.devtools.ksp'
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.components.base_ui"
@@ -35,8 +34,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
@@ -44,7 +43,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion "1.9.20"
+        kotlinCompilerExtensionVersion "1.5.14"
     }
 
 }
@@ -54,6 +53,7 @@ dependencies {
     api project(':components:core')
     implementation project(':core:storage')
 
+    kapt toothpick.compiler
     api toothpick.ktp
     api toothpick.androidx
 

@@ -19,10 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.lifecycleScope
 import com.example.base.extensions.viewModel
 import com.example.core.ui.Theming
 import com.example.splash.di.DaggerSplashComponent
 import com.example.splash.di.SplashDependenciesImpl
+import com.example.splash.domain.SplashNavigator
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.produceIn
 
 class SplashActivity : AppCompatActivity() {
 
@@ -30,24 +34,38 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val component = DaggerSplashComponent.factory().create(SplashDependenciesImpl())
         val splashViewModel = viewModel { component.getSplashViewModel().get() }
-        setContent { splashScreen(splashViewModel) }
+        setContent { SplashScreen(splashViewModel) }
         if (savedInstanceState == null) splashViewModel.loadConfig()
+        observeSideEffects(component.getSplashNavigator(), splashViewModel)
+    }
+
+    private fun observeSideEffects(
+        navigator: SplashNavigator,
+        splashViewModel: SplashViewModel
+    ) {
+        splashViewModel.sideEffect
+            .onEach {
+                when (it) {
+                    is SideEffects.NextScreen -> navigator.nextScreen(this)
+                }
+            }
+            .produceIn(lifecycleScope)
+
     }
 
     @Composable
-    private fun splashScreen(viewModel: SplashViewModel) = MaterialTheme {
-        splashBackground()
+    private fun SplashScreen(viewModel: SplashViewModel) = MaterialTheme {
+        SplashBackground()
         when (viewModel.state) {
-            is State.Loading -> progress()
-            is State.Error -> errorScreen(viewModel)
-            is State.Success -> viewModel.nextScreen(this)
+            is State.Loading -> Progress()
+            is State.Error -> ErrorScreen(viewModel)
         }
 
     }
 
     @Composable
     @Preview
-    private fun progress() {
+    private fun Progress() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,7 +78,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     @Composable
-    private fun errorScreen(viewModel: SplashViewModel) {
+    private fun ErrorScreen(viewModel: SplashViewModel) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -77,7 +95,7 @@ class SplashActivity : AppCompatActivity() {
 
     @Composable
     @Preview
-    private fun splashBackground() {
+    private fun SplashBackground() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,

@@ -1,6 +1,6 @@
 package com.example.favorite.domain.repositories
 
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.bottom.navigation.domain.models.MovieResponse
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.config.Config
@@ -13,12 +13,12 @@ import javax.inject.Inject
 internal class FavoriteListRepositoryImpl @Inject constructor(
     private val favoriteDao: FavoriteDao,
     private val httpDataSource: HttpDataSource,
-    private val schedulerProvider: SchedulerProvider,
+    private val dispatcherProvider: DispatcherProvider,
     private val movieMapper: MovieMapper,
     private val config: Config
 ) : FavoriteListRepository {
 
-    override suspend fun getFavorites(page: Int): MovieResponse = withContext(schedulerProvider.io()) {
+    override suspend fun getFavorites(page: Int): MovieResponse = withContext(dispatcherProvider.io()) {
         val count = favoriteDao.count()
         val countPages = count / config.perPage
         val movieIds = favoriteDao.getMoviesId(
@@ -26,7 +26,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
             config.perPage
         )
         val requests = movieIds.asSequence().map { id ->
-            async(schedulerProvider.io()) {
+            async(dispatcherProvider.io()) {
                 httpDataSource.getMovie(id)
             }
         }.toList()

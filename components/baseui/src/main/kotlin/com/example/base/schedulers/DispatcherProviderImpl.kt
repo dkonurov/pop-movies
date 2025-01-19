@@ -3,7 +3,7 @@ package com.example.base.schedulers
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-internal class SchedulerProviderImpl : SchedulerProvider {
+internal class DispatcherProviderImpl : DispatcherProvider {
 
     override fun io(): CoroutineDispatcher = Dispatchers.IO
 

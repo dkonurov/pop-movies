@@ -3,7 +3,7 @@ package com.example.base.ui.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.load.HttpException
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.base.ui.ui.errors.UIError
 import com.example.core.data.logger.Logger
 import com.example.core.storage.preferences.ErrorMessageDataSource
@@ -14,7 +14,7 @@ import java.net.UnknownHostException
 
 open class ErrorViewModel(
     coroutineScope: CoroutineScope,
-    schedulerProvider: SchedulerProvider,
+    schedulerProvider: DispatcherProvider,
     private val errorMessageDataSource: ErrorMessageDataSource,
     private val logger: Logger
 ) : BaseViewModel(coroutineScope, schedulerProvider) {
@@ -28,13 +28,13 @@ open class ErrorViewModel(
         )
     }
 
-    val error: LiveData<UIError>
+    val error: LiveData<UIError?>
         get() = _error
 
     val notStub: LiveData<Boolean>
         get() = _noStub
 
-    protected val _error = SingleLiveEvent<UIError>()
+    protected val _error = SingleLiveEvent<UIError?>()
 
     protected val _noStub = MutableLiveData<Boolean>()
 

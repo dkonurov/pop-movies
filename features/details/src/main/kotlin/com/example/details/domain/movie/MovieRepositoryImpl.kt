@@ -1,6 +1,6 @@
 package com.example.details.domain.movie
 
-import com.example.base.schedulers.SchedulerProvider
+import com.example.base.schedulers.DispatcherProvider
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.db.inteface.FavoriteDao
 import com.example.core.storage.preferences.PrivateDataSource
@@ -14,11 +14,11 @@ internal class MovieRepositoryImpl @Inject constructor(
     private val privateDataSource: PrivateDataSource,
     private val favoriteDao: FavoriteDao,
     private val movieMapper: MovieMapper,
-    private val schedulerProvider: SchedulerProvider
+    private val dispatcherProvider: DispatcherProvider
 ) : MovieRepository {
 
     override suspend fun findMovie(id: Long): ViewMovie {
-        return withContext(schedulerProvider.io()) {
+        return withContext(dispatcherProvider.io()) {
             val details = httpDataSource.getDetailsMovie(id)
             val isFavorite = favoriteDao.findById(id) != null
             movieMapper.toViewMovie(
@@ -29,13 +29,13 @@ internal class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun saveFavorite(viewMovie: ViewMovie) {
-        withContext(schedulerProvider.io()) {
+        withContext(dispatcherProvider.io()) {
             favoriteDao.save(movieMapper.toFavorite(viewMovie))
         }
     }
 
     override suspend fun removeFavorite(viewMovie: ViewMovie) {
-        withContext(schedulerProvider.io()) {
+        withContext(dispatcherProvider.io()) {
             favoriteDao.delete(movieMapper.toFavorite(viewMovie))
         }
     }

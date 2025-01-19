@@ -1,7 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'org.jetbrains.kotlin.plugin.compose'
-apply plugin: 'com.google.devtools.ksp'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
 
 android {
     compileSdkVersion application.compileSdk
@@ -48,9 +50,17 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //toothpick
+    kapt toothpick.compiler
+    implementation dagger.hilt
+    kapt dagger.hilt_compiler
+
     implementation project(':features:splash')
     implementation project(':features:navigations')
     implementation project(':features:details')
