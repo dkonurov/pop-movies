@@ -4,7 +4,7 @@ ext.application = [
         minSdk       : 24
 ]
 ext.versions = [
-        kotlin       : '1.9.20',
+        kotlin       : '1.9.24',
         room         : '2.4.1',
         toothpick    : '3.1.0',
         coroutine    : '1.9.0',
