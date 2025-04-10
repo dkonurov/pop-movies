@@ -41,6 +41,15 @@ dependencies {
     implementation project(':core:storage')
     kapt toothpick.compiler
 
+    implementation compose.ui
+    debugImplementation compose.tooling
+    implementation compose.material
+    implementation compose.activity
+    implementation compose.viewModel
+    implementation compose.livedata
+    implementation compose.rxjava
+    kapt compose.compiler
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

@@ -6,7 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.base.ui.ui.fragment.DIFragment
+import com.example.base.ui.ui.fragment.ToothpickFragment
 import com.example.dmitry.grades.features.navigations.R
 import com.example.dmitry.grades.features.navigations.databinding.FragmentBootomNavBinding
 import com.example.favorite.list.view.FavoriteFragment
@@ -15,7 +15,7 @@ import com.example.navigation.di.BottomNavigationModule
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import toothpick.config.Module
 
-class BottomNavFragment : DIFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
+class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         fun newInstance(): BottomNavFragment {

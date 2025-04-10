@@ -1,11 +1,9 @@
 package com.example.core.mapper
 
+import com.example.core.data.NetworkUtils
 import com.example.core.model.PresentationError
 import com.example.core.storage.preferences.ErrorMessageDataSource
 import retrofit2.HttpException
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 class ErrorMapper @Inject constructor(
@@ -15,7 +13,7 @@ class ErrorMapper @Inject constructor(
     fun map(throwable: Throwable): PresentationError {
         val message = when {
             throwable is HttpException -> handleHttpException(throwable)
-            NETWORK_EXCEPTIONS.contains(throwable.javaClass) -> errorMessageDataSource.getNetworkError()
+            NetworkUtils.isNetworkException(throwable) -> errorMessageDataSource.getNetworkError()
             else -> errorMessageDataSource.getUnknownError()
         }
         return PresentationError(message, throwable)
@@ -31,10 +29,6 @@ class ErrorMapper @Inject constructor(
 
     companion object {
         const val AUTH_ERROR_HTTP_CODE = 401
-        val NETWORK_EXCEPTIONS = listOf<Class<*>>(
-            UnknownHostException::class.java,
-            SocketTimeoutException::class.java,
-            ConnectException::class.java
-        )
+
     }
 }

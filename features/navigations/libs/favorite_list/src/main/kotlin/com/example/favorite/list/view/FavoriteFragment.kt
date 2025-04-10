@@ -9,7 +9,7 @@ import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
-import com.example.base.ui.ui.fragment.DIFragment
+import com.example.base.ui.ui.fragment.ToothpickFragment
 import com.example.core.storage.db.entity.LocalMovie
 import com.example.dmitry.grades.features.libs.favorite_list.R
 import com.example.dmitry.grades.features.libs.favorite_list.databinding.FragmentGridBinding
@@ -20,7 +20,7 @@ import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
 import toothpick.config.Module
 
-class FavoriteFragment : DIFragment(), LoadingView {
+class FavoriteFragment : ToothpickFragment(), LoadingView {
 
     companion object {
         fun newInstance(): FavoriteFragment {

@@ -11,14 +11,14 @@ import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
-import com.example.base.ui.ui.fragment.DIFragment
+import com.example.base.ui.ui.fragment.ToothpickFragment
 import com.example.details.DetailsViewModel
 import com.example.details.di.DetailsModule
 import com.example.dmitry.grades.features.details.R
 import com.example.dmitry.grades.features.details.databinding.FragmentDetailBinding
 import toothpick.config.Module
 
-class DetailsFragment : DIFragment(), LoadingView {
+class DetailsFragment : ToothpickFragment(), LoadingView {
 
     companion object {
         private const val MOVIE_ID = "com.example.dmitry.grades.ui.movie.details.movie_id"

@@ -1,7 +1,7 @@
 package com.example.favorite.domain.repositories
 
 import com.example.base.schedulers.DispatcherProvider
-import com.example.bottom.navigation.domain.models.MovieResponse
+import com.example.bottom.navigation.domain.models.MoviePage
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.config.Config
 import com.example.core.storage.db.inteface.FavoriteDao
@@ -18,7 +18,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
     private val config: Config
 ) : FavoriteListRepository {
 
-    override suspend fun getFavorites(page: Int): MovieResponse = withContext(dispatcherProvider.io()) {
+    override suspend fun getFavorites(page: Int): MoviePage = withContext(dispatcherProvider.io()) {
         val count = favoriteDao.count()
         val countPages = count / config.perPage
         val movieIds = favoriteDao.getMoviesId(
@@ -31,6 +31,6 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
             }
         }.toList()
         val movies = requests.awaitAll().map { movieMapper.mapFromDTOToLocal(it) }
-        MovieResponse(countPages, movies)
+        MoviePage(countPages, movies)
     }
 }
