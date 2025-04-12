@@ -57,16 +57,11 @@ class MovieListAdapter(
         return if (isFooter(position)) FOOTER_TYPE else DEFAULT_TYPE
     }
 
-    fun setData(movies: List<LocalMovie>?) {
-        val saveMovies = movies ?: emptyList()
-        val result = DiffUtil.calculateDiff(MovieDiffUtils(items, saveMovies))
+    fun setData(movies: List<LocalMovie>) {
+        val result = DiffUtil.calculateDiff(MovieDiffUtils(items, movies))
         items.clear()
-        items.addAll(saveMovies)
-        if (saveMovies.isEmpty()) {
-            notifyDataSetChanged()
-        } else {
-            result.dispatchUpdatesTo(this)
-        }
+        items.addAll(movies)
+        result.dispatchUpdatesTo(this)
     }
 
     fun isFooter(position: Int): Boolean {

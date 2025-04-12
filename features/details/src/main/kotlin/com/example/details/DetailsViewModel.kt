@@ -3,6 +3,7 @@ package com.example.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.base.schedulers.DispatcherProvider
+import com.example.base.ui.ui.errors.UiErrorMapper
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
 import com.example.core.storage.preferences.ErrorMessageDataSource
@@ -16,11 +17,11 @@ import javax.inject.Inject
 internal class DetailsViewModel @Inject constructor(
     coroutineScope: CoroutineScope,
     schedulerProvider: DispatcherProvider,
-    errorMessageDataSource: ErrorMessageDataSource,
+    uiErrorMapper: UiErrorMapper,
     logger: Logger,
     @MovieId private val wrapperId: PrimitiveWrapper<Long>,
     private val movieRepository: MovieRepository
-) : ErrorViewModel(coroutineScope, schedulerProvider, errorMessageDataSource, logger) {
+) : ErrorViewModel(coroutineScope, schedulerProvider, logger, uiErrorMapper) {
 
     private val _movie = MutableLiveData<ViewMovie>()
 

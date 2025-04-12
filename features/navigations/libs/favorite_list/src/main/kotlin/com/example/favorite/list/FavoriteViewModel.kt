@@ -3,10 +3,10 @@ package com.example.favorite.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.base.schedulers.DispatcherProvider
+import com.example.base.ui.ui.errors.UiErrorMapper
 import com.example.base.ui.vm.ErrorViewModel
 import com.example.core.data.logger.Logger
 import com.example.core.storage.db.entity.LocalMovie
-import com.example.core.storage.preferences.ErrorMessageDataSource
 import com.example.favorite.domain.usecase.FavoriteListUseCase
 import com.example.favorite.list.view.FavoriteListRouter
 import kotlinx.coroutines.CoroutineScope
@@ -15,11 +15,11 @@ import javax.inject.Inject
 internal class FavoriteViewModel @Inject constructor(
     coroutineScope: CoroutineScope,
     dispatcherProvider: DispatcherProvider,
-    errorMessageDataSource: ErrorMessageDataSource,
+    uiErrorMapper: UiErrorMapper,
     logger: Logger,
     private val favoriteListRouter: FavoriteListRouter,
     private val favoriteListUseCase: FavoriteListUseCase
-) : ErrorViewModel(coroutineScope, dispatcherProvider, errorMessageDataSource, logger) {
+) : ErrorViewModel(coroutineScope, dispatcherProvider, logger, uiErrorMapper) {
 
     private val _movies = MutableLiveData<MutableList<LocalMovie>>()
 
@@ -46,15 +46,11 @@ internal class FavoriteViewModel @Inject constructor(
     fun load() {
         coroutine {
             val info = favoriteListUseCase.getFavorites(page)
-            val movies = _movies.value
-            if (movies == null) {
-                _movies.value = info.movies.toMutableList()
-            } else {
-                movies.addAll(info.movies)
-                _movies.value = movies
-            }
+            val movies = _movies.value ?: arrayListOf()
+            movies.addAll(info.movies)
+            _movies.value = movies
             countPage = info.countPage
-            page = info.page
+            page = info.countPage
         }
     }
 

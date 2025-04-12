@@ -11,12 +11,13 @@ internal class MovieListUseCase
     private val movieListRepository: MovieListRepository
 ) {
 
-    suspend fun getMovies(page: Int, sortBy: String?): MovieListInfo {
-        val response = movieListRepository.getMovies(page, sortBy)
-        return movieListMapper.toMovieListInfo(response, page)
+    suspend fun getMovies(args: Args): MovieListInfo {
+        val response = movieListRepository.getMovies(args.page, args.sortBy)
+        return movieListMapper.toMovieListInfo(response, args.page)
     }
 
-    suspend fun clearCache() {
-        movieListRepository.clearCache()
-    }
+    data class Args(
+        val page: Int,
+        val sortBy: String? = null,
+    )
 }
