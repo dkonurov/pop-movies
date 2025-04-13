@@ -9,6 +9,7 @@ import com.example.base.schedulers.DispatcherProvider
 import com.example.core.coroutine.resultOf
 import com.example.core.mapper.ErrorMapper
 import com.example.splash.domain.repositories.configurtaion.RequestConfigurationUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
@@ -28,9 +29,12 @@ internal class SplashViewModel @Inject constructor(
 
     val sideEffect: Flow<SideEffects> = mutableSideEffects
 
+    private var job: Job? = null
+
 
     fun loadConfig() {
-        viewModelScope.launch {
+        if (job?.isActive == true) return
+        job = viewModelScope.launch {
             state = State.Loading
             resultOf {
                 withContext(dispatcherProvider.io()) {

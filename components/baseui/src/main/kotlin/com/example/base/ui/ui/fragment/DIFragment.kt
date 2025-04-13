@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.base.extensions.viewModel
 import com.example.di.StoreScope
 
-abstract class DIFragment<T : Any> : BaseFragment(), StoreScope {
+abstract class DIFragment<T : Any> : BaseFragment() {
 
     private lateinit var component: T
 

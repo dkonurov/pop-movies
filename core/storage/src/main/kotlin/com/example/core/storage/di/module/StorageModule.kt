@@ -35,7 +35,7 @@ internal abstract class StorageModule {
 
         @Provides
         @StorageScope
-        fun provideConfig() = Config(-1, 20)
+        fun provideConfig() = Config(Int.MAX_VALUE, 20)
 
         @Provides
         @StorageScope

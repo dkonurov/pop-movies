@@ -1,6 +1,7 @@
 package com.example.movie.list
 
 import com.example.base.ui.ui.errors.UIError
+import com.example.bottom.navigation.ui.models.FilterType
 import com.example.bottom.navigation.ui.models.MovieListInfo
 import com.example.core.storage.db.entity.LocalMovie
 
@@ -10,25 +11,32 @@ data class ViewModelState(
     val countPage: Int = 0,
     val isRefreshing: Boolean = false,
     val error: UIError? = null
-)
+) {
 
-fun ViewModelState.loading() = copy(
-    isRefreshing = true,
-    error = null
-)
+    fun loading() = copy(
+        isRefreshing = true,
+        error = null
+    )
 
-fun ViewModelState.success(request: Request, info: MovieListInfo) = copy(
-    request = request,
-    movies = this.movies + info.movies,
-    countPage = info.countPage,
-    isRefreshing = false
-)
+    fun success(request: Request, info: MovieListInfo) = copy(
+        request = request,
+        movies = this.movies + info.movies,
+        countPage = info.countPage,
+        isRefreshing = false
+    )
 
-fun ViewModelState.error(request: Request, error: UIError) = copy(
-    request = request,
-    error = error,
-    isRefreshing = false
-)
+    fun error(request: Request, error: UIError) = copy(
+        request = request,
+        error = error,
+        isRefreshing = false
+    )
+
+    companion object {
+        fun filter(filterType: FilterType): ViewModelState = ViewModelState(
+            request = Request(sortBy = filterType.text)
+        )
+    }
+}
 
 
 sealed interface LastElement {
@@ -61,4 +69,5 @@ data class Request(
 sealed interface Event {
     data object NextPage : Event
     data object Reload : Event
+    data class Filter(val filterType: FilterType) : Event
 }

@@ -5,8 +5,7 @@ import com.example.bottom.navigation.ui.models.MovieListInfo
 import com.example.core.storage.preferences.PrivateDataSource
 import javax.inject.Inject
 
-class MovieListMapper
-@Inject constructor(
+class MovieListMapper @Inject constructor(
     private val privateDataSource: PrivateDataSource
 ) {
 

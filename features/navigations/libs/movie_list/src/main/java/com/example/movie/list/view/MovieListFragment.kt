@@ -7,31 +7,38 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.base.extensions.viewModel
 import com.example.base.ui.ui.errors.LoadingView
-import com.example.base.ui.ui.fragment.ToothpickFragment
+import com.example.base.ui.ui.fragment.DaggerFragment
 import com.example.core.storage.db.entity.LocalMovie
 import com.example.dmitry.grades.features.libs.movie_list.R
 import com.example.dmitry.grades.features.libs.movie_list.databinding.FragmentGridBinding
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
-import com.example.movie.di.MovieListModule
+import com.example.movie.di.DaggerMovieListComponent
+import com.example.movie.di.MovieListComponent
+import com.example.movie.di.MovieListDependenciesImpl
 import com.example.movie.list.ListMoviesUiState
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.widget.FilterPopupMenu
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.produceIn
-import toothpick.config.Module
 
-class MovieListFragment : ToothpickFragment(), LoadingView {
+internal class MovieListFragment : DaggerFragment<MovieListComponent>(), LoadingView {
 
-    companion object {
-        fun newInstance(): MovieListFragment {
+    public companion object Factory {
+        fun newInstance(): Fragment {
             return MovieListFragment()
         }
+    }
+
+    override fun createComponent(): MovieListComponent {
+        val dependencies = MovieListDependenciesImpl(getParentToothpickScope())
+        return DaggerMovieListComponent.factory().create(dependencies)
     }
 
     private lateinit var viewModel: ListViewModel
@@ -43,10 +50,6 @@ class MovieListFragment : ToothpickFragment(), LoadingView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-    }
-
-    override fun getModules(): Array<Module>? {
-        return arrayOf(MovieListModule())
     }
 
     override fun onCreateView(
@@ -79,7 +82,7 @@ class MovieListFragment : ToothpickFragment(), LoadingView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentGridBinding.bind(view)
-        viewModel = viewModel { getScope().getInstance(ListViewModel::class.java) }
+        viewModel = viewModel { getComponent().getListViewModel() }
         adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
             viewModel.showDetails(movie.id)
         }

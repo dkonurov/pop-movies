@@ -5,9 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = LocalMovie.TABLE_NAME)
 data class LocalMovie(
+    @PrimaryKey
     val id: Long,
-    @PrimaryKey(autoGenerate = true)
-    val localId: Long,
     var posterPath: String?,
     val adult: Boolean,
     val overview: String,
@@ -20,7 +19,8 @@ data class LocalMovie(
     val popularity: Double,
     val voteCount: Int,
     val isVideo: Boolean,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val page: Int
 ) {
     companion object {
         const val TABLE_NAME = "Movie"

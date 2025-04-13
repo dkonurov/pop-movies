@@ -1,44 +1,41 @@
 package com.example.movie.domain.repositories
 
-import com.example.base.schedulers.DispatcherProvider
 import com.example.bottom.navigation.domain.models.MoviePage
+import com.example.core.coroutine.resultOf
 import com.example.core.network.remote.HttpDataSource
 import com.example.core.storage.config.Config
 import com.example.core.storage.db.inteface.MovieDao
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class MovieListRepository @Inject constructor(
     private val httpDataSource: HttpDataSource,
     private val movieDao: MovieDao,
-    private val schedulerProvider: DispatcherProvider,
     private val mapper: MovieMapper,
     private val config: Config
 ) {
 
-    suspend fun getMovies(
-        page: Int,
-        sortBy: String?
-    ): MoviePage {
-        val list = movieDao.getMovies((page - 1) * config.perPage, config.perPage)
-        return if (list.isEmpty()) {
+    suspend fun getMovies(page: Int, sortBy: String?): MoviePage {
+        return resultOf {
             getRemoteMovies(page, sortBy)
-        } else {
-            return MoviePage(config.unknownCountPage, list)
+        }.getOrElse {
+            if (sortBy !== null) {
+                throw it
+            }
+            val movies = movieDao.getMovies(page)
+            if (movies.isEmpty()) {
+                throw it
+            }
+            MoviePage(this.config.unknownCountPage, movies)
         }
     }
 
-    suspend fun getRemoteMovies(
-        page: Int = 1,
-        sortBy: String? = null
-    ): MoviePage = withContext(schedulerProvider.io()) {
+    private suspend fun getRemoteMovies(page: Int, sortBy: String?): MoviePage {
         val response = httpDataSource.getListMovies(page, sortBy)
-        val mapped = response.movies.map { mapper.mapFromDTOToLocal(it) }
+        val mapped = response.movies.map { mapper.mapFromDTOToLocal(it, page) }
+        if (page == 1 && sortBy == null) {
+            resultOf { movieDao.clear() }
+        }
         movieDao.save(mapped)
-        MoviePage(response.totalPages, mapped)
-    }
-
-    suspend fun clearCache() = withContext(schedulerProvider.io()) {
-        movieDao.clear()
+        return MoviePage(response.totalPages, mapped)
     }
 }

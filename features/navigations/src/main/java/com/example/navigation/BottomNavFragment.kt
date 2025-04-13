@@ -6,11 +6,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.example.base.ui.ui.fragment.ToothpickFragment
 import com.example.dmitry.grades.features.navigations.R
 import com.example.dmitry.grades.features.navigations.databinding.FragmentBootomNavBinding
 import com.example.favorite.list.view.FavoriteFragment
-import com.example.movie.list.view.MovieListFragment
+import com.example.movie.list.view.MovieListFragmentFactory
 import com.example.navigation.di.BottomNavigationModule
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import toothpick.config.Module
@@ -31,7 +32,7 @@ class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigation
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         val fragment: Fragment? = when (item.itemId) {
-            R.id.nav_list -> MovieListFragment.newInstance()
+            R.id.nav_list -> MovieListFragmentFactory.newInstance()
             R.id.nav_favorite -> FavoriteFragment.newInstance()
             else -> null
         }
@@ -61,7 +62,7 @@ class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigation
         val binding = FragmentBootomNavBinding.bind(view)
         binding.bottomNav.setOnNavigationItemSelectedListener(this)
         if (needLoad) {
-            setFragment(MovieListFragment.newInstance())
+            setFragment(MovieListFragmentFactory.newInstance())
             needLoad = false
         }
         this.binding = binding
@@ -73,9 +74,9 @@ class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigation
     }
 
     private fun setFragment(fragment: Fragment) {
-        childFragmentManager.beginTransaction()
-            .replace(R.id.nav_container, fragment)
-            .commit()
+        childFragmentManager.commit {
+            replace(R.id.nav_container, fragment)
+        }
     }
 
     override fun onDestroyView() {

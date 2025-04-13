@@ -30,7 +30,7 @@ internal class FavoriteListRepositoryImpl @Inject constructor(
                 httpDataSource.getMovie(id)
             }
         }.toList()
-        val movies = requests.awaitAll().map { movieMapper.mapFromDTOToLocal(it) }
+        val movies = requests.awaitAll().map { movieMapper.mapFromDTOToLocal(it, page) }
         MoviePage(countPages, movies)
     }
 }

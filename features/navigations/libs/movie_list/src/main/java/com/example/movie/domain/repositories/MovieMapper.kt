@@ -6,9 +6,8 @@ import javax.inject.Inject
 
 internal class MovieMapper @Inject constructor() {
 
-    fun mapFromDTOToLocal(movie: MovieDTO) = LocalMovie(
+    fun mapFromDTOToLocal(movie: MovieDTO, page: Int) = LocalMovie(
         id = movie.id,
-        localId = 0,
         posterPath = movie.posterPath,
         adult = movie.adult,
         overview = movie.overview,
@@ -21,6 +20,7 @@ internal class MovieMapper @Inject constructor() {
         popularity = movie.popularity,
         voteCount = movie.voteCount,
         isVideo = movie.isVideo,
-        voteAverage = movie.voteAverage
+        voteAverage = movie.voteAverage,
+        page = page
     )
 }

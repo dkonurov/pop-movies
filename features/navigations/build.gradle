@@ -41,6 +41,7 @@ dependencies {
     implementation project(':features:navigations:libs:favorite_list')
     implementation androidx.constraint
     kapt toothpick.compiler
+    implementation androidx.fragmentKtx
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

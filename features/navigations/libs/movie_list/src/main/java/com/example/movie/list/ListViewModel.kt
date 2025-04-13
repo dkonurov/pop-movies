@@ -26,11 +26,8 @@ internal class ListViewModel @Inject constructor(
     private val logger: Logger,
     private val movieListRouter: MovieListRouter,
     private val movieListUseCase: MovieListUseCase,
-    private val config: Config,
     private val uiErrorMapper: UiErrorMapper
 ) : ViewModel() {
-
-    private var moreMovies = false
 
     private val state = MutableStateFlow(ViewModelState())
     private val events = MutableSharedFlow<Event>()
@@ -45,7 +42,7 @@ internal class ListViewModel @Inject constructor(
     fun observe(): Flow<ListMoviesUiState> = state.map {
         if (it.movies.isNotEmpty()) {
             val lastElement = if (it.isRefreshing) {
-                LastElement.Refresh
+                LastElement.LoadingMore
             } else if (it.error != null) {
                 LastElement.Refresh
             } else {
@@ -69,6 +66,7 @@ internal class ListViewModel @Inject constructor(
             }
 
             is Event.Reload -> forceLoad()
+            is Event.Filter -> handleFilter(event.filterType)
         }
     }
 
@@ -99,22 +97,16 @@ internal class ListViewModel @Inject constructor(
         load(vmState.request)
     }
 
+    private suspend fun handleFilter(filterType: FilterType) {
+        val vmState = ViewModelState.filter(filterType)
+        state.value = vmState
+        load(vmState.request)
+    }
+
     fun filter(filterType: FilterType) {
-//        val text = when (filterType) {
-//            FilterType.RELEASE_DATE -> FilterType.RELEASE_DATE.text
-//            FilterType.VOTE_COUNT -> FilterType.VOTE_COUNT.text
-//            else -> FilterType.POPULARITY.text
-//        }
-//
-//        state.update {
-//
-//        }
-//
-//        if (text != _sortyBy) {
-//            sortConfigRepository.sortBy = text
-//            _sortyBy = text
-//            forceLoad()
-//        }
+        viewModelScope.launch {
+            events.emit(Event.Filter(filterType))
+        }
     }
 
     fun loadMore() {
@@ -126,7 +118,5 @@ internal class ListViewModel @Inject constructor(
     fun showDetails(movieId: Long) {
         movieListRouter.showDetails(movieId)
     }
-
-
 }
 
