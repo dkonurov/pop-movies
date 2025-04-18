@@ -16,32 +16,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class SplashViewModel @Inject constructor(
-    private val dispatcherProvider: DispatcherProvider,
-    private val requestConfigurationUseCase: RequestConfigurationUseCase,
-    private val errorMapper: ErrorMapper
-) : ViewModel() {
+internal class SplashViewModel
+    @Inject
+    constructor(
+        private val dispatcherProvider: DispatcherProvider,
+        private val requestConfigurationUseCase: RequestConfigurationUseCase,
+        private val errorMapper: ErrorMapper,
+    ) : ViewModel() {
+        var state by mutableStateOf<State>(value = State.Loading)
+            private set
 
-    var state by mutableStateOf<State>(value = State.Loading)
-        private set
+        private val mutableSideEffects = MutableSharedFlow<SideEffects>()
 
-    private val mutableSideEffects = MutableSharedFlow<SideEffects>()
+        val sideEffect: Flow<SideEffects> = mutableSideEffects
 
-    val sideEffect: Flow<SideEffects> = mutableSideEffects
+        private var job: Job? = null
 
-    private var job: Job? = null
-
-
-    fun loadConfig() {
-        if (job?.isActive == true) return
-        job = viewModelScope.launch {
-            state = State.Loading
-            resultOf {
-                withContext(dispatcherProvider.io()) {
-                    requestConfigurationUseCase.execute()
+        fun loadConfig() {
+            if (job?.isActive == true) return
+            job =
+                viewModelScope.launch {
+                    state = State.Loading
+                    resultOf {
+                        withContext(dispatcherProvider.io()) {
+                            requestConfigurationUseCase.execute()
+                        }
+                        mutableSideEffects.emit(SideEffects.NextScreen)
+                    }.onFailure { State.Error(errorMapper.map(it)) }
                 }
-                mutableSideEffects.emit(SideEffects.NextScreen)
-            }.onFailure { State.Error(errorMapper.map(it)) }
         }
     }
-}

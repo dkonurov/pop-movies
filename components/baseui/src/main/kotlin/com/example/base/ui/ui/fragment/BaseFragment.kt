@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import com.example.base.ui.ui.errors.ErrorView
 import com.google.android.material.snackbar.Snackbar
 
-open class BaseFragment : Fragment(), ErrorView {
-
+open class BaseFragment :
+    Fragment(),
+    ErrorView {
     private var snackbar: Snackbar? = null
 
     override fun showMessage(message: String) {

@@ -7,9 +7,10 @@ import com.example.bottom.navigation.ui.models.FilterType
 import com.example.dmitry.grades.features.libs.movie_list.R
 import com.example.movie.list.view.MovieListFragment
 
-internal class FilterPopupMenu(fragment: MovieListFragment, anchorView: View) :
-    PopupMenu(fragment.requireContext(), anchorView) {
-
+internal class FilterPopupMenu(
+    fragment: MovieListFragment,
+    anchorView: View,
+) : PopupMenu(fragment.requireContext(), anchorView) {
     init {
         val viewModel = fragment.viewModel { fragment.getComponent().getListViewModel() }
 

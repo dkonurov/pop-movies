@@ -8,7 +8,6 @@ import com.example.core.storage.db.entity.LocalMovie
 
 @Dao
 interface MovieDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(movies: List<LocalMovie>)
 

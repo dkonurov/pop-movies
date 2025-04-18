@@ -5,11 +5,13 @@ import com.example.di.StoreScope
 import toothpick.Scope
 import toothpick.config.Module
 
-open class ToothpickFragment : DIFragment<ToothpickComponent>(), StoreScope {
-
-    override fun createComponent(): ToothpickComponent = ToothpickComponent(
-        getParentScope().openSubScope(this.javaClass.simpleName)
-    )
+open class ToothpickFragment :
+    DIFragment<ToothpickComponent>(),
+    StoreScope {
+    override fun createComponent(): ToothpickComponent =
+        ToothpickComponent(
+            getParentScope().openSubScope(this.javaClass.simpleName),
+        )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,16 +57,15 @@ open class ToothpickFragment : DIFragment<ToothpickComponent>(), StoreScope {
     }
 
     private fun getParentScope(): Scope {
-        val store: StoreScope = getParentFragmentStore()
-            ?: getActivityStore()
-            ?: getApplicationStore()
-            ?: throw IllegalStateException(
-                "parent fragment or activity or application must be implemented StoreScope"
-            )
+        val store: StoreScope =
+            getParentFragmentStore()
+                ?: getActivityStore()
+                ?: getApplicationStore()
+                ?: throw IllegalStateException(
+                    "parent fragment or activity or application must be implemented StoreScope",
+                )
         return store.getScope()
     }
 
-    protected open fun getModules(): Array<Module>? {
-        return null
-    }
+    protected open fun getModules(): Array<Module>? = null
 }

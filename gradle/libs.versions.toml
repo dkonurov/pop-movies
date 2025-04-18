@@ -13,7 +13,7 @@ app-compat = "1.7.0"
 material = "1.12.0"
 compose = "2025.04.00"
 compose-compiler = "1.5.15"
-ktlint = "11.1.0"
+ktlint = "1.5.0"
 detekt = "1.23.7"
 dagger = "2.55"
 room = "2.7.0"
@@ -28,7 +28,6 @@ kotlin-application = { id = "org.jetbrains.kotlin.android", version.ref = "kotli
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt = { id = "kotlin-kapt" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 [libraries]
@@ -75,5 +74,8 @@ glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref 
 toothpick-compiler = { group = "com.github.stephanenicolas.toothpick", name = "toothpick-compiler", version.ref = "toothpick" }
 toothpick-ktp = { group = "com.github.stephanenicolas.toothpick", name = "ktp", version.ref = "toothpick" }
 toothpick-androidx = { group = "com.github.stephanenicolas.toothpick", name = "smoothie-androidx", version.ref = "toothpick" }
+
+#ktlint
+ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
 
 

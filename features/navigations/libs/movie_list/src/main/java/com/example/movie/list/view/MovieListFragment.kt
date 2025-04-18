@@ -28,12 +28,11 @@ import com.example.movie.list.view.widget.FilterPopupMenu
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.produceIn
 
-internal class MovieListFragment : DaggerFragment<MovieListComponent>(), LoadingView {
-
+internal class MovieListFragment :
+    DaggerFragment<MovieListComponent>(),
+    LoadingView {
     public companion object Factory {
-        fun newInstance(): Fragment {
-            return MovieListFragment()
-        }
+        fun newInstance(): Fragment = MovieListFragment()
     }
 
     override fun createComponent(): MovieListComponent {
@@ -55,22 +54,22 @@ internal class MovieListFragment : DaggerFragment<MovieListComponent>(), Loading
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_grid, container, false)
-    }
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(R.layout.fragment_grid, container, false)
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.list_movie, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             R.id.filter -> showPopupFilter()
             else -> super.onOptionsItemSelected(item)
         }
-    }
 
     private fun showPopupFilter(): Boolean {
         val activity = requireActivity()
@@ -79,13 +78,17 @@ internal class MovieListFragment : DaggerFragment<MovieListComponent>(), Loading
         return true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentGridBinding.bind(view)
         viewModel = viewModel { getComponent().getListViewModel() }
-        adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
-            viewModel.showDetails(movie.id)
-        }
+        adapter =
+            MovieListAdapter(requireContext()) { movie: LocalMovie ->
+                viewModel.showDetails(movie.id)
+            }
 
         compatActivity?.let {
             it.setSupportActionBar(binding.toolbar)
@@ -105,7 +108,8 @@ internal class MovieListFragment : DaggerFragment<MovieListComponent>(), Loading
     }
 
     private fun initViewModel() {
-        viewModel.observe()
+        viewModel
+            .observe()
             .onEach {
                 if (it is ListMoviesUiState.Loading) {
                     showLoading()
@@ -127,8 +131,7 @@ internal class MovieListFragment : DaggerFragment<MovieListComponent>(), Loading
 
                     else -> {}
                 }
-            }
-            .produceIn(lifecycleScope)
+            }.produceIn(lifecycleScope)
     }
 
     override fun onDestroyView() {

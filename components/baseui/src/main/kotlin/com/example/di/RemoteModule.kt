@@ -9,7 +9,6 @@ import kotlinx.coroutines.SupervisorJob
 import toothpick.config.Module
 
 class RemoteModule : Module() {
-
     init {
         // schedulers
         bind(DispatcherProvider::class.java).toInstance(DispatcherProviderImpl())

@@ -2,10 +2,8 @@ package com.example.base.ui.ui.fragment
 
 import com.example.di.StoreScope
 import toothpick.Scope
-import toothpick.config.Module
 
 abstract class DaggerFragment<T : Any> : DIFragment<T>() {
-
     private fun getApplicationStore(): StoreScope? {
         val application = requireActivity().application
         return if (application is StoreScope) {
@@ -35,12 +33,13 @@ abstract class DaggerFragment<T : Any> : DIFragment<T>() {
     }
 
     protected fun getParentToothpickScope(): Scope {
-        val store: StoreScope = getParentFragmentStore()
-            ?: getActivityStore()
-            ?: getApplicationStore()
-            ?: throw IllegalStateException(
-                "parent fragment or activity or application must be implemented StoreScope"
-            )
+        val store: StoreScope =
+            getParentFragmentStore()
+                ?: getActivityStore()
+                ?: getApplicationStore()
+                ?: throw IllegalStateException(
+                    "parent fragment or activity or application must be implemented StoreScope",
+                )
         return store.getScope()
     }
 }

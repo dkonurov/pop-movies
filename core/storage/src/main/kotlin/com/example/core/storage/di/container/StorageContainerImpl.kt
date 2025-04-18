@@ -9,11 +9,10 @@ import dagger.Component
 @StorageScope
 @Component(modules = [StorageModule::class])
 internal interface StorageContainerImpl : StorageContainer {
-
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance context: Context
+            @BindsInstance context: Context,
         ): StorageContainerImpl
     }
 }

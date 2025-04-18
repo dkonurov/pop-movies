@@ -12,7 +12,6 @@ import com.example.core.storage.db.inteface.MovieDao
 @Database(entities = [LocalMovie::class, LocalFavorite::class], version = 1, exportSchema = true)
 @TypeConverters(ListIntConverter::class)
 internal abstract class AppDatabase : RoomDatabase() {
-
     abstract fun getMovieDao(): MovieDao
 
     abstract fun getFavoriteDao(): FavoriteDao

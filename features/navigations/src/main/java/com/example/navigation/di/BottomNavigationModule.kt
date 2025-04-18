@@ -8,7 +8,6 @@ import com.example.navigation.ChildMovieRouterImpl
 import toothpick.config.Module
 
 class BottomNavigationModule : Module() {
-
     init {
         bind(SortConfigRepository::class.java).to(SortConfigRepositoryImpl::class.java)
         bind(MovieListRouter::class.java).to(ChildMovieRouterImpl::class.java)

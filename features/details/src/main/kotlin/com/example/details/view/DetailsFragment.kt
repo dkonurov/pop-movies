@@ -19,8 +19,9 @@ import com.example.dmitry.grades.features.details.R
 import com.example.dmitry.grades.features.details.databinding.FragmentDetailBinding
 import toothpick.config.Module
 
-class DetailsFragment : ToothpickFragment(), LoadingView {
-
+class DetailsFragment :
+    ToothpickFragment(),
+    LoadingView {
     companion object {
         private const val MOVIE_ID = "com.example.dmitry.grades.ui.movie.details.movie_id"
 
@@ -43,13 +44,14 @@ class DetailsFragment : ToothpickFragment(), LoadingView {
     }
 
     override fun getModules(): Array<Module>? {
-        val id = arguments?.getLong(MOVIE_ID)
-            ?: throw IllegalArgumentException("Cannot be find Movie id")
+        val id =
+            arguments?.getLong(MOVIE_ID)
+                ?: throw IllegalArgumentException("Cannot be find Movie id")
         return arrayOf(DetailsModule(id))
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             android.R.id.home -> {
                 activity?.onBackPressed()
                 true
@@ -57,12 +59,11 @@ class DetailsFragment : ToothpickFragment(), LoadingView {
 
             else -> super.onOptionsItemSelected(item)
         }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
         toolbar = view.findViewById(R.id.toolbar)
@@ -70,7 +71,10 @@ class DetailsFragment : ToothpickFragment(), LoadingView {
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentDetailBinding.bind(view)
         compatActivity?.let {
@@ -84,17 +88,18 @@ class DetailsFragment : ToothpickFragment(), LoadingView {
             viewLifecycleOwner,
             {
                 it?.let {
-
                     binding.titleTv.text = it.title
                     binding.yearTv.text = it.year
                     binding.timeTv.text = it.time
                     binding.releaseTv.text = it.release
                     binding.aboutTv.text = it.about
-                    Glide.with(this@DetailsFragment)
-                        .load(it.poster).into(binding.poster)
+                    Glide
+                        .with(this@DetailsFragment)
+                        .load(it.poster)
+                        .into(binding.poster)
                     binding.favoriteBtn.isChecked = it.isFavorite
                 }
-            }
+            },
         )
         ErrorHandler.handleError(viewModel, this)
         binding.favoriteBtn.setOnClickListener {

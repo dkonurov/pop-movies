@@ -19,9 +19,8 @@ class AppModule(
     context: Context,
     remoteContainer: RemoteContainer,
     storageContainer: StorageContainer,
-    coreDependencies: CoreDependencies
+    coreDependencies: CoreDependencies,
 ) : Module() {
-
     init {
         bind(Context::class.java).toInstance(context)
         bind(HttpDataSource::class.java).toInstance(remoteContainer.getHttpDataSource())

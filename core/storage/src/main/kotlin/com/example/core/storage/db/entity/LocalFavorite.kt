@@ -10,7 +10,7 @@ data class LocalFavorite(
     val about: String,
     val poster: String?,
     val time: String?,
-    val release: String
+    val release: String,
 ) {
     companion object {
         const val TABLE_NAME = "Favorite"

@@ -12,9 +12,8 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 abstract class BaseViewModel(
     private val scope: CoroutineScope,
-    protected val dispatcherProvider: DispatcherProvider
+    protected val dispatcherProvider: DispatcherProvider,
 ) : ViewModel() {
-
     protected abstract fun handleError(t: Throwable)
 
     protected abstract fun hideError()
@@ -26,9 +25,9 @@ abstract class BaseViewModel(
     protected fun coroutine(
         context: CoroutineContext = EmptyCoroutineContext,
         start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> Unit
-    ): Job {
-        return scope.launch(context, start) {
+        block: suspend CoroutineScope.() -> Unit,
+    ): Job =
+        scope.launch(context, start) {
             try {
                 showLoading()
                 hideError()
@@ -39,7 +38,6 @@ abstract class BaseViewModel(
                 hideLoading()
             }
         }
-    }
 
     override fun onCleared() {
         super.onCleared()

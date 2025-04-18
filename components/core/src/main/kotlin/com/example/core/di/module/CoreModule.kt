@@ -8,7 +8,6 @@ import dagger.Module
 
 @Module
 internal abstract class CoreModule {
-
     @Binds
     @CoreScope
     abstract fun bindLogger(impl: LoggerImpl): Logger

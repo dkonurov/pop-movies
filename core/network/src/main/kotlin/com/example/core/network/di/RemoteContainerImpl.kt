@@ -11,12 +11,11 @@ import dagger.Component
 @Component(modules = [InterceptorsModule::class, RemoteModule::class])
 @RemoteScope
 internal interface RemoteContainerImpl : RemoteContainer {
-
     @Component.Factory
     interface Factory {
         fun create(
             @BindsInstance @Url url: String,
-            @BindsInstance @Key key: String
+            @BindsInstance @Key key: String,
         ): RemoteContainerImpl
     }
 }

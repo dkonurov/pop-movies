@@ -9,14 +9,16 @@ import com.example.core.storage.preferences.PrivateDataSource
 
 interface StorageContainer {
     fun getFavoriteDao(): FavoriteDao
+
     fun getMovieDao(): MovieDao
+
     fun getPrivateDataSource(): PrivateDataSource
+
     fun getErrorMessageDataSource(): ErrorMessageDataSource
+
     fun getConfig(): Config
 }
 
 object StorageContainerFactory {
-    fun create(context: Context): StorageContainer {
-        return DaggerStorageContainerImpl.factory().create(context)
-    }
+    fun create(context: Context): StorageContainer = DaggerStorageContainerImpl.factory().create(context)
 }

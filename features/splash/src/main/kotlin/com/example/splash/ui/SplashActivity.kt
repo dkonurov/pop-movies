@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.produceIn
 
 class SplashActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val component = DaggerSplashComponent.factory().create(SplashDependenciesImpl())
@@ -42,27 +41,25 @@ class SplashActivity : AppCompatActivity() {
 
     private fun observeSideEffects(
         navigator: SplashNavigator,
-        splashViewModel: SplashViewModel
+        splashViewModel: SplashViewModel,
     ) {
         splashViewModel.sideEffect
             .onEach {
                 when (it) {
                     is SideEffects.NextScreen -> navigator.nextScreen(this)
                 }
-            }
-            .produceIn(lifecycleScope)
-
+            }.produceIn(lifecycleScope)
     }
 
     @Composable
-    private fun SplashScreen(viewModel: SplashViewModel) = MaterialTheme {
-        SplashBackground()
-        when (val state = viewModel.state) {
-            is State.Loading -> Progress()
-            is State.Error -> ErrorScreen(state.present, viewModel)
+    private fun SplashScreen(viewModel: SplashViewModel) =
+        MaterialTheme {
+            SplashBackground()
+            when (val state = viewModel.state) {
+                is State.Loading -> Progress()
+                is State.Error -> ErrorScreen(state.present, viewModel)
+            }
         }
-
-    }
 
     @Composable
     @Preview
@@ -70,9 +67,10 @@ class SplashActivity : AppCompatActivity() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Theming.colorGrey)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Theming.colorGrey),
         ) {
             CircularProgressIndicator(color = Theming.colorPrimary)
         }
@@ -81,14 +79,15 @@ class SplashActivity : AppCompatActivity() {
     @Composable
     private fun ErrorScreen(
         error: PresentationError,
-        viewModel: SplashViewModel
+        viewModel: SplashViewModel,
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Theming.colorPrimaryDark)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Theming.colorPrimaryDark),
         ) {
             Text(text = error.message, color = Color.White)
             Button(onClick = { viewModel.loadConfig() }, Modifier.padding(0.dp, 8.dp)) {
@@ -103,7 +102,7 @@ class SplashActivity : AppCompatActivity() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Text(text = "Splash", fontSize = 50.sp, color = Theming.colorAccent)
         }

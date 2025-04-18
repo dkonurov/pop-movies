@@ -20,7 +20,7 @@ data class LocalMovie(
     val voteCount: Int,
     val isVideo: Boolean,
     val voteAverage: Double,
-    val page: Int
+    val page: Int,
 ) {
     companion object {
         const val TABLE_NAME = "Movie"

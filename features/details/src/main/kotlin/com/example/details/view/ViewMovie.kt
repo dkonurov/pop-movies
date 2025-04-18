@@ -8,5 +8,5 @@ internal data class ViewMovie(
     val year: String,
     val time: String?,
     val release: String,
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
 )

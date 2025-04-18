@@ -12,7 +12,6 @@ import com.example.navigation.BottomNavFragment
 import toothpick.config.Module
 
 class MainActivity : DIActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,7 +20,7 @@ class MainActivity : DIActivity() {
                 add(
                     R.id.container,
                     BottomNavFragment.newInstance(),
-                    BottomNavFragment::class.java.simpleName
+                    BottomNavFragment::class.java.simpleName,
                 )
             }
         }
@@ -34,17 +33,13 @@ class MainActivity : DIActivity() {
                     replace(R.id.container, DetailsFragment.newInstance(it))
                     addToBackStack(DetailsFragment::class.java.simpleName)
                 }
-            }
+            },
         )
     }
 
-    override fun getModules(): Array<Module>? {
-        return arrayOf(MainModule())
-    }
+    override fun getModules(): Array<Module>? = arrayOf(MainModule())
 
     companion object {
-        fun makeIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
-        }
+        fun makeIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
 }

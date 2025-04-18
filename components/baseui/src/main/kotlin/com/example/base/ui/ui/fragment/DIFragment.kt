@@ -2,10 +2,8 @@ package com.example.base.ui.ui.fragment
 
 import android.content.Context
 import com.example.base.extensions.viewModel
-import com.example.di.StoreScope
 
 abstract class DIFragment<T : Any> : BaseFragment() {
-
     private lateinit var component: T
 
     override fun onAttach(context: Context) {
@@ -13,7 +11,6 @@ abstract class DIFragment<T : Any> : BaseFragment() {
         component = viewModel.component
         super.onAttach(context)
     }
-
 
     abstract fun createComponent(): T
 

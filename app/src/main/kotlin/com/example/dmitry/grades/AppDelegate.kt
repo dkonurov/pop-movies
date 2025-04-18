@@ -14,8 +14,9 @@ import toothpick.Toothpick
 import toothpick.configuration.Configuration
 
 @HiltAndroidApp
-open class AppDelegate : Application(), StoreScope {
-
+open class AppDelegate :
+    Application(),
+    StoreScope {
     override fun onCreate() {
         super.onCreate()
         initToothpick()
@@ -26,15 +27,17 @@ open class AppDelegate : Application(), StoreScope {
         val coreContainer = CoreDependenicesFactories.create()
         val remoteContainer = RemoteContainerFactory.create(BuildConfig.PROD_URL, BuildConfig.APY_KEY)
         val storageContainer = StorageContainerFactory.create(this)
-        val appScore = Toothpick.openScope(Scopes.APP_SCOPE)
-            .installModules(
-                AppModule(
-                    this,
-                    remoteContainer,
-                    storageContainer,
-                    coreContainer
+        val appScore =
+            Toothpick
+                .openScope(Scopes.APP_SCOPE)
+                .installModules(
+                    AppModule(
+                        this,
+                        remoteContainer,
+                        storageContainer,
+                        coreContainer,
+                    ),
                 )
-            )
 
         BaseUIScope.initBaseUIScope(appScore)
     }

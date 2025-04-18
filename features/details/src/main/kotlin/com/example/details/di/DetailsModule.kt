@@ -6,8 +6,9 @@ import com.example.details.domain.movie.MovieRepository
 import com.example.details.domain.movie.MovieRepositoryImpl
 import toothpick.config.Module
 
-internal class DetailsModule(private val movieId: Long) : Module() {
-
+internal class DetailsModule(
+    private val movieId: Long,
+) : Module() {
     init {
         bind(MovieMapper::class.java).to(MovieMapper::class.java).singleton()
         bind(MovieRepository::class.java).to(MovieRepositoryImpl::class.java).singleton()

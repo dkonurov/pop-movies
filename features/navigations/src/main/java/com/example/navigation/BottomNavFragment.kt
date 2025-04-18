@@ -16,12 +16,11 @@ import com.example.navigation.di.BottomNavigationModule
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import toothpick.config.Module
 
-class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigationItemSelectedListener {
-
+class BottomNavFragment :
+    ToothpickFragment(),
+    BottomNavigationView.OnNavigationItemSelectedListener {
     companion object {
-        fun newInstance(): BottomNavFragment {
-            return BottomNavFragment()
-        }
+        fun newInstance(): BottomNavFragment = BottomNavFragment()
 
         private const val SELECTED_ID = "com.example.navigation.selected_id"
     }
@@ -31,18 +30,17 @@ class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigation
     private var binding: FragmentBootomNavBinding? = null
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val fragment: Fragment? = when (item.itemId) {
-            R.id.nav_list -> MovieListFragmentFactory.newInstance()
-            R.id.nav_favorite -> FavoriteFragment.newInstance()
-            else -> null
-        }
+        val fragment: Fragment? =
+            when (item.itemId) {
+                R.id.nav_list -> MovieListFragmentFactory.newInstance()
+                R.id.nav_favorite -> FavoriteFragment.newInstance()
+                else -> null
+            }
         fragment?.let(this::setFragment)
         return fragment != null
     }
 
-    override fun getModules(): Array<Module>? {
-        return arrayOf(BottomNavigationModule())
-    }
+    override fun getModules(): Array<Module>? = arrayOf(BottomNavigationModule())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +52,13 @@ class BottomNavFragment : ToothpickFragment(), BottomNavigationView.OnNavigation
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = inflater.inflate(R.layout.fragment_bootom_nav, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentBootomNavBinding.bind(view)
         binding.bottomNav.setOnNavigationItemSelectedListener(this)

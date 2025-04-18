@@ -4,9 +4,11 @@ import com.example.base.ui.observers.ErrorObserver
 import com.example.base.ui.vm.ErrorViewModel
 
 object ErrorHandler {
-
     @JvmStatic
-    fun handleError(viewModel: ErrorViewModel, view: ErrorView) {
+    fun handleError(
+        viewModel: ErrorViewModel,
+        view: ErrorView,
+    ) {
         viewModel.error.observe(view, ErrorObserver(view))
     }
 }

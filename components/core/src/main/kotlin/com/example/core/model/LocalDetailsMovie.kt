@@ -16,5 +16,5 @@ data class LocalDetailsMovie(
     val voteCount: Int,
     val isVideo: Boolean,
     val runtime: String?,
-    val voteAverage: Double
+    val voteAverage: Double,
 )

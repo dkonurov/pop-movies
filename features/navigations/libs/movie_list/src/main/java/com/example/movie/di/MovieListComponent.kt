@@ -5,13 +5,12 @@ import dagger.Component
 
 @Component(dependencies = [MovieListDependencies::class])
 internal interface MovieListComponent {
-
     fun getListViewModel(): ListViewModel
 
     @Component.Factory
     interface Factory {
         fun create(
-            dependencies: MovieListDependencies
+            dependencies: MovieListDependencies,
         ): MovieListComponent
     }
 }

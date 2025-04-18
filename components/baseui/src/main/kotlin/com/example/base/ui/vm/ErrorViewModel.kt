@@ -12,11 +12,8 @@ open class ErrorViewModel(
     coroutineScope: CoroutineScope,
     schedulerProvider: DispatcherProvider,
     private val logger: Logger,
-    private val uiErrorMapper: UiErrorMapper
+    private val uiErrorMapper: UiErrorMapper,
 ) : BaseViewModel(coroutineScope, schedulerProvider) {
-
-
-
     val error: LiveData<UIError?>
         get() = _error
 
@@ -29,7 +26,7 @@ open class ErrorViewModel(
 
     override fun handleError(t: Throwable) {
         logger.error(t)
-        val uiError =  this.uiErrorMapper.mapEror(t)
+        val uiError = this.uiErrorMapper.mapEror(t)
         _error.value = uiError
     }
 

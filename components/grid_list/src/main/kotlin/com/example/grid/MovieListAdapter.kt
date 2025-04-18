@@ -11,9 +11,8 @@ import com.example.grid.holders.MovieDiffUtils
 
 class MovieListAdapter(
     context: Context,
-    private val clickListener: MovieClickListener
+    private val clickListener: MovieClickListener,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     companion object {
         private const val FOOTER_TYPE = 1
         private const val DEFAULT_TYPE = 0
@@ -23,14 +22,17 @@ class MovieListAdapter(
 
     private val items: MutableList<LocalMovie> = arrayListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return if (viewType == FOOTER_TYPE) {
             LoadingViewHolder(
-                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_loading, parent, false)
+                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_loading, parent, false),
             )
         } else {
             return GridViewHolder(
-                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_grid, parent, false)
+                layoutInflater.inflate(com.example.dmitry.grades.components.grid_list.R.layout.list_item_grid, parent, false),
             ).apply {
                 itemView.setOnClickListener {
                     val position = bindingAdapterPosition
@@ -47,15 +49,16 @@ class MovieListAdapter(
         return size + if (size > 0) 1 else 0
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         if (!isFooter(position)) {
             (holder as GridViewHolder).bind(items[position].posterPath)
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (isFooter(position)) FOOTER_TYPE else DEFAULT_TYPE
-    }
+    override fun getItemViewType(position: Int): Int = if (isFooter(position)) FOOTER_TYPE else DEFAULT_TYPE
 
     fun setData(movies: List<LocalMovie>) {
         val result = DiffUtil.calculateDiff(MovieDiffUtils(items, movies))
@@ -64,7 +67,5 @@ class MovieListAdapter(
         result.dispatchUpdatesTo(this)
     }
 
-    fun isFooter(position: Int): Boolean {
-        return items.size == position
-    }
+    fun isFooter(position: Int): Boolean = items.size == position
 }
