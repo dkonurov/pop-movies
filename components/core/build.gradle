@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+}
 
 android {
     compileSdkVersion application.compileSdk
@@ -60,31 +62,25 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    def composeBom = platform(compose.bom)
-    api composeBom
-    api compose.ui
-    api project(":core:network")
-    implementation composeBom
+    implementation(platform(libs.android.compose.bom))
+    testImplementation platform(libs.android.compose.bom)
+    androidTestImplementation platform(libs.android.compose.bom)
 
-    //components
-    implementation "androidx.room:room-runtime:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
+    implementation libs.android.compose.ui
 
+
+    implementation projects.core.network
+    implementation projects.core.storage
 
     //dagger
-    kapt dagger.processor
-    implementation dagger.core
+    implementation libs.dagger.core
+    kapt libs.dagger.processor
 
-    implementation compose.ui
-    debugImplementation compose.tooling
-    implementation compose.material
+    //retrofit
+    implementation libs.network.retrofit
 
-    implementation kotlinLib.std
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-}
-repositories {
-    mavenCentral()
 }

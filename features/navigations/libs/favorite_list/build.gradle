@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+}
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.features.libs.favorite_list"
@@ -44,14 +46,19 @@ android {
 }
 
 dependencies {
-    api project(":components:bottom_navigation_core")
-    implementation project(":components:grid_list")
-    implementation project(':core:storage')
+    implementation projects.components.bottomNavigationCore
+    implementation projects.components.gridList
+    implementation projects.core.storage
+    implementation projects.core.network
+    implementation projects.components.core
+    implementation projects.components.baseui
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation libs.toothpick.ktp
+
+    implementation libs.android.swiperefreshlayout
+    implementation libs.android.app.compat
+    implementation libs.android.material
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

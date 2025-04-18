@@ -7,8 +7,9 @@ import toothpick.Scope
 import toothpick.Toothpick
 import toothpick.config.Module
 
-open class DIActivity : AppCompatActivity(), StoreScope {
-
+open class DIActivity :
+    AppCompatActivity(),
+    StoreScope {
     private lateinit var scope: Scope
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +27,13 @@ open class DIActivity : AppCompatActivity(), StoreScope {
     override fun getScope(): Scope = scope
 
     private fun getApplicationScope(): Scope {
-        val store = application as? StoreScope
-            ?: throw IllegalStateException("application must be implemented StoreScope")
+        val store =
+            application as? StoreScope
+                ?: throw IllegalStateException("application must be implemented StoreScope")
         return store.getScope()
     }
 
-    protected open fun getModules(): Array<Module>? {
-        return null
-    }
+    protected open fun getModules(): Array<Module>? = null
 
     override fun onDestroy() {
         super.onDestroy()

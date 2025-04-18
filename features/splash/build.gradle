@@ -1,8 +1,9 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.compose
+    alias libs.plugins.dagger.hilt
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
 }
 android {
     compileSdkVersion application.compileSdk
@@ -48,38 +49,38 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion "1.5.14"
     }
-
-
 }
 
 dependencies {
-    def composeBom = platform(compose.bom)
-    api project(':components:baseui')
-    implementation project(':core:storage')
-    implementation composeBom
-    implementation androidx.core
-    implementation androidx.constraint
-    implementation dagger.hilt
-    kapt dagger.hilt_compiler
+    implementation projects.components.baseui
+    implementation projects.core.storage
+    implementation projects.core.network
+    implementation projects.components.core
+    implementation(platform(libs.android.compose.bom))
+    implementation libs.android.core
+    implementation libs.android.constraint
+    implementation libs.dagger.hilt.core
+    kapt libs.dagger.hilt.compiler
 
-    implementation compose.ui
-    debugImplementation compose.tooling
-    implementation compose.material
-    implementation compose.activity
-    implementation compose.viewModel
-    implementation compose.livedata
-    implementation compose.rxjava
-    kapt compose.compiler
+    implementation libs.android.compose.ui
+    debugImplementation libs.android.compose.tooling
+    implementation libs.android.compose.material
+    implementation libs.android.compose.activity
+    implementation libs.android.compose.viewModel
+    implementation libs.android.compose.livedata
+    implementation libs.android.compose.rxjava
+    implementation libs.android.app.compat
+
+    kapt libs.android.compose.compiler
 
     //dagger
-    kapt toothpick.compiler
-    kapt dagger.processor
-    implementation dagger.core
+    implementation libs.toothpick.ktp
+    implementation libs.dagger.hilt.core
+    kapt libs.dagger.hilt.compiler
 
     // UI Tests
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.5'
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

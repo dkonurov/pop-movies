@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
 }
 
 android {
@@ -41,15 +41,14 @@ android {
 }
 
 dependencies {
-    implementation kotlinLib.std
 
     //retrofit
-    implementation network.retrofit
-    implementation network.okhttp
-    implementation network.logging
-    implementation network.converter
+    implementation libs.network.retrofit
+    implementation libs.network.okhttp
+    implementation libs.network.logging
+    implementation libs.network.converter
 
     //dagger
-    kapt dagger.processor
-    implementation dagger.core
+    implementation libs.dagger.core
+    kapt libs.dagger.processor
 }

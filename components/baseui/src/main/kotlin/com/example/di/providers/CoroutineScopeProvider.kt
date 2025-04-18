@@ -6,10 +6,11 @@ import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 import javax.inject.Provider
 
-class CoroutineScopeProvider @Inject constructor(
-    private val dispatcherProvider: DispatcherProvider,
-    private val supervisor: CompletableJob
-) : Provider<CoroutineScope> {
-
-    override fun get(): CoroutineScope = CoroutineScope(dispatcherProvider.ui() + supervisor)
-}
+class CoroutineScopeProvider
+    @Inject
+    constructor(
+        private val dispatcherProvider: DispatcherProvider,
+        private val supervisor: CompletableJob,
+    ) : Provider<CoroutineScope> {
+        override fun get(): CoroutineScope = CoroutineScope(dispatcherProvider.ui() + supervisor)
+    }

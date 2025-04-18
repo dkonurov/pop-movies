@@ -11,13 +11,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 internal abstract class InterceptorsModule {
-
     companion object {
         @Provides
         @RemoteScope
-        fun provideHttpLogingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+        fun provideHttpLogingInterceptor(): HttpLoggingInterceptor =
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
     }
 
     @IntoSet

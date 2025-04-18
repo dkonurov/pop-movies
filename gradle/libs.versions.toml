@@ -1,0 +1,81 @@
+[versions]
+kotlin = "2.1.0"
+hilt = "2.51.1"
+agp = "8.9.1"
+android-constraint = "2.2.1"
+retrofit = "2.11.0"
+okhttp = "4.12.0"
+androidx = "1.16.0"
+fragmen-ktx = "1.8.6"
+lifecycle = "2.8.7"
+swiperefreshlayout = "1.2.0-beta01"
+app-compat = "1.7.0"
+material = "1.12.0"
+compose = "2025.04.00"
+compose-compiler = "1.5.15"
+ktlint = "1.5.0"
+detekt = "1.23.7"
+dagger = "2.55"
+room = "2.7.0"
+recycler = "1.4.0"
+glide = "4.16.0"
+toothpick = "3.1.0"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-application = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-kapt = { id = "kotlin-kapt" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+
+[libraries]
+#android
+android-constraint = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "android-constraint" }
+android-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx" }
+android-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmen-ktx" }
+android-app-compat = { group = "androidx.appcompat", name = "appcompat", version.ref = "app-compat" }
+android-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+android-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+android-recycler = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recycler" }
+
+#compose
+android-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose" }
+android-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+android-compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+android-compose-activity = { group = "androidx.activity", name = "activity-compose" }
+android-compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+android-compose-rxjava = { group = "androidx.compose.runtime", name = "runtime-rxjava2" }
+android-compose-material = { group = "androidx.compose.material", name = "material" }
+android-compose-viewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+android-compose-compiler = { group = "androidx.compose.compiler", name = "compiler", version.ref = "compose-compiler" }
+
+#network
+network-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+network-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+network-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+network-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+
+#dagger
+dagger-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
+dagger-processor = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+dagger-hilt-core = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
+
+#room
+room-core = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+#glide
+glide-core = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+
+#toothpick
+toothpick-compiler = { group = "com.github.stephanenicolas.toothpick", name = "toothpick-compiler", version.ref = "toothpick" }
+toothpick-ktp = { group = "com.github.stephanenicolas.toothpick", name = "ktp", version.ref = "toothpick" }
+toothpick-androidx = { group = "com.github.stephanenicolas.toothpick", name = "smoothie-androidx", version.ref = "toothpick" }
+
+#ktlint
+ktlint-cli = { group = "com.pinterest.ktlint", name = "ktlint-cli", version.ref = "ktlint" }
+
+

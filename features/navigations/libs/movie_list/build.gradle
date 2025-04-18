@@ -1,6 +1,10 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.compose
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+}
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.features.libs.movie_list"
@@ -22,7 +26,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        compose = true
     }
 
     compileOptions {
@@ -33,13 +38,40 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.5.14"
+    }
 }
 
 dependencies {
-    api project(":components:bottom_navigation_core")
-    implementation project(":components:grid_list")
-    implementation project(':core:storage')
-    kapt toothpick.compiler
+    implementation projects.components.bottomNavigationCore
+    implementation projects.components.gridList
+    implementation projects.core.storage
+    implementation projects.core.network
+    implementation projects.components.baseui
+    implementation projects.components.core
+    implementation libs.android.app.compat
+    implementation libs.android.material
+
+    implementation libs.android.swiperefreshlayout
+    implementation libs.toothpick.ktp
+
+    //dagger
+    implementation libs.dagger.hilt.core
+    kapt libs.dagger.hilt.compiler
+
+    implementation platform(libs.android.compose.bom)
+
+    implementation libs.android.compose.ui
+    debugImplementation libs.android.compose.tooling
+    implementation libs.android.compose.material
+    implementation libs.android.compose.activity
+    implementation libs.android.compose.viewModel
+    implementation libs.android.compose.livedata
+    implementation libs.android.compose.rxjava
+
+    kapt libs.android.compose.compiler
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

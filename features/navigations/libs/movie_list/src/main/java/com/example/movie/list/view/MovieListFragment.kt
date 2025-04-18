@@ -7,29 +7,37 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.base.extensions.viewModel
-import com.example.base.ui.observers.LoadingObserver
-import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
-import com.example.base.ui.ui.fragment.DIFragment
+import com.example.base.ui.ui.fragment.DaggerFragment
 import com.example.core.storage.db.entity.LocalMovie
+import com.example.dmitry.grades.features.libs.movie_list.R
+import com.example.dmitry.grades.features.libs.movie_list.databinding.FragmentGridBinding
 import com.example.grid.MovieListAdapter
 import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
-import com.example.dmitry.grades.features.libs.movie_list.R
-import com.example.dmitry.grades.features.libs.movie_list.databinding.FragmentGridBinding
-import com.example.movie.di.MovieListModule
+import com.example.movie.di.DaggerMovieListComponent
+import com.example.movie.di.MovieListComponent
+import com.example.movie.di.MovieListDependenciesImpl
+import com.example.movie.list.ListMoviesUiState
 import com.example.movie.list.ListViewModel
 import com.example.movie.list.view.widget.FilterPopupMenu
-import toothpick.config.Module
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.produceIn
 
-class MovieListFragment : DIFragment(), LoadingView {
+internal class MovieListFragment :
+    DaggerFragment<MovieListComponent>(),
+    LoadingView {
+    public companion object Factory {
+        fun newInstance(): Fragment = MovieListFragment()
+    }
 
-    companion object {
-        fun newInstance(): MovieListFragment {
-            return MovieListFragment()
-        }
+    override fun createComponent(): MovieListComponent {
+        val dependencies = MovieListDependenciesImpl(getParentToothpickScope())
+        return DaggerMovieListComponent.factory().create(dependencies)
     }
 
     private lateinit var viewModel: ListViewModel
@@ -43,29 +51,25 @@ class MovieListFragment : DIFragment(), LoadingView {
         setHasOptionsMenu(true)
     }
 
-    override fun getModules(): Array<Module>? {
-        return arrayOf(MovieListModule())
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_grid, container, false)
-    }
+        savedInstanceState: Bundle?,
+    ): View? = inflater.inflate(R.layout.fragment_grid, container, false)
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(
+        menu: Menu,
+        inflater: MenuInflater,
+    ) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.list_movie, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
             R.id.filter -> showPopupFilter()
             else -> super.onOptionsItemSelected(item)
         }
-    }
 
     private fun showPopupFilter(): Boolean {
         val activity = requireActivity()
@@ -74,13 +78,17 @@ class MovieListFragment : DIFragment(), LoadingView {
         return true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentGridBinding.bind(view)
-        viewModel = viewModel { getScope().getInstance(ListViewModel::class.java) }
-        adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
-            viewModel.showDetails(movie.id)
-        }
+        viewModel = viewModel { getComponent().getListViewModel() }
+        adapter =
+            MovieListAdapter(requireContext()) { movie: LocalMovie ->
+                viewModel.showDetails(movie.id)
+            }
 
         compatActivity?.let {
             it.setSupportActionBar(binding.toolbar)
@@ -93,24 +101,37 @@ class MovieListFragment : DIFragment(), LoadingView {
         binding.recycler.addOnScrollListener(MovieListScrollListener(layoutManager, viewModel::loadMore))
 
         binding.refresh.setOnRefreshListener {
-            viewModel.forceLoad()
+            viewModel.loadData()
         }
         initViewModel()
         this.binding = binding
     }
 
     private fun initViewModel() {
-        viewModel.movies.observe(
-            viewLifecycleOwner,
-            {
-                adapter.setData(it)
-            }
-        )
-        viewModel.loading.observe(viewLifecycleOwner, LoadingObserver(this))
-        ErrorHandler.handleError(viewModel, this)
-        if (viewModel.movies.value == null) {
-            viewModel.load()
-        }
+        viewModel
+            .observe()
+            .onEach {
+                if (it is ListMoviesUiState.Loading) {
+                    showLoading()
+                } else {
+                    hideLoading()
+                }
+                when (it) {
+                    is ListMoviesUiState.Success -> {
+                        adapter.setData(it.movies)
+                    }
+
+                    is ListMoviesUiState.Empty -> {
+                        viewModel.loadData()
+                    }
+
+                    is ListMoviesUiState.Error -> {
+                        showMessage(it.ui.message)
+                    }
+
+                    else -> {}
+                }
+            }.produceIn(lifecycleScope)
     }
 
     override fun onDestroyView() {

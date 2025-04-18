@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.lifecycleScope
 import com.example.base.extensions.viewModel
+import com.example.core.model.PresentationError
 import com.example.core.ui.Theming
 import com.example.splash.di.DaggerSplashComponent
 import com.example.splash.di.SplashDependenciesImpl
@@ -29,7 +30,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.produceIn
 
 class SplashActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val component = DaggerSplashComponent.factory().create(SplashDependenciesImpl())
@@ -41,27 +41,25 @@ class SplashActivity : AppCompatActivity() {
 
     private fun observeSideEffects(
         navigator: SplashNavigator,
-        splashViewModel: SplashViewModel
+        splashViewModel: SplashViewModel,
     ) {
         splashViewModel.sideEffect
             .onEach {
                 when (it) {
                     is SideEffects.NextScreen -> navigator.nextScreen(this)
                 }
-            }
-            .produceIn(lifecycleScope)
-
+            }.produceIn(lifecycleScope)
     }
 
     @Composable
-    private fun SplashScreen(viewModel: SplashViewModel) = MaterialTheme {
-        SplashBackground()
-        when (viewModel.state) {
-            is State.Loading -> Progress()
-            is State.Error -> ErrorScreen(viewModel)
+    private fun SplashScreen(viewModel: SplashViewModel) =
+        MaterialTheme {
+            SplashBackground()
+            when (val state = viewModel.state) {
+                is State.Loading -> Progress()
+                is State.Error -> ErrorScreen(state.present, viewModel)
+            }
         }
-
-    }
 
     @Composable
     @Preview
@@ -69,24 +67,29 @@ class SplashActivity : AppCompatActivity() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Theming.colorGrey)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Theming.colorGrey),
         ) {
             CircularProgressIndicator(color = Theming.colorPrimary)
         }
     }
 
     @Composable
-    private fun ErrorScreen(viewModel: SplashViewModel) {
+    private fun ErrorScreen(
+        error: PresentationError,
+        viewModel: SplashViewModel,
+    ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Theming.colorPrimaryDark)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Theming.colorPrimaryDark),
         ) {
-            Text(text = "Sorry. Something was going to wrong", color = Color.White)
+            Text(text = error.message, color = Color.White)
             Button(onClick = { viewModel.loadConfig() }, Modifier.padding(0.dp, 8.dp)) {
                 Text(text = "Repeat")
             }
@@ -99,7 +102,7 @@ class SplashActivity : AppCompatActivity() {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             Text(text = "Splash", fontSize = 50.sp, color = Theming.colorAccent)
         }

@@ -9,7 +9,6 @@ import com.example.core.storage.db.entity.LocalFavorite
 
 @Dao
 interface FavoriteDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun save(favorite: LocalFavorite)
 
@@ -23,7 +22,10 @@ interface FavoriteDao {
     fun findById(id: Long): LocalFavorite?
 
     @Query("SELECT id FROM ${LocalFavorite.TABLE_NAME} LIMIT :offset, :limit")
-    fun getMoviesId(offset: Int, limit: Int): List<Long>
+    fun getMoviesId(
+        offset: Int,
+        limit: Int,
+    ): List<Long>
 
     @Query("SELECT COUNT(id) FROM ${LocalFavorite.TABLE_NAME}")
     fun count(): Int

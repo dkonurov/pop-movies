@@ -9,7 +9,7 @@ import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
 import com.example.base.ui.ui.errors.ErrorHandler
 import com.example.base.ui.ui.errors.LoadingView
-import com.example.base.ui.ui.fragment.DIFragment
+import com.example.base.ui.ui.fragment.ToothpickFragment
 import com.example.core.storage.db.entity.LocalMovie
 import com.example.dmitry.grades.features.libs.favorite_list.R
 import com.example.dmitry.grades.features.libs.favorite_list.databinding.FragmentGridBinding
@@ -20,21 +20,18 @@ import com.example.grid.recycler.MovieListScrollListener
 import com.example.grid.recycler.SpanSizeLookup
 import toothpick.config.Module
 
-class FavoriteFragment : DIFragment(), LoadingView {
-
+class FavoriteFragment :
+    ToothpickFragment(),
+    LoadingView {
     companion object {
-        fun newInstance(): FavoriteFragment {
-            return FavoriteFragment()
-        }
+        fun newInstance(): FavoriteFragment = FavoriteFragment()
     }
 
     private lateinit var adapter: MovieListAdapter
 
     private var binding: FragmentGridBinding? = null
 
-    override fun getModules(): Array<Module>? {
-        return arrayOf(FavoriteListModule())
-    }
+    override fun getModules(): Array<Module>? = arrayOf(FavoriteListModule())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +41,20 @@ class FavoriteFragment : DIFragment(), LoadingView {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View = inflater.inflate(R.layout.fragment_grid, container, false)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentGridBinding.bind(view)
         val viewModel = viewModel { getScope().getInstance(FavoriteViewModel::class.java) }
-        adapter = MovieListAdapter(requireContext()) { movie: LocalMovie ->
-            viewModel.showDetails(movie.id)
-        }
+        adapter =
+            MovieListAdapter(requireContext()) { movie: LocalMovie ->
+                viewModel.showDetails(movie.id)
+            }
 
         compatActivity?.let {
             it.setSupportActionBar(binding.toolbar)
@@ -90,7 +91,7 @@ class FavoriteFragment : DIFragment(), LoadingView {
             viewLifecycleOwner,
             {
                 adapter.setData(it)
-            }
+            },
         )
         viewModel.loading.observe(viewLifecycleOwner, LoadingObserver(this))
         ErrorHandler.handleError(viewModel, this)

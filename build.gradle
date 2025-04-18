@@ -1,31 +1,66 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+
 buildscript {
     apply from: 'dependencies.gradle'
-
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
+}
+//
+buildscript {
     dependencies {
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        classpath 'com.android.tools.build:gradle:8.7.3'
+        classpath(libs.ktlint.cli) {
+            attributes {
+                attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
+            }
+        }
     }
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.android' version '1.9.24' apply false
-    id 'com.google.dagger.hilt.android' version '2.51.1' apply false
-    id "org.jlleitschuh.gradle.ktlint" version "11.1.0"
-    id "io.gitlab.arturbosch.detekt" version "1.23.7"
+    alias libs.plugins.android.application apply false
+    alias libs.plugins.android.library apply false
+    alias libs.plugins.kotlin.application apply false
+    alias libs.plugins.dagger.hilt apply false
+    alias libs.plugins.kotlin.compose apply false
+    alias libs.plugins.detekt
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
+// ktlint
+rootProject.tasks.register("ktlintCheck", JavaExec) {
+    group = "verification"
+    description = "Check Kotlin code style."
+    classpath = buildscript.configurations.classpath
+    mainClass = "com.pinterest.ktlint.Main"
+    args "**/*.kt", "!**.kts", "!**/build/**", "!**/ci-tooling/**"
+    jvmArgs = ["-Xmx192m", "-Xms64m"]
+}
+
+rootProject.tasks.register("ktlintFormat", JavaExec) {
+    group = "formatting"
+    description = "Fix Kotlin code style deviations."
+    classpath = buildscript.configurations.classpath
+    mainClass = "com.pinterest.ktlint.Main"
+    jvmArgs "--add-opens=java.base/java.lang=ALL-UNNAMED"
+    args "-F", "**/*.kt", "!**.kts", "!**/build/**", "!**/ci-tooling/**"
+    jvmArgs = ["-Xmx192m", "-Xms64m"]
+}
+// Detekt
+tasks.withType(Detekt).configureEach {
+    it.jvmTarget = "1.8"
+}
+tasks.withType(DetektCreateBaselineTask).configureEach {
+    it.jvmTarget = "1.8"
+}
+
+tasks.withType(Detekt).configureEach {
+    it.reports {
+        html.required.set(true) // observe findings in your browser with structure and code snippets
     }
+}
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    allRules = true
 }
 
 task clean(type: Delete) {

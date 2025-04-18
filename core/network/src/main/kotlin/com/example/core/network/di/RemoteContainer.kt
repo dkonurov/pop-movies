@@ -7,7 +7,8 @@ interface RemoteContainer {
 }
 
 object RemoteContainerFactory {
-    fun create(url: String, key: String): RemoteContainer {
-        return DaggerRemoteContainerImpl.factory().create(url, key)
-    }
+    fun create(
+        url: String,
+        key: String,
+    ): RemoteContainer = DaggerRemoteContainerImpl.factory().create(url, key)
 }

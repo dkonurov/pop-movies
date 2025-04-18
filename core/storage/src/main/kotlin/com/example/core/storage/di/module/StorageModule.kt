@@ -18,7 +18,6 @@ import dagger.Provides
 
 @Module
 internal abstract class StorageModule {
-
     companion object {
         private const val SHARED_NAME = "com.example.dmitry.grades.domain.data.preferences.shared_name"
         private const val DB_NAME = "app-database"
@@ -35,20 +34,20 @@ internal abstract class StorageModule {
 
         @Provides
         @StorageScope
-        fun provideConfig() = Config(-1, 20)
+        fun provideConfig() = Config(Int.MAX_VALUE, 20)
 
         @Provides
         @StorageScope
-        fun provideSharedPreferences(context: Context): SharedPreferences = context.getSharedPreferences(
-            SHARED_NAME,
-            Context.MODE_PRIVATE
-        )
+        fun provideSharedPreferences(context: Context): SharedPreferences =
+            context.getSharedPreferences(
+                SHARED_NAME,
+                Context.MODE_PRIVATE,
+            )
 
-        private fun getDb(context: Context): AppDatabase {
-            return Room
+        private fun getDb(context: Context): AppDatabase =
+            Room
                 .databaseBuilder(context, AppDatabase::class.java, DB_NAME)
                 .build()
-        }
     }
 
     @Binds
