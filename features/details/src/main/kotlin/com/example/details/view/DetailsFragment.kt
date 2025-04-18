@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.example.base.extensions.viewModel
 import com.example.base.ui.observers.LoadingObserver
@@ -34,7 +35,7 @@ class DetailsFragment : ToothpickFragment(), LoadingView {
 
     private lateinit var toolbar: Toolbar
 
-    private lateinit var refresh: androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    private lateinit var refresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

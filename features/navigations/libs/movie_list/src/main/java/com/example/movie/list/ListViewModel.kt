@@ -7,7 +7,6 @@ import com.example.base.ui.ui.errors.UiErrorMapper
 import com.example.bottom.navigation.ui.models.FilterType
 import com.example.core.coroutine.resultOf
 import com.example.core.data.logger.Logger
-import com.example.core.storage.config.Config
 import com.example.movie.domain.usecase.MovieListUseCase
 import com.example.movie.list.view.MovieListRouter
 import kotlinx.coroutines.flow.Flow

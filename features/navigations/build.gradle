@@ -1,6 +1,8 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+}
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.features.navigations"
@@ -37,11 +39,17 @@ android {
 }
 
 dependencies {
-    implementation project(':features:navigations:libs:movie_list')
-    implementation project(':features:navigations:libs:favorite_list')
-    implementation androidx.constraint
-    kapt toothpick.compiler
-    implementation androidx.fragmentKtx
+    implementation projects.features.navigations.libs.movieList
+    implementation projects.features.navigations.libs.favoriteList
+    implementation projects.components.bottomNavigationCore
+    implementation projects.components.baseui
+    implementation libs.android.constraint
+    kapt libs.toothpick.compiler
+    implementation libs.toothpick.ktp
+    implementation libs.dagger.hilt.core
+    kapt libs.dagger.hilt.compiler
+    implementation libs.android.fragment.ktx
+    implementation libs.android.material
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'

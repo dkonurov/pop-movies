@@ -1,8 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
+    alias libs.plugins.android.application
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+    alias libs.plugins.dagger.hilt
 }
 
 android {
@@ -57,25 +57,21 @@ kapt {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //toothpick
-    kapt toothpick.compiler
-    implementation dagger.hilt
-    kapt dagger.hilt_compiler
+    kapt libs.toothpick.compiler
+    implementation libs.toothpick.ktp
+    implementation libs.dagger.hilt.core
+    kapt libs.dagger.hilt.compiler
 
-    implementation project(':features:splash')
-    implementation project(':features:navigations')
-    implementation project(':features:details')
-    implementation project(':core:network')
-    implementation project(':core:storage')
-    //android
-    implementation 'androidx.appcompat:appcompat:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
-    implementation "androidx.recyclerview:recyclerview:$versions.recycler"
+    implementation projects.features.splash
+    implementation projects.features.navigations
+    implementation projects.features.details
+    implementation projects.core.network
+    implementation projects.core.storage
+    implementation projects.components.baseui
+    implementation projects.components.core
 
-    // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-
-    // optional - ReactiveStreams support for LiveData
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.8.7'
+    implementation libs.android.app.compat
+    implementation libs.android.fragment.ktx
 
     // Test
     testImplementation 'androidx.arch.core:core-testing:2.2.0'

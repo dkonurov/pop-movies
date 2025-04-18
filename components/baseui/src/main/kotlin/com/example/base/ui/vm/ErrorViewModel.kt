@@ -6,7 +6,6 @@ import com.example.base.schedulers.DispatcherProvider
 import com.example.base.ui.ui.errors.UIError
 import com.example.base.ui.ui.errors.UiErrorMapper
 import com.example.core.data.logger.Logger
-import com.example.core.storage.preferences.ErrorMessageDataSource
 import kotlinx.coroutines.CoroutineScope
 
 open class ErrorViewModel(

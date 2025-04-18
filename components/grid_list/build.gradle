@@ -1,6 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+
+plugins {
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.application
+    alias libs.plugins.kotlin.kapt
+}
 android {
     compileSdkVersion application.compileSdk
     namespace "com.example.dmitry.grades.components.grid_list"
@@ -43,9 +46,10 @@ android {
 }
 
 dependencies {
-    api project(':components:baseui')
-    implementation project(':core:storage')
-    api "androidx.recyclerview:recyclerview:$versions.recycler"
+    implementation projects.components.baseui
+    implementation projects.core.storage
+    implementation libs.android.recycler
+    implementation libs.glide.core
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
